@@ -1,0 +1,94 @@
+## Puppet Installation
+#prerequsites Take 2 machine one is server and second is agent
+
+
+#set hostname to Master/Puppetserver
+> sudo hostnamectl set-hostname master.puppet.local
+
+#set hostname to client/agent
+> sudo hostnamectl set-hostname node01.puppet.local
+
+#Install agent in server
+> apt -y install puppet-master
+
+#Make local DNS entry in /etc/hosts of Puppetserver and Do Same entry in Agent Host file also
+> nano /etc/hosts
+#entry in hosts file
+<Server-IP>	<master.puppet.local>
+<Agent-IP>	<node01.puppet.local>
+
+#Try to ping with the domain name if they are ping successfully we can continue if they are not ping each other then check the file entry 
+
+
+#Configure Puppet on Server Host (/etc/puppet/puppet.conf) and past the below contain 
+> nano /etc/puppet/puppet.conf
+# add to the end
+[main]
+certname = dlp.srv.world
+server = dlp.srv.world
+
+[server]
+dns_alt_names = dlp.srv.world,dlp
+# any [environment] name
+environment = production
+
+
+#Now when we start the puppetserver through Error of Heap memory to run puppetserver
+> nano /etc/default/puppetserver
+
+#Change the following things as per the ram capacity
+# Modify this if you'd like to change the memory allocation, enable JMX, etc
+JAVA_ARGS="-Xms2g -Xmx2g"
+
+#For example, to allocate 1GB of memory, use JAVA_ARGS="-Xms1g -Xmx1g"; for 512MB, use JAVA_ARGS="-Xms512m -Xmx512m"
+
+#Restart the puppetserver service
+> sudo systemctl restart puppetserver
+
+#Install Agent on client node
+> apt -y install puppet-agent
+
+
+#Configure Puppet on Client Host (/etc/puppet/puppet.conf) and past the below things
+# add to the end
+[main]
+certname = node01.srv.world
+server = dlp.srv.world
+
+[agent]
+server = dlp.srv.world
+ca_server = dlp.srv.world
+# interval for applying catalogs on server
+# if set [0], always applied
+# default is 30 minutes if the value is not set
+runinterval = 30m
+
+#Enable puppet-agent service and run
+>systemctl enable --now puppet
+
+
+#Enable certificate on Puppet Server.
+> puppetserver ca list --all
+
+#sign a certificate request
+> puppetserver ca sign --certname node01.srv.world
+
+
+# create a directory for putting manifests
+# for the name [production], specify the name set for [environment = ***] parameter in [puppet.conf]
+> mkdir -p /etc/puppet/code/environments/production/manifests
+
+> /etc/puppet/code/environments/production/manifests/site.pp
+
+# for example, install apache on node
+node default{
+package { 'apache2':
+  provider => apt,
+  ensure   => installed,
+}
+}
+
+# on Client host, reload puppet if you like to verify settings immediately
+> systemctl reload puppet
+#and to check it work or not we have to check it on manual basis
+> puppet plugin -t

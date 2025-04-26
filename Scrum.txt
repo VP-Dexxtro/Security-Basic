@@ -1,0 +1,224 @@
+The software development term scrum was first used in a 1986 paper titled "The New Product Development Game" by Hirotaka Takeuchi and Ikujiro Nonaka
+
+the term is borrowed from rugby, where a scrum is a formation of players. The term scrum was chosen by the paper's authors because it emphasizes teamwork.
+
+Scrum is occasionally seen written in all-capitals, as SCRUM
+
+
+Scrum is a lightweight, iterative and incremental framework for developing, delivering, and sustaining complex products.
+
+The framework challenges assumptions of the traditional, sequential approach to product development, and enables teams to self-organize by encouraging physical co-location or close online collaboration of all team members, as well as daily face-to-face communication among all team members and disciplines involved.
+
+A key principle of scrum is the dual recognition that customers will change the scope of what is wanted (often called requirements volatility) and that there will be unpredictable challenges — for which a predictive or planned approach is not suited. These changes come from a variety of sources, but according to scrum, understanding why is irrelevant, and change should simply be accepted and analyzed for benefits.
+
+Scrum Team
+
+1)Product owner
+The product owner, representing the product's stakeholders and the voice of the customer (or may represent the desires of a committee), is responsible for delivering good business results.
+
+Hence, the product owner is accountable for the product backlog and for maximizing the value that the team delivers.
+
+The product owner defines the product in terms of customer-centric outcomes (typically - but not limited to - user stories), adds them to the product backlog, and prioritizes them based on importance and dependencies
+
+A scrum team should have only one product owner (although a product owner could support more than one team) and it is strongly advised against combining this role with the role of the scrum master.
+
+This role is crucial and requires a deep understanding of both sides: the business and the engineers (developers) in the scrum team. 
+
+Therefore, a good product owner should be able to communicate what the business needs, ask why they need it (because there may be better ways to achieve that), and convey the message to all stakeholders including the developers using technical language, as required.
+
+Communication is a core responsibility of the product owner.
+
+The product owner role bridges the communication gap between the team and its stakeholders, serving as a proxy for stakeholders to the team and as a team representative to the overall stakeholder community
+
+As the face of the team to the stakeholders, the following are some of the communication tasks of the product owner to the stakeholders:
+
+- Define and announce releases.
+- Communicate delivery and product status.
+- Share progress during governance meetings.
+- Share significant RIDAs (risks, impediments, dependencies, and assumptions) with stakeholders.
+- Negotiate priorities, scope, funding, and schedule.
+- Ensure that the product backlog is visible, transparent and clear.
+
+Ability to relate is a key attribute for a product owner to have—the ability to put one's self in another's shoes. A product owner converses with different stakeholders with a variety of backgrounds, job roles, and objectives - and should be able to appreciate these different points of view.
+
+To be effective, it is wise for a product owner to know the level of detail the audience needs. 
+
+The developers need thorough feedback and specifications so they can build a product up to expectation, while an executive sponsor may just need summaries of progress. 
+
+Providing more information than necessary may lose stakeholder interest and waste time. A direct means of communication is preferred by seasoned product owners
+
+A product owner's ability to communicate effectively is also enhanced by being skilled in techniques that identify stakeholder needs, negotiate priorities between stakeholder interests, and collaborate with developers to ensure effective implementation of requirements.
+
+
+2) Developers
+
+The developers carry out all work required to build increments of value every sprint.
+
+The term developers refers to anyone who plays a role in the development and support of the system or product, and can include researchers, architects, designers, data specialists, statisticians, analysts, engineers, programmers, and testers, among others.
+
+However, due to the confusion that can arise when some people do not feel the term 'developer' applies to them, they are often referred to just as team members.
+
+The team is self-organizing. While no work should come to the team except through the product owner, and the scrum master is expected to protect the team from distractions, the team are encouraged to interact directly with customers and/or stakeholders to gain maximum understanding and immediacy of feedback
+
+3) Scrum Master
+Scrum is facilitated by a scrum master, who is accountable for removing impediments to the ability of the team to deliver the product goals and deliverables.
+
+The scrum master is not a traditional team lead or project manager but acts as a barrier between the team and any distracting influences. 
+
+The scrum master ensures that the Scrum framework is followed by coaching the team in Scrum theory and concepts, often facilitating key sessions, and encourages the team to grow and to improve. 
+
+The role has also been referred to as a team facilitator or servant-leader to reinforce these dual perspectives.
+
+The core responsibilities of a scrum master include (but are not limited to):
+
+- Helping the product owner maintain the product backlog in a way that ensures the needed work is well understood so the team can continually make forward progress
+
+- Helping the team to determine the definition of done for the product, with input from key stakeholders
+
+- Coaching the team, within the scrum principles, in order to deliver high-quality features for its product
+
+- Educating key stakeholders and the rest of the organization on scrum (and possibly agile) principles
+
+- Helping the scrum team avoid or remove impediments to its progress, whether internal or external to the team
+
+- Promoting self-organization and cross-functionality within the team
+
+- Facilitating team events to ensure regular progress
+
+The scrum master helps people and organizations adopt empirical and lean thinking, leaving behind hopes for certainty and predictability.
+
+**Workflow**
+
+Sprint
+A sprint (also known as iteration or timebox) is the basic unit of development in scrum. The sprint is a timeboxed effort; that is, the length is agreed and fixed in advance for each sprint and is normally between one week and one month, with two weeks being the most common.
+
+Each sprint starts with a sprint planning event in which a sprint goal is defined. Priorities for the upcoming sprint are chosen out of the backlog. Each sprint ends with two events:
+
+a sprint review (progress shown to stakeholders to elicit their feedback)
+a sprint retrospective (identify lessons and improvements for the next sprints).
+
+Scrum emphasizes valuable, actionable output at the end of the sprint that just was completed. In the case of software, this likely includes that products are fully integrated, tested and documented, and potentially releasable.
+
+
+*Sprint planning*
+At the beginning of a sprint, the scrum team holds a sprint planning event to:
+
+Agree on the sprint goal, a short description of what they forecast to deliver by sprint end, based on the priorities set by the product owner.
+
+Select product backlog items that contribute towards this goal
+
+Form a sprint backlog by mutually discussing and agreeing on which items are intended to be done during that sprint
+
+The maximum duration of sprint planning is eight hours for a four-week sprint.
+
+As the detailed work is elaborated, some product backlog items may be split or returned to the product backlog if the team believes they cannot complete that work in a single sprint.
+
+
+Daily scrum
+Each day during a sprint, the developers hold a daily scrum (sometimes conducted standing up) with specific guidelines
+
+All developers come prepared. The daily scrum:
+
+- is focused on inspecting progress towards the sprint goal
+- should happen at the same time and place every day
+- is limited (timeboxed) to fifteen minutes
+- is conducted however the team decides
+- may include others, though only developers should speak.
+- may be facilitated by the scrum master
+- may identify impediments to progress (e.g., stumbling block, risk, issue, delayed dependency, assumption proved unfounded)
+- does not feature discussions
+- is not a means of updating progress charts
+
+No detailed discussions should happen during the daily scrum. Once over, individual members can discuss issues in detail, often known as a 'breakout session' or an 'after party'.Blockers identified should be collectively discussed outside of the daily scrum with a view to working toward a resolution.
+
+
+Where the team does not see the value in this event, it is the responsibility of the scrum master to determine why and educate the team and stakeholders about Scrum principles, or encourage the team to design their own method of keeping the team fully informed of sprint progress.
+
+Sprint review
+Conducted at the end of a sprint, the team:
+
+presents the completed work to the stakeholders (a.k.a. the demo)
+collaborates with stakeholders on topics such as:
+inviting feedback about the completed product increment
+discussing the impact of incomplete work (planned or otherwise)
+receiving suggestions for upcoming work (guidance of what to work on next)
+
+Product Owners should see this event as a valuable opportunity to review and refine the product backlog with stakeholders.
+
+Guidelines for sprint reviews:
+
+- Incomplete work should not be demonstrated; although stakeholders should be presented with product increments they will be receiving, but can also request to see work in progress if necessary. However, the team should only be prepared to show what has been done.
+- The recommended duration is two hours for a two-week sprint (proportional for other sprint-durations)
+
+
+Sprint retrospective
+At the sprint retrospective, the team:
+
+reflects on the past sprint(s)
+inspects how the last Sprint went (individuals, interactions, processes, tools, Definition of Done)
+identifies and agrees on continuous process improvement actions
+
+Guidelines for sprint retrospectives:
+
+- Three suggested areas to consider in sprint retrospectives are:
+	- What went well during the sprint?
+	- What did not go well?
+	- What could we do differently the next sprint?
+
+- The duration is maximum of three hours for a four-week sprint, proportional for other sprint duration(s)(e.g. one-and-a-half hours for a two-week sprint).
+
+- The scrum master may facilitate this event, but they can also be present just as a part of the team.
+
+
+*Canceling a sprint*
+The product owner can cancel a sprint if necessary, and may do so with input from others (developers, scrum master or management). 
+For example, recent external circumstances may negate the value of the sprint goal, so it is pointless in continuing.
+
+When a sprint is abnormally terminated, the next step is to conduct new sprint planning, where the reason for the termination is reviewed.
+
+
+
+*Product backlog*
+The product backlog is a breakdown of work to be done and contains an ordered list of product requirements that the team maintains for a product. Common formats for backlog items include user stories and use cases
+
+These requirements define features, bug fixes, non-functional requirements, etc. — whatever delivers a viable product. The product owner prioritizes product backlog items (PBIs) based on considerations such as risk, business value, dependencies, size, and date needed
+
+
+The product backlog is "what is needed, ordered by when it is needed" and is visible to everyone but may only be changed with consent of the product owner, who is responsible for managing and maintaining the product backlog items.
+
+The product backlog:
+
+- Captures requests to modify a product—including new features, replacing old features, removing features, and fixing issues
+- Ensures the developers have work that maximizes business benefit of the product
+- Typically, the whole team works together to refine the product backlog, which evolves as new information surfaces about the product and its customers, and so later sprints may address new work.
+
+
+Burndown chart
+Often used in scrum (but not part of scrum), a burndown chart is a publicly displayed chart showing remaining work.
+
+Updated every day, it provides quick visualizations for reference. The horizontal axis of the burndown chart shows the days remaining, while the vertical axis shows the amount of work remaining each day.
+
+During sprint planning, the ideal burndown chart is plotted. Then, during the sprint, developers update the chart with remaining work so the chart is updated day by day, showing a comparison between actual and predicted.
+
+**Scrum values**
+
+Scrum is a feedback-driven empirical approach which is, like all empirical process control, underpinned by the three pillars of transparency, inspection, and adaptation. 
+
+All work within the scrum framework should be visible to those responsible for the outcome: the process, the workflow, progress, etc.
+
+In order to make these things visible, scrum teams need to frequently inspect the product being developed and how well the team is working. 
+
+With frequent inspection, the team can spot when their work deviates outside of acceptable limits and adapt their process or the product under development.
+
+
+These three pillars require trust and openness in the team, which the following five values of scrum enable:
+
+- Commitment: Team members individually commit to achieving their team goals, each and every sprint.
+- Courage: Team members know they have the courage to work through conflict and challenges together so that they can do the right thing.
+- Focus: Team members focus exclusively on their team goals and the sprint backlog; there should be no work done other than through their backlog.
+- Openness: Team members and their stakeholders agree to be transparent about their work and any challenges they face.
+- Respect: Team members respect each other to be technically capable and to work with good intent.
+
+
+The size of a Scrum team
+A Scrum team should consist of less than 9 people. For large enterprise projects, the ideal Scrum team size is 7 people (product owner, scrum master, and 5 developers). Smaller projects typically consist of four team members (product owner, scrum master, and 2 developers)

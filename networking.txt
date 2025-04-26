@@ -1,0 +1,238 @@
+FCN
+
+# InterNetworking
+	
+		- Type of InterNetworking
+				 
+				 1. Extranet --> restricted in scoope to one organization
+				 2. Intranet --> set of interconnected network
+				 3. Internet --> Consist of WorldWide interconnection,ARPANET ,WWW
+
+# Cables
+		Type of cables
+				1. Coaxial cable
+				2. twisted pair cable
+				3. Fiber Optic cable
+				
+2. Twisted cable :
+		
+		- Shield Twisted pair (STP) --> used for long distance and free from EMF
+		- Unshield Twisted pair (USTP) --> used in normal computer network
+	
+	Categories of UTP Cables :
+			
+		CAT 1  - upto 1 Mbps
+		CAT 2  - upto 4 Mbps
+		CAT 3  - upto 10 Mbps
+		CAT 4  - upto 16 Mbps
+		CAT 5  - upto 100 Mbps
+		CAT 5e - upto 1 Gbps
+		CAT 6  - upto 10 Gbps
+		CAT 6a - upto 10 Gbps
+		CAT 7  - upto 10 Gbps
+		
+3. Fiber Optics :
+		
+		1. Single-Mode --> long distance
+		2. Multi-Mode --> multiple light ray to transmit
+		
+# Ethernet
+		
+		- Ethernet is the most widely used LAN technology 
+		- IEEE standards 802.3
+		- Access control mechanism used in Ethernet is CSMA/CD.
+		
+# IP (Internet Protocol)
+		- IP version :
+				1. IP v4 --> 32 bit 
+				2. IP v6 --> 128 bit 
+				
+		- Type of IP Address
+				1. Private
+				2. Public
+		
+
+
+# TCP/IP
+
+Developed by DOD (Deparment of defense)
+	
+	-1990
+	
+	- concise version of OSI Model
+	- it contain four layer
+			
+			1. Application			  --> Http,ssh,NTP
+			2. Transport			  --> TCP, UDP
+			3. Network /Internet (IP) --> IP, ICMP, ARP
+			4. Network Access layer	  --> PPP, Framing, IEEE 802.2 framing 
+	
+# OSI Model
+
+Developed by ISO 
+	- 1984
+	
+	Data flow :
+			
+			1. Application Layer: Applications create the data.
+			2. Presentation Layer: Data is formatted and encrypted.
+			3. Session Layer: Connections are established and managed.
+			4. Transport Layer: Data is broken into segments for reliable delivery.
+			5. Network Layer: Segments are packaged into packets and routed.
+			6. Data Link Layer: Packets are framed and sent to the next device.
+			7. Physical Layer: Frames are converted into bits and transmitted physically
+
+	1. Application Layer	--> Network Virtual terminal,Mail Services, SMTP 
+	2. Presentation Layer	--> Translation Layer, Encryption/ Decryption, Compression, JPEG, MPEG, GIF
+	3. Session layer		--> Session, Mantainace, Termination, Synchronization, Dialog Controller, PPTP,NetBIOS
+	4. Transport Layer		--> Segements, retransmit data if error found, ports, TCP, UDP, NetBIOS, PPTP
+	5. Network Layer		--> Packets,Routing,Logical addressing, Device(Router & Switch)
+	6. Data Link layer		--> Framing,error-Control,Flow Control, Access Control, Devices	(Switch,Bridge)
+								DLL divided into 2 layer	
+										1. Logical link Layer
+										2. Media Access Control
+	7. Physical layer		--> Bit (0,1), Topologies , Simplex, Half-dumplex, Full duplex, Devices(Modem,router,Cables,Hub)
+	
+# STP (Spanning tree Protocol) :
+	
+	1. Spanning Tree Protocol (STP) is used to make a loop free network by monitoring the network to 
+	   track all the links and shut down the least redundant ones. 
+	   
+	- Types of Spanning Tree Protocol (STP)	:
+		
+			1. Common Spanning Tree (CST) --> 802.1D
+			2. Per VLan Spanning Tree (PVST) 
+			3. Rapid Spanning Tree Protocol (RSTP+) --> 802.1w
+			4. Multiple Spanning Tree	  --> 802.1s 
+			
+# Virtual LAN (VLAN)
+	- IT is a concept in which we can divide the devices logically on layer 2 (data link layer). 
+	  Generally, layer 3 devices divide the broadcast domain but the broadcast domain can be 
+	  divided by switches using the concept of VLAN. 
+	- VLAN encapsulation ISL (Inter Switch Link) and 802.1Q
+	  
+	- VLAN Taging --> is a way to identify and distinguish VLAN traffic from other network traffic
+	- LAN membership --> determines which devices are assigned to which VLANs
+	- VLAN trunking --> allows multiple VLANs to be carried over a single physical link and 
+	                    done using a protocol such as IEEE 802.1Q.
+	- Vlan Management --> involves configuring and managing VLANs, including assigning devices 
+	                      to VLANs, configuring VLAN tags, and configuring VLAN trunking
+						  
+	- Type of VLAN connection
+			
+			1. Trunk Link --> All connected devices to a trunk link must be VLAN-aware
+							  All frames on this should have a special header attached 
+							  to it called tagged frames.
+			2. Access Link --> It connects VLAN-unaware devices to a VLAN-aware bridge
+								All frames on the access link must be untagged.
+			3. Hybrid Link --> combination of the Trunk link and Access link
+
+# VLAN Trunking Protocol (VTP) :
+	- VTP is CISCO proprietary protocol used to maintain consistency throughout the network or 
+	  the user can say that synchronizing the VLAN information in the same VTP domain
+	- VTP allows you to add, delete and rename VLANs which is then propagated to other switches
+      in the VTP domain. VTP advertisements can be sent over 802.1Q, and ISL trunks. 
+	
+# Routing Protocol	
+
+		1. static --> manual setting-up
+		2. Dynamic
+				1. Distance-Vector (RIP,IGRP,RIPv2)
+				2. link-State (OSPF,IS-IS)
+				3. Hybrid (EIGRP)
+				
+1. RIP (Routing Information Protocol) :
+		- dynamic routing protocol
+		- use hop count
+		- find best path 
+		- Protocol Number UDP - 520
+		- Administrative distance 120
+		- Hop Count : --> lowest hop count is consider as best path and placed in routing table
+		- RIP prevent routing loops 
+		- Max hop count allowed for RIP is 15 and a hop of 16 is consider as network unreable
+		- routing information is always broadcast
+		- Full routing table are send in updates
+		- Router always trust routing information recived from neighbour 
+	
+	- RIP v1 --> is classfull Routing Protocol because it doesn't send  sunet mask in routing updates
+	- RIP v2 --> is Classless Routing Protocol because it send information of subnet mask in it routing updates
+	
+	- RIP timers :
+		
+		- Update Timer : 30 Secs
+		- Invalid TImer : 
+		- Hold down Timer : 180 Secs
+		- Flush Timer : 
+
+2. OSPF (Open Short Path First) :
+		
+		- link-state routing protocol
+		- Protocol number 89
+		- Administrative Distance 110
+		- multicast address 224.0.0.5
+		- Load balancing with equal-cost routes for the same destination 
+		- oop-free topology using SPF algorithm. 
+	
+	- OSPF messages – 
+		OSPF uses certain messages for the communication between the routers operating OSPF. 
+
+		1. Hello message – These are keep-alive messages used for neighbor discovery /recovery. 
+		                   These are exchanged every 10 seconds. This includes the following 
+						   information: Router I’d, Hello/dead interval, Area I’d, 
+						   Router priority, DR and BDR IP address, authentication data. 
+		
+		2. Database Description (DBD) – It is the OSPF route of the router. This contains the
+                                  		topology of an AS or an area (routing domain). 
+		
+		3. Link state request (LSR) – When a router receives DBD, it compares it with its own DBD. 
+		                              If the DBD received has some more updates than its own DBD 
+									  then LSR is being sent to its neighbor. 
+		
+		4. Link state update (LSU) –  When a router receives LSR, it responds with an LSU message 
+		                              containing the details requested. 
+		
+		5. Link state acknowledgement – This provides reliability to the link-state exchange process. 
+		                                It is sent as the acknowledgement of LSU. 
+		
+		6. Link state advertisement (LSA) – It is an OSPF data packet that contains link-state routing
+                                      		information, shared only with the routers to which 
+											adjacency has been formed. 
+											
+	- Note – Link State Advertisement and Link State Acknowledgement both are different messages. 
+
+	- Timers  
+		1. Hello timer – The interval in which the OSPF router sends a hello message on an interface. 
+						 It is 10 seconds by default. 
+		
+		2. Dead timer – The interval in which the neighbor will be declared dead if it is not able to 
+		                send the hello packet. It is 40 seconds by default. It is usually 4 times 
+						the hello interval but can be configured manually according to need. 
+	
+3. Interior Gateway Routing Protocol (IGRP) :
+		
+		- distance vector routing protocol
+		- Protocol Number is 9
+		- Update table : 90 seconds
+		- Hold down Time : 280 second
+		- Max number of hop allowed 255. it has a default value  of 100 and it often change to 50
+		- Administrative Distance is 100
+	
+4. Enhanced Interior Gateway Routing Protocol (EIGRP) :
+		
+		- Hybrid protocol (distance and link state)
+		- Protocol no is 88
+		- Administrative Distance
+				1. Internal route --> 90
+				2. External route --> 170
+	
+	- Timer 
+		1. hello timer : 5 Second by default
+		2. Dead Timer : 15 Second By deafult
+
+
+
+# IP v6 :
+	
+	- 128 bit address
+	- 8 groups and each group represents 2 Bytes (16-bits)
+	

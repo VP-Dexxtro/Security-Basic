@@ -1,0 +1,166 @@
+IT Service
+	range of activities involving use of IT to support, manage and improve the operations of a business or organization.
+
+
+ITIL
+	Framework
+	Information Technology Infrastructure Library
+	ITSM (IT Service Management)
+
+4 P's of Service Management
+	1. People  		- Skills, training, Communication
+	2. Processes	- Actions, Activities, Changes, Goals
+	3. Products		- Tools, Monitor, Measure, Improve
+	4. Partners		- Suppliers (Specialist)
+	
+Process
+	A set of activities which are carried out in a given manner to achieve the desired objective.
+	A process may define policies, standards, guidelines, activities and work instructions if they needed.
+
+Process is
+	measurable
+	yields desired result
+	delivers result to customers
+	responds to specific events or requirements
+
+
+staff
+	The personnel who are assigned to carry out specified tasks or activities.
+
+Roles
+	A set of authorities, responsibilities and activites assigned to individual or personnel.
+	 
+Metrics or KPI(kown performance indicator)
+	a measurement unit which imparts an ability to 'judge' the performance of a service.
+
+Process Owner
+	an individual or a team which is responsible towards
+		documenting and publicizing the process
+		defining the KPI
+		Reviewing the KPI
+		Improving the effectiveness and efficiency of the process.
+		Provide the input Service Improvement Plan
+		
+
+Function
+	A group of people & their tools to carry out one or more processes or activities.
+	
+	Units of Organizations specialized to perform a certain type of work and responsible for specific outcomes.
+	
+
+Contract Types
+	SLA (Service Level Agreement)		- Customer and Service Provider
+	OLA (Operational Level Agreement)	- Internal Entities and Functions of an organization
+	UC (Underpinning Contract)			- service provider and a third party vendor for a specific customer
+	
+
+SLA (Service Level Agreement)
+	Agreement between Customer and Service Provider
+	which defines all the aspects of service including the acceptable quality parameters on the delivered services, financial conditions and penalties.
+
+
+
+
+Service Lifecycle Approach (Topics covered undear each phase)
+
+Service Strategy
+	Demand Management
+		Market research
+		Customer Requests for Proposal (RFP)
+		Current Service Performance
+		Sales + Marketing + Portfolio Manager
+	Service Portfolio Management
+		Decide what services to offer
+	Financial Management
+		higher profits or revenue?
+
+Service Design
+	Service Catalogue Management
+		Discussions with customer
+		agreed list of services
+		Defined SLA's to work with
+		It is a sub part of portfolio Management
+		Helps in designing men power requirements
+	Service Level Management
+		set of people and systems that allow the organization to ensure that agreed quality of services are being met and that the necessary resources are being provided.
+	Availability Management
+		High Availability
+		Reliability
+		Resilience
+		Recoverability
+		Serviceability
+	Capacity Management
+		Right Capacity, Right Time, Right Cost
+	Supplier Management
+		Complete Relationship with the vendor	
+			Montioring the performance
+			Montioring contract and expiry
+			Logging calls if required
+			Contractual Dispute resolution
+	Information Security mangaement
+		to achieve CIA
+			Confidentiality Policies
+			Integrity
+				make sure data is accurate and not corrupted
+			Availability
+				Making sure data is available when it is requested
+	Service Continuity Mangement
+		Overall Business Continutiy Mangement (BCM)
+		Ensuring Required Infra and IT Services can be restored within agreed business time -scales.
+
+Service Transition
+	Service Asset & Configuration Management
+		Asset Management
+	Change Management
+		Assessed, Approved, Implemented and Reviewed
+	Release & Deployment Mangagement & Knowledge Management
+		Roll out & Roll back informations
+		Knowledge database
+		
+Service Operation
+	Service Desk (Function)
+	Incident Management
+	Event Management
+	Request Fulfilment
+	Access Management
+	Problem Management
+		KEDB (Known  Error Database)
+	Technical Management (Function)
+	IT Operations Management (Function)
+	Application Management (Function)
+
+Continual Service Improvement (PDCA)
+	7 Step Improvement Process
+		1. Define what you should measure?
+		2. Define what you can measure
+		3. Gather the data (who, how, when, integrity)
+		4. Process the data (Frequency, Format, System, Accuracy)
+		5. Analyze the data (Relations, trends, according to plan, corrective actions)
+		6. Present and use the informations	(assessment summary, action plans)
+		7. Implement Corrective Actions
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

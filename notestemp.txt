@@ -1,0 +1,206 @@
+## **browser forensic:** 
+* intstall new fresh window server machine. and install chrome and 
+* name it as forensices1 machine - 4GB ram 
+* rc on forensic1 name > install vm tools > this pc > double kckick on vm icon > typical > install. > restart
+* change time zone.
+* server manage > local server > ienhace sercutity configuration : off
+* start the internet explorer
+* install chrome > select for computer option
+* now install firefox internet browser
+* brower on both chrome and firefox and book mark some sites.
+* c: drive > user : administrator> app data ( hidden folder make it unhide) > roaming > mozila > firefox > profiles > ( type about: profiles 1. Root Directory	C:\Users\Administrator\AppData\Roaming\Mozilla\Firefox\Profiles\5qrt8474.default-release 2.Local Directory	C:\Users\Administrator\AppData\Local\Mozilla\Firefox\Profiles\5qrt8474.default-release)> select (cockies.sqlite- store cookies, places.sqlite -store browsing sties, fevicon.sqlite, formhistroy.sqlite, places.sqlite) sessionstore-backups
+
+* Users > adminstrators > app data > local > google > chorme > user data > default > bookmark file (openwith wordpad it will see bookmarks), open history (open with wordpad it will see history), fevicons (openwith wordpad itl will see fevicons), logindata file( openwith wordpad it will see saved password).
+
+* hindsight github: release latestes > hindsight_gui.exe > on cmd (netstat -an | findstr 8080) > input type: chrome, path select : C:\users\administrator\AppData\Local\Google\Chrome\User Data > click on run buttion. > report will shown > click on jason format > the data in jason format will save
+* now close the cli console > goto chrome brower > clear browsing data > on mozila brower give the path C:\users\administrator\AppData\Local\Google\Chrome\User Data >  click on run buttion. > report will shown > click on jason format > the data in jason format will save. so all the browsing history will be recoverd.
+
+* also install sqlite db > select standard installer 64 bit windows > run and open the sqlite db. >click the open databse and give following path of mozilla > C:\Users\Administrator\AppData\Roaming\Mozilla\Firefox\Profiles\5qrt8474.default-release > ok > click brows data it will show data. 
+* on google search convert epoch time .
+* now clear all browing histroy and serach the data from sqlite db tools.
+* lab over.
+
+
+
+## ftk imager lab (for Creating the Disk/Hard-drive IMG for forensic to Analysis the evidence in Logical mode) 
+* download FTK Imager tools > run the program > next > next > finish
+* file > creat disk image > image file > browser > select image file > finish > add e01 > next > case no. evidance no. > select image desitination  folder > give image filename with .e01 extension > finish > start.
+* file > image mounting > browse image > mount file type: physical and logical > mount.
+
+
+
+
+
+## Regripper tool for data Analysis
+* it is easily available on Github.
+* c:\windows\system32\config\SAM
+* SAM : users and password.
+* SOFTWARE : registry and binary file
+* SYSTEM : registry 
+* SECURITY : encrypted key of SOFTWARE, SYSTEM AND SAM File
+
+userprofile
+NTUSER.DAT
+
+* install regripper zip file from ftp server.
+* keydet89
+* double click on folder, rename it.
+
+* goto cmd on which regripper installed 
+> cd \regripper3.0
+> reg -h
+> rip -l ( it will show all the plugins)
+> rip -l | findstr usb
+* find the E01 ( available on 192.168.0.51 ) file and mount it ( the F: drives will assign it)
+```
+* goto f:\WINDOWS\system32\config 
+```
+> rip -r F:\WINDOWS\system32\config\SOFTWARE -p Product
+> rip -r F:\WINDOWS\system32\config\SOFTWARE -p winver
+> rip -r F:\WINDOWS\system32\config\SYSTEM -p nic2
+
+
+> rip -r "F:\Documents and settings\james\NTUSER.DAT" -p typedurls
+> rip -r F:\WINDOWS\system32\config\SYSTEM -p shutdown
+> rip -r F:\WINDOWS\system32\config\SOFTWARE -p uninstall 
+> rip -r F:\WINDOWS\system32\config\SOFTWARE -p profilelist
+
+
+## Network forensic: 
+* install wireshark on windows server 2016 > check desktop icon while istalling.
+* download malware.zip > extract it > copy the file > make a folder inside vm  named wireshark-data and paste it . password : infected_20200424 
+* double click on file you will get pcap data.
+* **Filtering:**
+* enter udp on filter bar you will see all udp traffic 
+* to see specific ip address : ip.addr == 10.0.0.202
+* to see source ip packets : ip.src_host == 10.0.0.202 ( this will see all packetes goes from this pc)
+* to see desitionat ip packets : ip.dst_host == 10.0.0.202 ( this will see all packets see comes from outside)
+* to see dns traffic : ip.dst_host == 10.0.0.202 && udp ( this will show only udp packets)
+* to see dns traffic : ip.dst_host == 10.0.0.202 ||udp ( this will show udp or tcp packets)
+* address in source and dist port 53 : ip.src_host == 10.0.0.202 && udp.port == 53 ( this port may be on source or destination)
+* while browsiong it detect protocol: browser or NBNS , this will indicate that the give machine is windows machine.
+* type kerberos on fiter name will show all kerberos packet 
+* kerberosCNameString == 'elmer.oberien'
+* ip.src_host == 10.0.0.10 && browser (this will shown the computer name.)
+* to check the ip address given manually or automatically for that check dhcp: dhcp 
+* to check trafic goes form http : ip.src_host ==10.0.0.167 && http
+* to check the ip host : goto to brower search whoismyip or whois.com site put ip here and find.
+* goto file > export objects > select HTTP (it will show all http flile downloaded.) > content type: image/png rc on file select and save. (dont double click on any file it will inftect the machine) (turn off the windows defender, real time protection )
+* goto file > export objects > select HTTP > contents type: image/png select flile > save. 
+* now goto virustotal site and scan the downloaded file.
+
+
+
+## Lab: Windows Ecryption File system and setup DRA(Data recovery agent)
+* open the windows server named :forensic1
+* login as administrator > computer management > create a user1,user2> close.
+* now login as user1 > goto any dirve make folder : user1-data > make text file: user1-f1 (''this is user1 file'')> save > rc properties > advanced > check encrypt contenct to secure data > ok > apply > encrypt the folder > ok > apply > ok 
+* Now login to user2 > goto  user1-data folder (ther will be no access for user2) > now make folder: user2-data
+> make text file :user2-f1 ("this data is only for user2") , make another file: shared-data ("this flile needs to be shared with user1") > rc properties > advanced > check encrypt contenct to secure data > ok > apply > encrypt the folder > ok > apply > ok  (also encrypt the shared-data file)
+> rc shared-data > properties > advanced > details > add > user1 > ok > ok > apply > ok.
+* now login to user1 and check which file is accessable to user1 > make file user1-f2 ("this is file1 of user1") 
+* ctrl +alt + insert > change password > put password > ok 
+* files are accessible
+* logout form user1
+* login as adminitrator and reset the user1 password> comp management > user1 > set password> put password here > ok  
+* Now login from user1 and try to access the file of user1
+* ctrl alt insert > change password > user1 > give old password > ok 
+* now files are accessable.
+
+* now login as administrator > cmd > 
+> cd Desktop 
+> md recovery-keys
+> cd recovery-keys
+* to generate the keys 
+> cipher /?
+> cipher /r:dra-cert
+* now type the password 
+* .CER and > PFX file will be generated.
+* to make policy
+> run (win + r)
+> secpol.msc > public key policy > encrpypting file system > rc add data recovery agent > next > browser folder > select the public key from recovery-keys > yes > finish > restart the computer
+> login from user2 > goto file-f2 rc > properties > advanced > it will see the administratior in the recovery section 
+> make a new flile : new-dra  ( this is file dra ) 
+* now login from administrator and check the new-dra file accessable or not. ( no any file will be open because os has not private key.)
+
+* to give private key to os 
+> run > certmgr.msc > rc on  personal > all task > import > current user > next > browse > select all files > slecct .pfx file > open > give password > check fist option automatiocally select the certificate store based on the type of certificate > next > finish .
+* now access the files of user2.
+
+* now login from user2 and try to accces the files it will access files.
+* now login from administrator and try to access the files.
+* for backup purpose we make another administrator account.
+* go to computer management > new user > admin1 give password > create . rc on admin1 > member of > add > Administrtors groups > apply > ok > logout
+* now login from admin1 and reset the password of user2 > comp management > user2 rc set password > proced > give new password > ok . 
+* now login from user2 and try to acces the files (no files will be access).
+* now login form admin1 and try to access the flies (no files will be access). > run > certmgr.msc > copy the file recovery-keys > personal > all task > import > next > browse > select dra-cert > next > password > apply > ok. 
+* now try to acces the files ( it will easily access the files.).
+
+
+
+## Memory Forensic (Using Volatilty3)
+## **How to capture memory:**
+* start window server 2016 machin > computer managment > users > make a user : user1 give password 
+* ctrl + alt + del > switch user : user1 > login
+* open the notepad and chrome and keep it as it is.
+* ctrl + alt + del > switch user : Administrator > login
+* start FTK imager > file > cature Memory > Browse: select drive, make a folder : RAM-capture > destination filename: server2016.mem > capture memory > cancle. 
+* download the python and volatilty3-2.7.0.zip from 192.168.0.51 server
+* install python and volatilty3-2.7.0 
+* add python to directory path : rc on python3.12 > more > open file location  > rc > python 3.12(64 bit) open file location > copy the path > goto this pc > rc on that and goto properties > advanced system settings > environmental veriable > on system variable double click path > new > paste the path of python > ok 
+* goto python path > goto script > copy the path > goto this pc > rc on that and goto properties > advanced system settings > environmental veriable > on environmental variable double click path > new > paste the path of python > ok.
+* open volatiolity program > double click on that ad copy on the any drive > rename it : volatility3
+* open cmd goto path on whichi volatitlty installed : volatilty3 to install requirement.txt
+> pip install -r requirments.txt 
+> python vol.py -v ( to check the version of volatiltiy)
+* copy the server2016.mem file in volitity3 directory. ( to analysize the file)
+> dir *.mem ( it will show the .mem file)
+> python vol.py -f memdump.mem<file name> window.info<plugins>
+* it will show all information of harddisk.
+> python vol.py -f memdump.mem<file name> window.pslist<plugins>
+> python vol.py -f memdump.mem<file name> window.psscan<plugins> ( to check the application running previously )
+> python vol.py -f memdump.mem<file name> window.netscan<plugins>
+> python vol.py -f memdump.mem<file name> window.netstat<plugins> (to check the all network status and port information )
+> python vol.py -f memdump.mem<file name> window.verinfo<plugins> ( to check the all services and runnig threads configured on system)
+> python vol.py -f memdump.mem<file name> window.privileges<plugins> ( to check all previleges account on window)
+> python vol.py -f memdump.mem<file name> window.registry.userassist<plugins> ( to check the info about created users )
+> python vol.py -f memdump.mem<file name> window.statistics<plugins> ( to check all the  inifo and pages in memeory )
+> python vol.py -f memdump.mem<file name> window.sessions<plugins> ( to check all programm run on console )
+> python vol.py -f memdump.mem<file name> window.lsadump<plugins> ( to check the passowrd of users.)
+> python vol.py -f memdump.mem<file name> window.hashdump<plugins> (to get hash of all users you can decode the hash using crackstation.net)
+
+## Memory forensic using Autopsy.
+* start the autopsy on window server 2016
+* caser name: win64
+* tools> plugins > availabel plugins > installed > select the Experimental > activate > finish > close
+* start the autopsy once again.
+> give case name > next > memory image file(volatiltiy) option will come select it > next > select memory dump file > next > scan. 
+
+
+## Sysinternals(Alternate Data streams(hiding file in another way))
+* window server 2016 machine requireds
+* Download Sysinternalsuits.zip file form server, extract it, copy it and make folder: sysinternals 
+* open the cmd 
+> cd\
+> md demo 
+> cd demo 
+> notepad report.txt
+```
+this is report about the white money.
+```
+> notepad report.txt:black.txt (create a new file) ( it will only show the black money file when type in this format otherwise it will shows white money data. )
+```
+this is report about black money.
+```
+* goto sysinternals directory 
+> streams ( to run systinternals)
+> streams -s c:\demo ( to scan the demo directory in c drive)
+* now run Autoruns64.exe (which show what run on your system)
+* BGInfo64.exe ( to show all info of system and display it on desktop)
+* TCPView ( to vies tcp, udp and process, ip address, close connection on system)
+* vmmap64.exe (it iwll show virtual memory mapping)
+* procexp64.exe (it is used for malware analysis)
+* Procmon64.exe (it is process monitor to monitor the process in systems.)
+* psLoggedon.exe ( it will show how many users loged on command line)
+
+

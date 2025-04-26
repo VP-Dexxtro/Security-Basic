@@ -1,0 +1,40 @@
+NIST
+GDPR
+HIPAA
+ISO27001
+PCIDSS
+COBIT
+ITIL
+CIS
+ITAA
+
+DPDPA -??
+
+
+
+
+
+
+
+
+	Framework/Law/Standard ?
+	Whom it applies?
+	Compulsory /  Optional
+	What is the purpose?
+	Versions -> Amendments (latest)
+	Release Date / Implementation Date.
+	Life Cycle
+	Certifications?
+	Major Part
+	
+
+ISO 27k
+	Standard
+	small,medium,large(industry) -> Improve ISMS
+	Optional
+	they can get more clients (clients will be able to trust that you are following Infromation Security 
+		Management Standard)
+	2005,2013,2017,2022
+	Audit - 27001
+	4 categories, 3 pillers, 93 controls
+	

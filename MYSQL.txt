@@ -1,0 +1,541 @@
+vpn and their type 
+vpn and tunnel diiference 
+tls V/s SSL
+apache hardening
+server hardening
+how to secure database
+how to secure webapplication from sql injection
+how you host web app on apache
+
+
+
+#SQL :
+Select user,password from mysql.user;
+creat user 'user'@'127.0.0.1' identified by 'password';
+grant all privileges on dvwa.* to 'user'@'localhost' identified by 'password';
+
+
+Mysql --> RDBMS is made by oracle based on SQL structured query language
+Database --> organized collection of structured inforamtion, or data
+DBMS --> software used to store, retrive. and run queries on data
+
+CRUD operation --> Create,Read,Update,Delete
+
+Database Type:
+		
+		1. Relational (SQL):
+					- relational DB is a collection of data items with pre-defined relationship between them,
+					  stored in the form of table, rows and column.
+					
+					- List of SQL Database:
+							1. MYsql
+							2. Mariadb
+							3. Oracle 10g
+							4. PostgreSQL 
+							5. MSSQL
+		
+		2. Non-relational (NO-SQL)
+					- MongoDB
+
+What is database table?
+
+		- Database table is a colletion of rows and columns that contains relational data.
+		
+Datatype:
+		- String
+		- Numeric 
+		- Date and Time
+		
+String Datatype:
+		- CHAR,VARCHAR,BINARY,VARBINARY,TINYTEXT,TEXT,MEDIUMTEXT,LONGTEXT,TINYBLOB,BLOB,MEDIUMBLOB,LONGBLOB,ENUM,SET
+
+Numeric Data Type:
+		- BIT,TINYINT,INT,INTEGER,SMALLINT,MEDIUMINT,BIGINT,BOOL,BOOLEAN,FLOAT,DOUBLE,DECIMAL,DEC
+
+Date Datatype:
+		- DATE,DATETIME,TIMESTAMP,TIME,YEAR
+		
+	
+Create Table:
+	
+	CREATE TABLE TABLE_NAME 
+	(
+		id int unsigned 
+		name varchar(50),
+		email varchar(50),
+		password varchar(100),
+		contact varchar(15),
+		address text,
+		dob date,
+		gender enum("M","F","O")
+		status boolean
+	)
+
+Insert single ROW:
+	
+	INSERT INTO TABLE_NAME
+	(
+		id,name,email,password,contact,address,dob,gender,status
+	)
+	VALUES
+	(
+		1,"john","john@gmail.com","123456789","0987654321","qtr 49/E type 3","1999-01-10","M",1
+	);
+
+Insert multiple ROW:
+	
+	INSERT INTO TABLE_NAME
+	(
+		id,name,email,password,contact,address,dob,gender,status
+	)
+	VALUES
+	(
+		1,"john","john@gmail.com","123456789","0987654321","qtr 49/E type 3","1999-01-10","M",1
+	),
+	(
+		2,"john2","john2@gmail.com","123432329","098232354321","qtr 48/E type 4","1999-02-07","M",1
+	);
+
+Insert in easy way:
+	
+	INSERT INTO TABLE_NAME VALUES
+	(
+		1,"john","john@gmail.com","123456789","0987654321","qtr 49/E type 3","1999-01-10","M",1
+	);
+
+Select Query Syntax:
+	
+	SELECT Column1,Column2, FROM table_name;
+
+ALIAS for display other name of by default :
+			
+	SELECT Column1,Column2 AS "STUDENT NAME",Column3 FROM table_name;
+
+SELECT Query for all Column:
+	
+	SELECT * from TABLE_NAME;
+	
+Where Clause:
+
+	- The WHERE Clause is used to filter records.
+	- it is used to extract only those records that fulfill a specified condition.
+	
+	- Syntax:
+		
+		SELECT Column1, Column2,.. FROM table_name WHERE condition
+		
+Where Conditon:
+	- = --> equal
+	- != --> Not equal
+	- >= --> greater than equal to
+	- <= --> less than equal to
+	- > --> greater than
+	- < --> less than
+
+MYSQL Constraints:
+	
+	1. NOT NULL
+	2. UNIQUE
+	3. DEFAULT
+	4. CHECK
+	5. FOREGIN KEY
+	4. PRIMARY KEY
+	
+
+Create Table with Constraints>
+
+	CREATE TABLE TABLE_NAME
+	(
+		id INT NOT NULL unique,
+		name varchar(100) not null,
+		email varchar(150) not null unique,
+		age tinyint check(age >= 8)
+		status boolean default 1 
+	)
+
+AND,OR & NOT
+	
+	- AND operator : Mysql logical AND operator compares two expression and 
+	                 return true if both of the expression are true
+	
+	- OR operator : Mysql OR operator compares two expressions and 
+					returns TRUE if either of the expression is TRUE.
+	
+	- NOT operator : Mysql NOT operator reverse or negates the input.
+
+AND Syntax :
+	
+	SELECT * FROM TABLE_NAME
+	
+	WHERE
+	
+	Condn1 AND Condn2
+
+OR Syntax :
+		
+	SELECT * FROM TABLE_NAME
+	
+	WHERE
+	
+	Condn1 OR Condn2
+	
+NOT operator :
+		
+	SELECT * FROM TABLE_NAME
+	
+	WHERE NOT
+	
+	Condn1 OR Condn2
+	
+IN operator:
+	
+	- The IN operator allows you to specify multiple values in a WHERE clause.
+	- The IN operator is a shorthand for multiple OR conditions.
+	
+	- Syntax :
+		
+		SELECT * FROM  TABLE_NAME
+		
+		WHERE age IN(19,21,23);
+			
+LIKE Operators
+	
+	- SELECT * FROM users WHERE name LIKE "s%";
+	
+	- The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+	
+	- The percent sign (%) represents zero, one, or multiple characters
+	
+	- The underscore sign (_) represents one, single character.
+	
+DATA With BETWEEN & NOT BETWEEN :
+	
+	- SELECT * FROM users WHERE age BETWEEN 20 AND 25;
+	
+	- SELECT * FROM users WHERE age NOT BETWEEN 20 AND 25;
+	
+ORDER BY and DISTINCT:
+	
+	Syntax :
+	
+		- SELECT * FROM table_name ORDER BY Column1  ASC|DESC		
+		- SELECT * FROM table_name ORDER BY name ASC 
+		
+DISTINCT :
+	
+	- used for unique data
+	
+	Syntax:
+		
+		- SELECT DISTINCT age FROM students ORDER BY age ASC;
+		
+IS NULL and IS NOT NULL:
+	
+	- SELECT * FROM table_name WHERE col IS NULL | IS NOT NULL  
+	
+LIMIT:
+	
+	- if want to LIMIT, the number of results that are returned you can simply use the LIMIT command with several rows to LIMIT by.
+	
+	Syntax:
+		- SELECT * FROM <table_name> LIMIT [Number to limit by ]
+		
+		- SELECT * FROM students LIMIT 5;
+		
+		- SELECT * FROM students ORDER BY name DESC LIMIT 5;
+		
+		- SELECT * FROM students WHERE age > 20 LIMIT 5;
+		
+
+OFFSET :
+	
+	- You can also specify on OFFSET from where to start returning data.
+	
+	Syntax :
+		
+		- SELECT * FROM TABLE_NAME
+		  
+		  LIMIT 5 OFFSET [Number of row to skip]
+		  
+		- SELECT * FROM Student
+		
+		  LIMIT 5 OFFSET 1; --> it will skip first line
+		  
+
+Aggregate  Functions: SUM,MIN,MAX & AVG 
+		
+	1. COUNT(): Return  the number of rows in a database table.
+	
+	2. SUM(): Return the total sum of a numeric column.
+	
+	3. AVG(): Calculates the average of set of values.
+	
+	4. MIN() : Return the lowest values (minimum) in a set of non-NULL values
+	
+	5. MAX() : Return the greatest value (maximum) in a set of non-NULL values.
+	
+	Syntax :
+		
+		- SELECT COUNT(id) FROM students WHERE fees > 5000;
+		
+		- SELECT sum(fees) FROM students;
+		
+		- SELECT avg(fees) FROM students;
+		
+		- SELECT min(fees) FROM students;
+		
+		- SELECT max(age) FROM students;
+
+Update Statement:
+	
+	Syntax:
+		
+		- UPDATE TABLE_NAME 
+		  
+		  SET field1 = new-value1,
+		  
+		  field2 = new-value2 [WHERE Clause]
+
+		- UPDATE students SET age = 20 WHERE id = 2;
+
+
+DELETE Statement:
+	
+	Syntax:
+		
+		- DELETE FROM TABLE_NAME [WHERE Clause]
+		
+		- DELETE FROM students Where id = 5;
+		
+		- Two delete at once 2 entry
+		  
+		  DELETE FROM students Where id IN (5,6);
+		  
+
+COMMIT & ROLLback:
+	
+	Syntax:
+		
+		- Commit is used to save if error occur we will do ROLLBACK it push the DB in undo state
+		- COMMIT;
+		- ROLLBACK;
+		
+	
+Primary Key:
+	
+	- Primary key always contains uniques data;
+	- it cannot be null
+	- There must  be a single primary key
+	
+	Syntax:
+		
+	CREATE TABLE students
+	(
+		id INT NOT NULL AUTO_INCREMENT,
+		name VARCHAR(50) NOT NULL,
+		age INT NOT NULL,
+		city VARCHAR(10) NOT NULL,
+		PRIMARY KEY(id)
+	)
+
+Foreign key:
+	
+	- The foreign key is used to link two tables.
+	- A foreign key in one table (child table) is used to point PRIMARY KEY in another table(parent table)	
+	
+	Syntax :
+	
+	CREATE TABLE students
+	(
+		id INT NOT NULL AUTO_INCREMENT,
+		name VARCHAR(50) NOT NULL,
+		age INT NOT NULL,
+		city INT NOT NULL,
+		PRIMARY KEY (id)
+		FOREGIN KEY (city) REFERENCES city (id)	
+	)
+	
+What is Mysql INNER JOIN ?
+	
+	- The MYsql INNER JOIN is used to returns only those results from the tables that match the specified 
+	  condition and hides other rows and columns
+	
+	- Mysql assumes it as a default Join, so it is optional to use the Inner Join keyword with the query.
+	
+	Syntax:
+		
+		- SELECT columns FROM table1 
+		  
+		  INNER JOIN table2 ON condition1
+		
+	
+		- SELECT * FROM students 
+		  
+		  INNER JOIN cities on students.city_id = cities.cid;
+		
+		
+
+What is mysql left JOIN?
+	
+	- The MYsql LEFT JOIN keyword return all records from the left table (table1), 
+	  and the matched records from the the right table(table2)
+	  
+	Syntax:
+		
+		- SELECT column_name(s)
+		  
+		  FROM table1
+		  
+		  LEFT JOIN table2
+		  
+		  ON 
+		  
+		  table1.column_name = table2.columns_name 
+		  
+		
+		- SELECT * FROM students
+		
+		  LEFT JOIN  cities
+		  
+		  ON students.city = cities.id;
+		  
+	
+What is Mysql Right JOIN?
+	
+	- The Right JOIN Keyword return all records from the right table(table2),
+	  and the matched records from the left table(table1).
+	  
+	Syntax:
+		
+		- SELECT column_name(s) FROM table1
+		
+		  RIGHT JOIN tables2
+		  
+		  ON 
+		  
+		  table1.column_name = table2.column_name
+		
+		- SELECT * FROM students 
+		
+		  RIGHT JOIN cities
+		  
+		  ON students.city = cities.id;
+		  
+
+What is Cross JOIN?
+	
+	- The MYsql CROSS JOIN produces a result set which is the number of rows in the first table multiple 
+	  by the number of rows in the second tables if no WHERE clause is used along with CROSS JOIN.
+	  
+	- This kind of result is called Cartesian Product
+	
+	Syntax:
+		
+		- SELECT column_name(s)
+		  
+		  FROM table1
+		  
+		  CROSS JOIN tables2
+		  
+		  ON table1.column_name = tables2.column_name;
+		  
+		- SELECT * FROM cities CROSS JOIN students;
+		
+
+How join Multiple tables using Mysql command
+	
+	Syntax:
+		
+		- SELECT column_name(s)
+		  
+		  FROM table1
+		  
+		  INNER JOIN table2
+		  
+		  ON table1.column_name = table2.column_name;
+		  
+		  INNER JOIN table2
+		  
+		  ON tables1.column_name = table2.column_name;
+		  
+		
+		- SELECT * FROM studets
+		  
+		  INNER JOIN cities
+		  
+		  ON students.cid = cities.id
+		  
+		  INNER JOIN courses
+		  
+		  ON students.courseid = courses.id
+		  
+		  
+What are Mysql GROUP BY and HAVING 
+		
+	
+	GROUP BY
+		
+		Syntax:
+			
+		- SELECT Column_name(s)
+		  
+		  FROM table1
+		  
+		  WHERE condn
+		  
+		  GROUP BY col_name(s)
+		  
+		- SELECT cid, COUNT(cid)
+		  
+		  FROM Students group by (cid)
+		  
+		- SELECT cid, cities.name, COUNT(cid) as total 
+		  
+		  inner join cities
+		  
+		  on students.cid = cities.id 
+		  
+		  FROM Students group by (cid)
+	
+	
+	HAVING Clause
+		
+		Syntax:
+		
+		- SELECT Column_name(s)
+		  
+		  FROM Table1
+		  
+		  WHERE condn
+		  
+		  GROUP BY col_name(s)
+		  
+		  HAVING condn
+		  
+		- SELECT courseid,courses.name,COUNT(courseid ) as total from students
+		  
+		  inner join cities
+		  
+		  on students.courseid	 = courses.id 
+		  
+		  group by (courseid) > 2
+		  
+SUB Query With EXISTs & NOT EXIST
+		
+		Syntax:
+		
+		- SELECT column_name(s)
+		  
+		  FROM table1
+		  
+		  Where
+		  
+		  (SELECT column_name FROM table2)
+		  
+		  
+		- SELECT name FROM students
+		  
+		  WHERE cid = (SELECT id from cities where name = "jodhpur");
+		  
+		  cid = --> is used to safe the query from the sql injection
+ 

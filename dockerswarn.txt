@@ -1,0 +1,60 @@
+3 debian fresh machines
+
+Machine - 1 , 2 and 3
+
+Network File Change (IP address) (/etc/network/interfaces)
+	
+	auto enp0s3
+	allow-hotplug
+	iface enp0s3 inet dhcp
+
+	auto enp0s8
+	allow-hotplug
+	iface enp0s8 inet dhcp
+
+systemctl restart networking
+
+
+Installing ssh-server
+	sudo apt install openssh-server
+	
+
+We connected the machine with Putty.
+
+Do This in all three machines..
+
+
+M1 - 192.168.56.111
+
+M2 - 192.168.56.112
+
+M3 - 192.168.56.113
+
+
+
+M1,M2,M3
+sudo apt install docker.io [To install docker]
+
+sudo usermod sb -aG docker [Add sb user to docker group -> terminal reset]
+
+
+
+M1
+	docker swarm init 
+	OR 
+	docker swarm init --advertise-addr 192.168.56.111
+	
+	
+docker swarm init (you will get a token)
+docker swarm join --token SWMTKN-1-4wjuynejda2ab3efmo62hdvpsldnim4tpb4da65ww12uv6fr98-07eists42halmnac664twou8u 192.168.56.111:2377
+
+
+docker node ls
+
+docker service create --name myhttpserver --replicas=3 SERVICE_NAME -p 8000:80 httpd
+
+
+
+docker service scale myhttpserver=2
+
+docker service rm myhttpserver
