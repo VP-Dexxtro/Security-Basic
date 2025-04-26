@@ -1,0 +1,2614 @@
+PKI & CF
+
+Session 1 :
+What is Information security?
+		- Information security is the practice of protecting information by mitigating information risks. 
+		  It involves the protection of information systems and the information processed, stored, and
+		  transmitted by these systems from unauthorized access, use, disclosure, disruption, modification, 
+		  or destruction
+		  
+What are the 3 Principles of Information Security?
+		
+		- Information security is necessary to ensure the confidentiality, integrity, and availability of information,
+		  whether it is stored digitally or in other forms such as paper document.
+		  
+		-Information Security programs are build around 3 objectives, commonly known as CIA – Confidentiality, Integrity, Availability.
+		
+		1. Confidentiality – Means information is not disclosed to unauthorized individuals, entities and process. 
+		   For example if we say I have a password for my Gmail account but someone saw while I was doing a login 
+		   into Gmail account. In that case my password has been compromised and Confidentiality has been breached.
+		2. Integrity – Means maintaining accuracy and completeness of data. This means data cannot be edited in an 
+		   unauthorized way. For example if an employee leaves an organisation then in that case data for that employee 
+		   in all departments like accounts, should be updated to reflect status to JOB LEFT so that data is complete
+		   and accurate and in addition to this only authorized person should be allowed to edit employee data.
+		3. Availability – Means information must be available when needed. For example if one needs to access information
+		   of a particular employee to check whether employee has outstanded the number of leaves, in that case it requires
+		   collaboration from different organizational teams like network operations, development operations, incident response
+		   and policy/change management. Denial of service attack is one of the factor that can hamper the availability of information.
+		   
+What is an Information Security Management System (ISMS)?
+		
+		- An Information Security Management System (ISMS) is a structured framework designed to protect an organization’s information assets.
+		  It includes policies, procedures, and controls to manage and secure sensitive data from threats like unauthorized access, data breaches,
+		  and cyberattacks. By following international standards like ISO/IEC 27001, an ISMS helps organizations identify risks,
+		  implement security measures, and continuously improve their security practices to safeguard their information.
+
+What is the Difference Between an Attack and a Threat?
+		
+		1. Threat: A potential danger to a system or network. It's like a storm cloud on the horizon.
+		2. Attack: An actual attempt to exploit a vulnerability in a system or network. It's like the storm hitting.
+		
+		1. Malware:
+				
+				- Threat: Malicious software designed to harm a computer system.
+				- Attack: Installing ransomware on your computer and demanding payment to decrypt your files.
+		
+		2. Phishing:
+				- Threat: Deceiving users into revealing sensitive information by disguising as a trustworthy entity.
+				- Attack: Sending an email pretending to be your bank, asking for your login credentials.
+		
+		3. Denial-of-Service (DoS) and Distributed Denial-of-Service (DDoS) Attacks:
+				
+				- Threat: Overloading a system with traffic to prevent legitimate users from accessing it.
+				- Attack: Flooding a website with requests to make it inaccessible to visitors.
+				
+		4. Social Engineering:
+		
+				- Threat: Manipulating people into performing actions or revealing confidential information.
+				- Attack: Pretending to be a tech support representative to gain remote access to a victim's computer.
+		
+		5. Insider Threats:
+				
+				- Threat: Malicious actions by authorized users within an organization.
+				- Attack: An employee stealing customer data for personal gain.
+				
+What is Cryptography?
+		- Cryptography is the art and science of making a cryptosystem that is capable of providing information security.
+		- Cryptography deals with the actual securing of digital data. It refers to the design of mechanisms based on 
+		  mathematical algorithms that provide fundamental information security services. You can think of cryptography 
+		  as the establishment of a large toolkit containing different techniques in security applications.
+		  
+What is Cryptanalysis?
+		- The art and science of breaking the cipher text is known as cryptanalysis.
+		- Cryptanalysis is the sister branch of cryptography and they both co-exist. The
+		  cryptographic process results in the cipher text for transmission or storage. It
+		  involves the study of cryptographic mechanism with the intention to break them.
+		  Cryptanalysis is also used during the design of the new cryptographic techniques to
+		  test their security strengths.
+		  
+Note − Cryptography concerns with the design of cryptosystems, while cryptanalysis studies the breaking of cryptosystems.
+
+
+Cryptosystems : 
+		
+		- A cryptosystem is an implementation of cryptographic techniques and their accompanying infrastructure to  
+		  provide information security services. A cryptosystem is also referred to as a cipher system.
+		  
+Components of a Cryptosystem :
+		
+		1. Plaintext : It is the data to be protected during transmission. 
+		2. Encryption Algorithm : It is a mathematical process that produces a ciphertext for any given
+           plaintext and encryption key. It is a cryptographic algorithm that takes plaintext and an 
+		   encryption key as input and produces a ciphertext
+		3. Ciphertext : It is the scrambled version of the plaintext produced by the encryption algorithm
+		   using a specific the encryption key. The ciphertext is not guarded. It flows on public channel.
+		   It can be intercepted or compromised by anyone who has access to the communication channel.
+		4. Decryption Algorithm : It is a mathematical process, that produces a unique plaintext for any given 
+		   ciphertext and decryption key. It is a cryptographic algorithm that takes a ciphertext and a decryption
+		   key as input, and outputs a plaintext. The decryption algorithm essentially reverses the encryption algorithm
+		   and is thus closely related to it.
+		5. Encryption Key : It is a value that is known to the sender. The sender inputs the encryption key into the 
+		   encryption algorithm along with the plaintext in order to compute the ciphertext.
+		6. Decryption Key. It is a value that is known to the receiver. The decryption key is related to the encryption 
+		   key, but is not always identical to it. The receiver inputs the decryption key into the decryption algorithm 
+		   along with the ciphertext in order to compute the plaintext.
+	
+	For a given cryptosystem, a collection of all possible decryption keys is called a key space
+	
+	An interceptor (an attacker) is an unauthorized entity who attempts to determine the plaintext. He can see the ciphertext 
+	and may know the decryption algorithm. He, however, must never know the decryption key
+
+
+Types of Cryptosystems : 
+	- two types of cryptosystems
+			
+				1. Symmetric Key Encryption
+				2. Asymmetric Key Encryption
+	
+Note :  main difference between these cryptosystems is the relationship between the encryption and the decryption key
+
+Logically, in any cryptosystem, both the keys are closely associated. It is practically impossible to decrypt the 
+ciphertext with the key that is unrelated to the encryption key.
+
+
+1. Symmetric Key Encryption : 
+				
+				- The encryption process where same keys are used for encrypting and decrypting the information is known as
+				  Symmetric Key Encryption.
+
+				- The study of symmetric cryptosystems is referred to as symmetric cryptography
+				
+				- Symmetric cryptosystems are also sometimes referred to as secret key cryptosystems.
+
+Example of symmetric key encryption methods :
+				
+				1. Digital Encryption Standard (DES)
+			    2. Triple-DES (3DES)
+				3. IDEA (International Data Encryption Algorithm)
+				4. BLOWFISH
+				5. Twofish
+				6. RC4,RC5, and RC6
+				7. Advanced Encryption Standard (AES)
+
+
+Techniques Used in Symmetric Key Cryptography :	
+				- Substitution and Transposition are two principal techniques used in symmetric-key cryptography.
+			
+Substitution Techniques
+				- The symmetric key cryptographic method employs one secret key for the operations of encryption and decryption.
+				  Substitution techniques provide two significant approaches, wherein elements (letters, characters) from the 
+				  plaintext message are replaced with new elements according to the rules based on the secret key.
+
+				1. Caesar Cipher: Caesar cipher has since their predictability is so complete and no complexity is invested.
+				
+				2. Monoalphabetic Ciphers: This is where the ciphers use one rule of substitution throughout the message. 
+				  This may involve replacing letters with numbers, symbols, or another set of letters in another order.
+				  Example : Atbash : each letter is replaced with its corresponding letter in reverse order.
+				
+				3. Playfair Cipher: Implementation of repeated letters or letter pairs can expose patterns, and
+                  cryptanalysis techniques exist to exploit them.
+				
+				4. Hill Cipher: This cipher operates on blocks of letters (typically bigrams or trigrams) using a 
+				  matrix multiplication approach. The Hill ciphers have a limitation on key size and susceptibility 
+				  towards cryptanalysis for larger key sizes.
+				
+				5. Polyalphabetic Ciphers: This is the type of cipher where any one of the letters in the plaintext 
+				  is substituted by a different letter to keep frequency analysis challenging. 
+				  For example, the Vigenère cipher operates with a keyword that would determine
+				  the shift value for each letter in the plaintext.
+				
+				6. One-Time Pad (OTP): It is a theoretically impossible cipher where the key is a random string 
+				  of characters that is exactly as long as the message itself. The key is used for a single 
+				  encryption and then discarded.
+				
+Transposition Techniques :
+		
+				- Transposition techniques rearrange the order of elements in the plaintext message without changing the elements themselves.
+
+				1. Rail Fence Cipher: This is a simple cipher that rearranges the elements by writing the plaintext message in a
+                   zigzag pattern, with the different components written in rows (rails) of an imaginary fence and then reading 
+				   through the columns in a standard order. The key to this is the number of rails used.
+
+				2. Columnar Transposition: In the case of a plaintext message written in columns and then the columns
+ 				   rearranged according to a permutation determined by the key, this cipher is known as columnar transposition.
+				   Although it is still vulnerable to cryptanalysis techniques that exploit the statistical properties of the language.
+				   
+Types of Symmetric Key Cryptography :
+				
+				1. Stream Ciphers :
+							
+							- The encryption process begins with the stream cipher’s algorithm generating a pseudo-random keystream
+ 							  made up of the encryption key and the unique randomly generated number known as the nonce
+							  
+							- The result is a random stream of bits corresponding to the length of the ordinary plaintext. 
+							  Then, the ordinary plaintext is also deciphered into single bits
+							  
+							- These bits are then joined one by one to the keystream bits, gradually converting the ordinary plaintext 
+							  into the ciphertext using the XOR bitwise operations.
+							
+							- When the recipient wants to decrypt the encrypted plaintext, they must generate a new keystream made 
+							  during the encryption
+							
+							- The encrypted plaintext is then deciphered one by one to derive the encrypted plaintext at the recipient’s end.
+							
+							The most common stream cipher algorithms are :
+										
+											1. Rivest Cipher 4 (RC4)
+											2. Salsa20
+											3. Grain-128								
+				
+				2. Block Ciphers :
+							
+							- The result of a block cipher is a sequence of blocks that are then encrypted with the key. The output is a sequence
+							  of blocks of encrypted data in a specific order. When the ciphertext travels to its endpoint, the receiver uses the
+							  same cryptographic key to decrypt the ciphertext blockchain to the plaintext message.
+							  
+							The most common block cipher algorithms are	:
+											
+											1. Advanced Encryption Standard (AES) :
+													- It has support for three-length keys: 128 bits, 192 bits, or 256 bits,
+													  the most commonly used one is a 128-bit key.
+													- It includes secure communication, data encryption in storage devices, 
+													  digital rights management (DRM), and so on.
+											
+											2. Data Encryption Standard (DES) :
+													- In DES, the 64-bit blocks of plaintext are encrypted using a 56-bit key.
+													- This weakness caused by the small key size led to the development of a 
+													  more secure algorithm, called AES.
+											
+											3. Triple Data Encryption Algorithm (Triple DES) :
+													- The development of the Triple DES, also called Triple-DES or TDEA,
+													  was triggered by the weak security resulting from the small key size
+													  in the DES.
+													- Triple DES denotes a method of three times applying the DES algorithm 
+													   sequentially (encrypt-decrypt-encrypt) on every plaintext block.
+													   
+											4. IDEA 
+													- It is a sufficiently strong block cipher with a block size of 64 and a key 
+													   size of 128 bits. A number of applications use IDEA encryption, including 
+													   early versions of Pretty Good Privacy (PGP) protocol. The use of IDEA
+													   scheme has a restricted adoption due to patent issues.
+
+											5. Twofish 
+											        − This scheme of block cipher uses block size of 128 bits and a key
+													  of variable length. It was one of the AES finalists. It is based 
+													  on the earlier block cipher Blowfish with a block size of 64 bits.
+
+											6. Serpent 
+											        − A block cipher with a block size of 128 bits and key lengths of 128,
+													  192, or 256 bits, which was also an AES competition finalist. It is a slower 
+													  but has more secure design than other block cipher.
+
+				
+Operation Modes in Symmetric Cryptography	:
+		
+			1. Electronic Codebook (ECB) :
+						
+						- ECB is one of the simplest modes of operation for block ciphers.
+						- A major limitation of ECB is that the same plaintext block produces identical ciphertext blocks 
+						  that can be used for subsequent attacks, and patterns in the plaintext are visible in the ciphertext.
+			
+			2. Cipher Block Chaining (CBC) :
+						
+						- CBC mode links each plaintext block with the previous ciphertext block before encryption.
+						- Each plaintext block is XORed with the previous ciphertext block before encryption,
+                          adding randomness and preventing patterns in the plaintext from being apparent in the ciphertext.
+
+			3. Cipher Feedback (CFB) :
+						
+						- CFB mode operates like a stream cipher, generating a keystream to XOR with the plaintext block
+   						  before encryption.
+						- One drawback of CFB mode is error propagation, if an error occurs in one ciphertext block, 
+					      it will affect subsequent blocks.
+			
+			4. Output Feedback (OFB) :
+					
+						- It is a method for switching a block cipher to a stream cipher, creating enciphering through 
+						  interpolating the plaintext directly.
+						- It produces a separate keystream, which will be the XOR with the plaintext to derive the ciphertext.
+			
+			5. Counter (CTR) mode :
+						
+						- CTR mode transforms a block cipher into a stream cipher by using a counter value as the
+ 						  input to the block cipher.
+						- CTR mode is highly parallelizable and efficient, making it suitable for scenarios where
+ 						  performance is critical, such as disk and network encryption.
+
+
+Attacks on Symmetric Key Cryptography :
+			
+			
+			1. Cryptanalysis
+						
+						- Cryptanalytic attacks depend on the ciphertext characteristics of the algorithm plus possibly
+						  some knowledge of general characteristics of plaintext or perhaps even some sample plaintext–ciphertext pairs.
+						  This type of attack attempts to deduce some specific plaintext or to deduce the key being used through an
+						  examination of algorithmic characteristics.
+			
+			2. Brute-Force Attack
+						
+						- The attacker attempts all the possible keys on the piece of encrypted data until they get a readable translation
+ 						  into plain text. It takes on average 50% of all the possible keys to get this far. If either of these attacks 
+						  gets the key right, then all of the future and previous messages encrypted with this key are lost. 
+						  This is why a large key size offers protection from brute force attacks by making them infeasible to compute.
+
+Feature :
+				
+In a group of n people, to enable two-party communication between any two persons,
+the number of keys required for group is n × (n – 1)/2.
+
+Length of Key (number of bits) in this encryption is smaller and hence,
+process of encryption-decryption is faster than asymmetric key encryption.
+
+
+
+
+
+2. Asymmetric Key Encryption :
+		
+				- The encryption process where different keys are used for encrypting and decrypting the information is
+				  known as Asymmetric Key Encryption.
+				
+				- Though the keys are different, they are mathematically related and hence, retrieving the plaintext by 
+				  decrypting ciphertext is feasible
+
+Example of asymmetric key encryption method :
+				
+				1. Elliptical Curve Cryptography (ECC)
+				2. Rivest Shamir Adleman (RSA)
+				3. The Diffie-Hellman exchange method
+				4. ELGamal encryption
+				5. Knapsack Encryption
+
+Asymmetric Key Cryptography :
+				
+				- In asymmetric Key cryptography, there are two keys, also known as key pairs: a public key and a private key.
+				
+				- The public key is publicly distributed. Anyone can use this public key to encrypt messages, but only the 
+				  recipient, who holds the corresponding private key, can decrypt those messages. “Public-key cryptography”
+				  is another representation used to refer to Asymmetric Key cryptography.
+				  
+				- This cryptographic system addresses two major challenges faced in traditional (symmetric) cryptography: 
+				  key distribution and digital signatures.
+				  
+				- Asymmetric algorithms use one key for encrypting data and another, related key for decrypting it. 
+				  These algorithms possess an important feature:
+								
+								1. It’s impossible to figure out the decryption key just by knowing the encryption key 
+								   and the cryptographic algorithm.
+								2. Either of the two keys can be used for encryption, while the other is used for decryption.
+								
+				- Asymmetric-key cryptography uses mathematical functions to transform plaintext and ciphertext represented
+  				  as numbers for encryption and decryption, while symmetric-key cryptography involves symbol substitution 
+				  or permutation.
+				  
+				- In asymmetric-key cryptography, plaintext and ciphertext are treated as integers, requiring encoding and 
+				  decoding processes for encryption and decryption.
+				  
+Silent Feature : 
+				- Every user in this system needs to have a pair of dissimilar keys, private key and public key
+				- These keys are mathematically related − when one key is used for encryption, the other can
+ 				  decrypt the ciphertext back to the original plaintext.
+				  
+				- It requires to put the public key in public repository and the private key as a well-guarded secret.
+  				  Hence, this scheme of encryption is also called Public Key Encryption.
+				  
+				- When Host1 needs to send data to Host2, he obtains the public key of Host2 from repository, 
+				  encrypts the data, and transmits. Host2 uses his private key to extract the plaintext.
+				
+				- Length of Keys (number of bits) in this encryption is large and hence, the process of 
+				  encryption-decryption is slower than symmetric key encryption.
+
+Cryptography
+			
+			- The art or science encompassing the principles and methods of transforming an intelligible message 
+			  into one that is unintelligible, and then retransforming that message back to its original form
+
+			- Plaintext The original intelligible message
+			- Cipher text The transformed message
+			
+			- Cipher An algorithm for transforming an intelligible message into one that is unintelligible by 
+			  transposition and/or substitution methods
+			
+			- Key Some critical information used by the cipher, known only to the sender& receiver
+			
+			- Encipher (encode) The process of converting plaintext to cipher text using a cipher and a key
+			- Decipher (decode) the process of converting cipher text back into plaintext using a cipher and a key
+			
+			- Cryptanalysis (Breaking of cryptography) The study of principles and methods of transforming an unintelligible message back 
+			  into an intelligible message without knowledge of the key. Also called code breaking
+			
+			- Cryptology study of cryptography and cryptanalysis
+			- Code An algorithm for transforming an intelligible message into an unintelligible one using a code-book
+
+
+###############################################################################################################################################
+
+Symmetric Key Encryption
+
+What is Data encryption standard (DES)?
+	
+			- Data Encryption Standard (DES) is a block cipher with a 56-bit key length that has played a significant 
+			  role in data security
+			  
+			- DES is a block cipher and encrypts data in blocks of size of 64 bits each, which means 64 bits of plain text
+			  go as the input to DES, which produces 64 bits of ciphertext
+			  
+			- The same algorithm and key are used for encryption and decryption, with minor differences. The key length is 56 bits. 
+			
+The basic idea is shown below:
+
+			- We have mentioned that DES uses a 56-bit key. Actually, The initial key consists of 64 bits. 
+			  However, before the DES process even starts, every 8th bit of the key is discarded to produce
+			  a 56-bit key. That is bit positions 8, 16, 24, 32, 40, 48, 56, and 64 are discarded. 
+			  
+			- Thus, the discarding of every 8th bit of the key produces a 56-bit key from the original 64-bit key.
+			  DES is based on the two fundamental attributes of cryptography: 
+											
+											1. substitution (also called confusion) 
+											2. transposition (also called diffusion)
+			
+			- DES consists of 16 steps, each of which is called a round. Each round performs the steps of substitution 
+			  and transposition. Let us now discuss the broad-level steps in DES
+			  
+						1. In the first step, the 64-bit plain text block is handed over to an initial Permutation (IP) function.
+						2. The initial permutation is performed on plain text.
+						3. Next, the initial permutation (IP) produces two halves of the permuted block; 
+						   saying Left Plain Text (LPT) and Right Plain Text (RPT).
+						4. Now each LPT and RPT go through 16 rounds of the encryption process.
+						5. In the end, LPT and RPT are rejoined and a Final Permutation (FP) is performed on the combined block
+						6. The result of this process produces 64-bit ciphertext.
+						
+1.  Initial Permutation (IP) :
+				
+			- initial permutation (IP) happens only once and it happens before the first round. It suggests how the transposition
+              in IP should proceed
+					
+					For example, it says that the IP replaces the first bit of the original plain text block with the 58th bit 
+					of the original plain text, the second bit with the 50th bit of the original plain text block, and so on.
+			
+			- This is nothing but  jugglery of bit positions of the original plain text block. the same rule applies to all the
+              other bit positions
+			  
+			- As we have noted after IP is done, the resulting 64-bit permuted text block is divided into two half blocks.
+        	  Each half-block consists of 32 bits, and each of the 16 rounds, in turn, 
+			  consists of the broad-level steps :
+							
+							1. Step 1: Key transformation
+									
+									- initial 64-bit key is transformed into a 56-bit key by discarding every 8th bit of 
+									  the initial key. Thus, for each a 56-bit key is available. From this 56-bit key, 
+									  a different 48-bit Sub Key is generated during each round using a process  
+									  called key transformation
+							
+									- For this, the 56-bit key is divided into two halves, each of 28 bits. These halves
+  									  are circularly shifted left by one or two positions, depending on the round.
+									  
+							2. Expansion Permutation
+									
+									- Recall that after the initial permutation, we had two 32-bit plain text areas
+ 									  called Left Plain Text(LPT) and Right Plain Text(RPT). During the expansion 
+									  permutation, the RPT is expanded from 32 bits to 48 bits. Bits are permuted
+									  as well hence called expansion permutation.
+									
+									- This happens as the 32-bit RPT is divided into 8 blocks, with each block consisting of 4 bits.
+									  Then, each 4-bit block of the previous step is then expanded to a corresponding 6-bit block, 
+									  i.e., per 4-bit block, 2 more bits are added
+									  
+									- This process results in expansion as well as a permutation of the input bit while creating output.
+ 									  The key transformation process compresses the 56-bit key to 48 bits. Then the expansion 
+									  permutation process expands the 32-bit RPT to 48-bits. Now the 48-bit key is XOR with 
+									  48-bit RPT and the resulting output is given to the next step, which is the S-Box substitution.
+									  
+
+Advanced Encryption Standard (AES) :
+			
+			
+			- Advanced Encryption Standard (AES) is a highly trusted encryption algorithm used to secure data by converting 
+			 it into an unreadable format without the proper key.
+			 
+			- Developed by the National Institute of Standards and Technology (NIST), AES encryption uses various key lengths 
+			  (128, 192, or 256 bits) to provide strong protection against unauthorized access.
+			
+			- This data security measure is efficient and widely implemented in securing internet communication, 
+			  protecting sensitive data, and encrypting files. AES, a cornerstone of modern cryptography, is recognized
+			  globally for its ability to keep information safe from cyber threats.
+			  
+Points to Remember :
+			
+			1. AES is a Block Cipher.
+			2. The key size can be 128/192/256 bits.
+			3. Encrypts data in blocks of 128 bits each.
+	
+Note : That means it takes 128 bits as input and outputs 128 bits of encrypted cipher text. 
+       AES relies on the substitution-permutation network principle, which is performed using
+	   a series of linked operations that involve replacing and shuffling the input data.
+	   
+Working of The Cipher :
+			
+			- AES performs operations on bytes of data rather than in bits. Since the block size is 128 bits, 
+			  the cipher processes 128 bits (or 16 bytes) of the input data at a time.
+
+			- The number of rounds depends on the key length as follows :
+
+				1. 128-bit key – 10 rounds
+				2. 192-bit key – 12 rounds
+				3. 256-bit key – 14 rounds
+				
+1. Creation of Round Keys :
+			
+			- A Key Schedule algorithm calculates all the round keys from the key.
+			  So the initial key is used to create many different round keys which
+			  will be used in the corresponding round of the encryption.
+			  
+			- AES considers each block as a 16-byte (4 byte x 4 byte = 128 ) grid in a 
+			  column-major arrangement.
+			
+2. Each round comprises of 4 steps :
+
+			1. SubBytes
+			2. ShiftRows
+			3. MixColumns
+			4. Add Round Key
+
+The last round doesn’t have the MixColumns round.
+
+The SubBytes does the substitution and ShiftRows and MixColumns perform the permutation in the algorithm.
+
+		1. Sub Bytes :
+				
+				- This step implements the substitution.
+				- In this step, each byte is substituted by another byte.
+                  It is performed using a lookup table also called the S-box.
+				  This substitution is done in a way that a byte is never substituted
+				  by itself and also not substituted by another byte which is a compliment
+				  of the current byte. The result of this step is a 16-byte (4 x 4 ) matrix like before.
+				  
+		The next two steps implement the permutation.
+		
+		2. Shift Rows :
+				
+				- This step is just as it sounds. Each row is shifted a particular number of times.
+				- The first row is not shifted
+				- The second row is shifted once to the left.
+				- The third row is shifted twice to the left.
+				- The fourth row is shifted thrice to the left.
+				
+		3. Mix Columns :
+				
+				- This step is a matrix multiplication. Each column is multiplied with a specific
+ 				  matrix and thus the position of each byte in the column is changed as a result.
+				- This step is skipped in the last round.
+		
+		4. Add Round Keys :
+				
+				- Now the resultant output of the previous stage is XOR-ed with the corresponding round key.
+				  Here, the 16 bytes are not considered as a grid but just as 128 bits of data.
+				 
+				- After all these rounds 128 bits of encrypted data are given back as output. This process
+ 				 is repeated until all the data to be encrypted undergoes this process.
+
+Decryption :
+		
+		- The stages in the rounds can be easily undone as these stages have an opposite to it which when 
+		  performed reverts the changes. Each 128 blocks goes through the 10,12 or 14 rounds depending 
+		  on the key size.
+		
+		- The stages of each round of decryption are as follows :
+
+					1. Add round key
+					2. Inverse MixColumns
+					3. ShiftRows
+					4. Inverse SubByte
+		Note : The decryption process is the encryption process done in reverse so I will explain the steps with notable differences.
+		
+		1. Inverse MixColumns :
+				
+				- This step is similar to the Mix Columns step in encryption but differs in the matrix used to carry out the operation.
+
+				- Mix Columns Operation each column is mixed independent of the other.
+
+				- Matrix multiplication is used. The output of this step is the matrix multiplication of the old values and a constant matrix
+					
+		2. Inverse SubBytes :
+				
+				- Inverse S-box is used as a lookup table and using which the bytes are substituted during decryption.
+				  Function Substitute performs a byte substitution on each byte of the input word. For this purpose,
+				  it uses an S-box.
+				  
+
+
+RC5 Encryption Algorithm :
+	
+		- RC5 is a symmetric key algorithm for block encryption designed by Ron Rivest. 
+		  It is suitable for both hardware and software implementations due to the following characteristics:
+
+									1. Simplicity: The algorithm only uses primitive computer operations, 
+									   such as addition, subtraction, bitwise XOR, and circular shifts. 
+									   This makes it easy to implement and analyze.
+
+									2. Flexibility: It allows a variable number of rounds and bit size of the key.
+
+									3. Low memory utilization: It can be implemented on devices with limited memory.
+		  
+	Parameterization:	
+						
+					- RC5 is a parameterized, word-oriented algorithm. This means it is a block cipher with a two-word 
+					  input (plaintext) and a two-word output (ciphertext) block size.
+					  The parameters are detailed as follows:
+								
+								1. Word size: w
+								
+										- This is the word size in bits. RC5 has two w bit blocks, so the input and output
+										  blocks are each 2w bits long.
+										  For example, if w is 32 bit, then the input block will be 64 bit long
+								
+								2. Number of rounds: r
+										
+										- This is the number of rounds and determines the trade-off between speed and security, 
+										  where greater rounds imply higher security but lower speed r also influences the size t
+										   of the expanded key table S that is derived from the secret key
+										- The formula for t is as follows:
+													
+															t=2(r+1)
+								3. Number of bytes in secret key: b
+										
+										- This is the number of 8-bit bytes in the user-provided secret key, K, and has has the 
+										  allowable range from 0-255 bytes.
+								
+
+										- The table below summarizes the parameters: 
+															
+										- Parameters of the RC5 encyrption algorithm
+
+												Parameter	                Possible Value
+											
+											block/word size (bits)    		  16, 32, 64
+											 
+											 Number of Rounds	         	   0 – 255
+											 
+											 Key Size (bytes)	         	   0 – 255
+						 
+	 
+								Given these parameters, the notation for the algorithm is as follows:	
+										
+										RC5 - w/r/b
+								
+								The nominal version of this is RC5 - 32/12/16, which implies there are two 32 bit word input
+								and outputs, 12 rounds, and a 16 byte (128 bit) key.
+									
+		Primitive operations :
+		
+					- RC5 uses only three primitive operations and their inverses. These are:
+								
+								1. Addition: This refers to the two's complement addition of words and is denoted by +. 
+								   The inverses of this subtraction, denoted by -.
+								
+								2. Bitwise XOR: This is the bitwise exclusive-OR of words and is denoted by (circle +)
+								
+								3. Left rotation: This is the cyclic left rotation of words, denoted by x <<< y,
+  								   where x is word and y is the number bits to be shifted. the inverses is cyclic right
+								   rotation, represented by x>>>y.
+								
+		The algorithm :
+					
+					- Now that we have defined the parameters and operations, we can begin taking a look at the 
+					  three components of the RC5 encryption algorithm:
+
+								1. Key expansion algorithm
+
+								2. Encryption
+
+								3. Decryption
+								
+		
+		1. Key expansion algorithm :
+					
+					- Recall that RC5 uses an expanded key table, S[0..t - 1],derived from the provided secret key, K.
+					  the key expansion algorithm expands K  by filling the array S with t = 2(r+t) binary words. it 
+					  does this over four steps, as outlined below :
+					  
+					  
+					Step-1 : Initialization of magic constants
+
+					- RC5 uses two word-sized constants,P and Q. They are defined as follows:
+							
+							P = Odd((e-2)2^w)
+							
+							Q = Odd((𝜙-1)2^w)
+					
+					Where e is the base of natural logarithms and 𝜙 is the golden ratio
+					
+					For w =16,32 and 64, the values of P and Q are given in the table :
+
+					- Values of P and Q for different word sizes
+					
+							Word Size (bits)	P (Hexadecimal)	      Q (Hexadecimal)
+								16					b7e1					9e37
+								32				   b7e15163			       9e3779b9
+								64				b7e151628aed2a6b	     9e3779b97f4a7c15
+					
+				    
+					Step-2 : Converting the secret key K from bytes to words
+					
+					The secret key array, K [0..b-1],is used to initialize a new array,L[0..c-1],
+					where c= [b/u] and u=w/8 bytes per word. Once L is declared.
+					
+					
+					Step-3 : Initializing the array S
+					
+					This step requires the initialization of the array S of size t = 2(r+1) and is dependent on the magic 
+					constants, P and Q.
+					
+					
+					Step-4 : Secret key mixing
+					
+					The last step of the key expansion algorithm involves mixing the provided secret key over the arrays
+					S and L. The larger of these arrays will be processed three times, and the smaller may be processed
+ 					more. Moreover, A and B are are registers that store input values of size w bit each.
+					
+					Encryption :
+					
+					- Now that we have the expanded key in the array S[0..t], we can perform the ecnryption algorithm as
+					  specific below.  Note that registers A and B hold the plaintext divided into two w bit blocks.
+					  
+					- Once r rounds are over, A and B together form the output ciphertext.
+
+
+# Asymmetric Key Encryption :
+		
+RSA Encryption Algorithm :
+
+		- This cryptosystem is one the initial system. It remains most employed cryptosystem even today.
+ 		  The system was invented by three scholars Ron Rivest, Adi Shamir, and Len Adleman and hence,
+		  it is termed as RSA cryptosystem.
+
+		- We will see two aspects of the RSA cryptosystem, firstly generation of key pair and secondly 
+		  encryption-decryption algorithms.
+		
+		
+		Generation of RSA Key Pair	:
+		
+		- Each person or a party who desires to participate in communication using encryption needs to 
+		  generate a pair of keys, namely public key and private key. Theprocess followed in the generation
+		  of keys is described below -
+			
+			1. Generate the RSA modulus (n) :
+					
+					- Select two large primes, p and q.
+					- Calculate n=p*q. For strong unbreakable encryption, let n be a large 
+					  number, typically a minimum of 512 bits.
+			
+			2. Find Derived Number (e) :
+					
+					- Number e must be greater than 1 and less than (p − 1)(q − 1)
+					- There must be no common factor for e and (p − 1)(q − 1) except for 1.In other words
+					  two numbers e and (p – 1)(q – 1) are coprime.
+
+			3. Form the public key :
+					
+					- The pair of numbers (n, e) form the RSA public key and is made public. 
+					- Interestingly, though n is part of the public key, difficulty in factorizing a large 
+					  prime number ensures that attacker cannot find in finite time the two primes (p & q) 
+					  used to obtain n. This is strength of RSA.
+			
+			4. Generate the private key :
+					
+					- Private Key d is calculated from p, q, and e. For given n and e, there 
+					  is unique number d.
+					- Number d is the inverse of e modulo (p - 1)(q – 1). This means that d is the 
+					  number less than (p - 1)(q - 1) such that when multiplied by e, it is equal to 1
+					  modulo (p - 1)(q - 1).
+					- This relationship is written mathematically as follows −
+							ed = 1 mod (p − 1)(q − 1)
+
+			The Extended Euclidean Algorithm takes p, q, and e as input and gives d as output.
+			
+			Encryption and Decryption :
+			
+			RSA Encryption :
+				1. Suppose the sender wish to send some text message to someone whose public key is
+				   (n, e).
+				2. The sender then represents the plaintext as a series of numbers less than n.
+				3. To encrypt the first plaintext P, which is a number modulo n. The encryption process
+				   is simple mathematical step as −
+						
+						C = Pe mod n
+				4. In other words, the ciphertext C is equal to the plaintext P multiplied by itself etimes 
+				    and then reduced modulo n. This means that C is also a number less than n.
+					
+			
+			RSA Decryption :
+				
+				The decryption process for RSA is also very straightforward. Suppose that thereceiver of
+			    public-key pair (n, e) has received a ciphertext C.
+				
+				1. Receiver raises C to the power of his private key d. The result modulo n will be the
+				   plaintext P.
+						
+							Plaintext = Cd mod n
+
+
+Elliptic Curve Cryptography (ECC) :
+		
+		- Elliptic Curve Cryptography (ECC) is a term used to describe a suite of cryptographic tools and
+          protocols whose security is based on special versions of thediscrete logarithm problem. It does
+		  not use numbers modulo p.
+		
+		- ECC is based on sets of numbers that are associated with mathematical objects called elliptic curves.
+		  There are rules for adding and computing multiples of these numbers, just asthere are for numbers 
+		  modulo p.
+		  
+		- ECC includes a variants of many cryptographic schemes that were initially designed for modular
+		  numbers such as ElGamal encryption and Digital Signature Algorithm.
+		
+		-It is believed that the discrete logarithm problem is much harder when applied to points on an 
+		  elliptic curve. This prompts switching from numbers modulo p to points on an elliptic curve. 
+
+		- Also an equivalent security level can be obtained with shorter keys if we use elliptic curve-based variants.
+		
+		The shorter keys result in two benefits −
+				
+				1. Ease of key management
+				2. Efficient computation
+		
+		- These benefits make elliptic-curve-based variants of encryption scheme highly attractive for 
+		  application where computing resources are constrained
+	
+
+
+Diffie-Hellman algorithm : 
+		
+		- The Diffie-Hellman algorithm is being used to establish a shared secret that can be used for secret 
+		  communications while exchanging data over a public network using the elliptic curve to generate 
+		  points and get the secret key using the parameters.  
+
+		- For the sake of simplicity and practical implementation of the algorithm, we will consider only 4 
+		  variables, one prime P and G (a primitive root of P) and two private values a and b.
+		- P and G are both publicly available numbers. Users (say Alice and Bob) pick private values a and b 
+		  and they generate a key and exchange it publicly. The opposite person receives the key and that 
+		  generates a secret key, after which they have the same secret key to encrypt.
+		  
+Step-by-Step explanation is as follows:  
+		Alice											Bob
+		
+		Public Keys available = P, G		Public Keys available = P, G
+		
+		Private Key Selected = a			Private Key Selected = b
+		
+		Key generated = 					Key generated =
+			x=G^a mod P							x=G^b mod P
+		
+				 Exchange of generated keys takes place
+		
+		Key received = y					key received = x
+		
+		
+		Generated Secret Key =				Generated Secret Key =
+			k^a = y^a mod P 						k^b = x^b mod P				
+
+					Algebraically, it can be shown that 
+							k^a=k^b
+							
+				Users now have a symmetric secret key to encrypt
+		
+		
+Example :
+			Step 1: Alice and Bob get public numbers P = 23, G = 9
+			
+			Step 2: Alice selected a private key a = 4 and
+					Bob selected a private key b = 3
+					
+			Step 3: Alice and Bob compute public values
+					Alice:  x =(9^4 mod 23) = (6561 mod 23) = 6
+					Bob:    y = (9^3 mod 23) = (729 mod 23)  = 16
+					
+			Step 4: Alice and Bob exchange public numbers
+			
+			Step 5: Alice receives public key y =16 and
+					Bob receives public key x = 6
+					
+			Step 6: Alice and Bob compute symmetric keys
+					Alice:  ka = y^a mod p = 65536 mod 23 = 9
+					Bob:    kb = x^b mod p = 216 mod 23 = 9
+					
+			Step 7: 9 is the shared secret.
+			
+
+Attacks against encryption :
+
+		1. Brute force attacks
+		2. Cipher-only attack
+		3. Known-plaintext attack
+		4. Chosen plaintext attack
+		5. Chosen ciphertext attacker
+		6. Differential cryptanalysis
+		7. Linear cryptanalysis
+		8. Side channel attacks
+		9. Replay attacks
+
+
+Cryptographic issues :
+		
+		1. Confidentiality
+				
+				- Confidentiality is the assurance that only authorized parties can access and read
+ 				  the message or data. In the real world, this is crucial for protecting sensitive 
+				  information like financial data, personal information, and trade secrets. 
+				  Cryptography ensures confidentiality by converting plaintext into ciphertext
+				  using encryption algorithms and keys
+		2. Integrity
+				
+				- Integrity ensures that the message or data cannot be altered in transit without the 
+				  recipient's knowledge. In the real world, this is important for ensuring that critical
+				  information, such as financial transactions or legal documents, remains unchanged 
+				  during transmission or storage.
+		
+		3. Authentication
+				
+				- Authentication verifies the identity of the sender or receiver of a message. In the real world,
+				  this is crucial for ensuring that you are communicating with the intended party and not an impersonator.
+				  Cryptography provides authentication through techniques like digital signatures and public key infrastructure (PKI)
+		
+		4. Non-repudiation
+				
+				- Non-repudiation ensures that the sender of a message cannot deny their involvement in the communication.
+				  In the real world, this is important for legal and financial transactions, where it is crucial to hav
+				  proof of the sender's participation.
+				  
+		5. Key Management
+				
+				- Key management is the process of securely generating, distributing, storing, and revoking cryptographic keys.
+				  In the real world, proper key management is essential for the effectiveness of cryptographic systems. Weak or 
+				  mismanaged keys can compromise the security of the entire system
+				  
+				  
+#################################################################################################################################
+
+Cryptography Hash function
+
+		- A hash function is a mathematical function that converts a numerical input value into another 
+		  compressed numerical value. The input to the hash function is of arbitrary length but output
+		  is always of fixed length.
+		
+		- Values returned by a hash function are called message digest or simply hash values.
+		
+
+Design of Hashing Algorithms :
+		
+		- At the heart of a hashing is a mathematical function that operates on two fixed-size blocks of 
+		  data to create a hash code. This hash function forms the part of the hashing algorithm.
+		
+		- The size of each data block varies depending on the algorithm. Typically the block sizes are 
+		  from 128 bits to 512 bits.
+		
+		- Hashing algorithm involves rounds of above hash function like a block cipher. Each round takes
+		  an input of a fixed size, typically a combination of the most recent message block and the output
+		  of the last round
+		
+		- Since, the hash value of first message block becomes an input to the second hash operation, output
+		  of which alters the result of the third operation, and so on. This effect, known as an 
+		  avalanche effect of hashing.
+		  
+		- Avalanche effect results in substantially different hash values for two messages that differ by even
+          a single bit of data.
+		
+		- difference between hash function and algorithm correctly :
+				
+				1. The hash function generates a hash code by operating on two blocks of fixed-length binary data.
+				
+				2. Hashing algorithm is a process for using the hash function, specifying how the message will be 
+				   broken up and how the results from previous message blocks are chained together.
+		
+Popular Hash Functions :
+
+		1. Message Digest (MD) :
+				
+				- The MD family comprises of hash functions MD2, MD4, MD5 and MD6. It was 
+				  adopted as Internet Standard RFC 1321. It is a 128-bit hash function
+				  
+				- MD5 digests have been widely used in the software world to provide assurance about 
+				  integrity of transferred file
+				
+				- In 2004, collisions were found in MD5. An analytical attack was reported to be successful 
+				  only in an hour by using computer cluster. This collision attack resulted in compromised 
+				  MD5 and hence it is no longer recommended for use.
+		
+		2. Secure Hash Function (SHA) :
+				
+				- Family of SHA comprise of four SHA algorithms; SHA-0, SHA-1, SHA-2, and SHA-3 Though from
+  				  same family, there are structurally different.
+				
+				- The original version is SHA-0, a 160-bit hash function, was published by the National 
+				  Institute of Standards and Technology (NIST) in 1993. It had few weaknesses and did not 
+				  become very popular. Later in 1995, SHA-1 was designed to correct alleged weaknesses of SHA-0
+				
+				- SHA-1 is the most widely used of the existing SHA hash functions. It is employed in several 
+				  widely used applications and protocols including Secure Socket Layer (SSL) security.
+				
+				- In 2005, a method was found for uncovering collisions for SHA-1 within practical time frame 
+				  making long-term employability of SHA-1 doubtful
+				
+				- SHA-2 family has four further SHA variants, SHA-224, SHA-256, SHA-384, and SHA-512 depending 
+				  up on number of bits in their hash value. No successful attacks have yet been reported on 
+				  SHA-2 hash function
+				
+				- Though SHA-2 is a strong hash function. Though significantly different, its basic design is
+ 				  still follows design of SHA-1. Hence, NIST called for new competitive hash function designs.
+				  
+				- In October 2012, the NIST chose the Keccak algorithm as the new SHA-3 standard. Keccak offers
+  				   many benefits, such as efficient performance and good resistance for attacks.
+		
+		3. RIPEMD (RACE Integrity Primitives Evaluation Message Digest)
+				
+				- This set of hash functions was designed by open research community and generally known as a 
+				  family of European hash functions.
+				
+				- The set includes RIPEMD, RIPEMD-128, and RIPEMD-160. There also exist 256, and 320-bit
+  				  versions of this algorithm
+				
+				- Original RIPEMD (128 bit) is based upon the design principles used in MD4 and found to 
+				  provide questionable security. RIPEMD 128-bit version came as a quick fix replacement 
+				  to overcome vulnerabilities on the original RIPEMD.
+				
+				- RIPEMD-160 is an improved version and the most widely used version in the family. The 
+				  256 and 320-bit versions reduce the chance of accidental collision, but do not have 
+				  higher levels of security as compared to RIPEMD- 128 and RIPEMD-160 respectively.
+		
+		4. Whirepool
+				
+				- This is a 512-bit hash function.
+				
+				- It is derived from the modified version of Advanced Encryption Standard (AES). 
+				  One of the designer was Vincent Rijmen, a co-creator of the AES.
+				
+				- Three versions of Whirlpool have been released; namely WHIRLPOOL-0,WHIRLPOOL-T, and WHIRLPOOL
+				
+Applications of Hash Functions :
+			
+		1. Password Storage
+		2. Data Integrity Check
+		
+
+
+# Message Authentication :
+
+		- MAC algorithm is a symmetric key cryptographic technique to provide message authentication. 
+		  For establishing MAC process, the sender and receiver share a symmetric key K
+		  
+		- Essentially, a MAC is an encrypted checksum generated on the underlying message that is sent 
+		  along with a message to ensure message authentication.
+		  
+		- Let us now try to understand the entire process in detail :
+				
+				1. The sender uses some publicly known MAC algorithm, inputs the messageand the secret key
+  				   K and produces a MAC value
+				
+				2. Similar to hash, MAC function also compresses an arbitrary long input into a fixed length 
+				   output. The major difference between hash and MAC is that MAC uses secret key during the 
+				   compression
+				
+				3. The sender forwards the message along with the MAC. Here, we assume that the message is sent
+ 				   in the clear, as we are concerned of providing message origin authentication, not confidentiality.
+				   If confidentiality is required then the message needs encryption
+				
+				4. On receipt of the message and the MAC, the receiver feeds the received message and the shared secret
+				   key K into the MAC algorithm and re-computes the MAC value.
+				
+				5. The receiver now checks equality of freshly computed MAC with the MAC received from the sender. 
+				   If they match, then the receiver accepts the message and assures himself that the message has 
+				   been sent by the intended sender
+				   
+				6. If the computed MAC does not match the MAC sent by the sender, the receiver cannot determine 
+				   whether it is the message that has been altered orit is the origin that has been falsified.
+ 				   As a bottom-line, a receiver safely assumes that the message is not the genuine.
+		
+		- Limitations of MAC :
+				
+				1. Establishment of Shared Secret.
+				2. Inability to Provide Non-Repudiation
+				
+
+# HMAC (Hash-based Message Authentication Code) :
+		
+		- HMAC is a great resistance towards cryptanalysis attacks as it uses the hashing concept twice.
+		
+		- HMAC consists of twin benefits of Hashing and MAC and thus is more secure than any other
+		  authentication code.
+		  
+		- RFC 2104 has issued HMAC, and HMAC has been made compulsory to implement in IP security. 
+		  The FIPS 198 NIST standard has also issued HMAC
+		
+		- As the Hash Function, HMAC is also aimed to be one way, i.e, easy to generate output from 
+		  input but complex the other way round.
+		
+		- It aims at being less affected by collisions than the hash functions
+		
+		- HMAC reuses the algorithms like MD5 and SHA-1 and checks to replace the embedded hash functions
+          with more secure hash functions,in case found.
+		
+		- HMAC tries to handle the Keys in a simpler manner
+		
+HMAC Algorithm :
+		
+		- The working of HMAC starts with taking a message M containing blocks of length b bits.
+          An input signature is padded to the left of the message and the whole is given as input 
+		  to a hash function which gives us a temporary message-digest MD’.MD’ again is appended
+		  to an output signature and the whole is applied a hash function again, the result is 
+		  our final message digestMD
+		  
+
+#############################################################################################################################
+
+# Public Key Infrastructure 
+
+		- Public key infrastructure or PKI is the governing body behind issuing digital certificates. It helps to protect
+		  confidential data and gives unique identities to users and systems. Thus, it ensures security in communications
+		  
+		- The public key infrastructure uses a pair of keys: the public key and the private key to achieve security. 
+		  The public keys are prone to attacks and thus an intact infrastructure is needed to maintain them. 
+		  
+		Managing Keys in the Cryptosystem :
+				
+				- The security of a cryptosystem relies on its keys. Thus, it is important that we have a solid key
+                  management system in place.  
+				
+				- The  3 main areas of key management are as follows:
+						
+						1. A cryptographic key is a piece of data that must be managed by secure administration.
+						2. It involves managing the key life cycle which is as follows:
+									
+							 Generation of Key -> Establishment of key --> Storage of key --> Usage of key -->
+							 Archival --> Destruction of key
+				
+				- Public key management further requires:
+						
+						1. Keeping the private key secret: Only the owner of a private key is authorized 
+						   to use a private key.  It should thus remain out of reach of any other person.
+						
+						2. Assuring the public key: Public keys are in the open domain and can be publicly
+ 						   accessed. When this extent of public accessibility, it becomes hard to know if 
+						   a key is correct and what it will be used for. The purpose of a public key must
+						   be explicitly defined.
+						   
+						   
+PKI or public key infrastructure aims at achieving the assurance of public key.
+
+Public Key Infrastructure:
+		
+		- Public key infrastructure affirms the usage of a public key. PKI identifies a public key along 
+		  with its purpose. 
+		- It usually consists of the following components:
+
+					1. A digital certificate also called a public key certificate
+					2. Private Key tokens
+					3. Registration authority
+					4. Certification authority
+					5. CMS or Certification management system
+					
+Working on a PKI:
+		
+		- Let us understand the working of PKI in steps. 
+
+		- PKI and Encryption: The root of PKI involves the use of cryptography and encryption techniques.
+		  Both symmetric and asymmetric encryption uses a public key. 
+		- The challenge here is – “how do you know that the public key belongs to the right person or 
+		  to the person you think it belongs to?”. There is always a risk of MITM(Man in the middle). 
+		  This issue is resolved by a PKI using digital certificates. It gives identities to keys 
+		  in order to make the verification of owners easy and accurate.
+		
+		- Public Key Certificate or Digital Certificate: Digital certificates are issued to people and
+          electronic systems to uniquely identify them in the digital world. Here are a few noteworthy
+		  things about a digital certificate. Digital certificates are also called X.509 certificates. 
+		  This is because they are based on the ITU standard X.509.
+					
+					1. The Certification Authority (CA) stores the public key of a user along with other
+					   information about the client in the digital certificate. The information is signed
+					   and a digital signature is also included in the certificate.
+					
+					2. The affirmation for the public key then thus be retrieved by validating the signature 
+					   using the public key of the Certification Authority.
+					   
+		- Certifying Authorities: A CA issues and verifies certificates. This authority makes sure that the 
+		  information in a certificate is real and correct and it also digitally signs the certificate. 
+		  A CA or Certifying Authority performs these basic roles:
+		  
+					1. Generates the key pairs – This key pair generated by the CA can be either independent or in 
+					   collaboration with the client.
+
+					2. Issuing of the digital certificates –  When the client successfully provides the right details 
+					   about his identity, the CA issues a certificate to the client. Then CA further signs this 
+					   certificate digitally so that no changes can be made to the information.
+
+					3. Publishing of certificates – The CA publishes the certificates so that the users can 
+					   find them. They can do this by either publishing them in an electronic telephone 
+					   directory or by sending them out to other people.
+
+					4. Verification of certificate – CA gives a public key that helps in verifying if the 
+					   access attempt is authorized or not.
+
+					5. Revocation – In case of suspicious behavior of a client or loss of trust in them, 
+					   the CA has the power to revoke the digital certificate.
+					   
+		
+		- Classes of a Digital Certificate:
+				
+				A digital certificate can be divided into four broad categories. These are :
+
+					- Class 1: These can be obtained by only providing the email address.
+					- Class 2: These need more personal information.
+					- Class 3: This first checks the identity of the person making a request.
+					- Class 4: They are used by organizations and governments.
+					
+		- Process of creation of certificate:
+				
+				The creation of a certificate takes place as follows:
+
+					1. Private and public keys are created.
+					2. CA requests identifying attributes of the owner of a private key.
+					3. Public key and attributes are encoded into a CSR or Certificate Signing Request.
+					4. Key owner signs that CSR to prove the possession of a private key.
+					5. CA signs the certificate after validation.
+
+# Digital Certificate :
+
+		- For analogy, a certificate can be considered as the ID card issued to the person. People use ID cards such as
+		  a driver's license, passport to prove their identity. A digital certificate does the same basic thing in the 
+		  electronic world, but with one difference
+		  
+		- Digital Certificates are not only issued to people but they can be issued to computers, software packages or 
+		  anything else that need to prove the identity in theelectronic world.
+		  
+					- Digital certificates are based on the ITU standard X.509 which defines a standard certificate format for 
+					  public key certificates and certification validation. Hence digital certificates are sometimes also 
+					  referred to as X.509 certificates.
+					
+					- Public key pertaining to the user client is stored in digital certificates by The Certification Authority (CA)
+   					  along with other relevant information such as client information, expiration date, usage, issuer etc.
+					  
+					- CA digitally signs this entire information and includes digital signature in the certificate.
+					
+					- Anyone who needs the assurance about the public key and associated information of client, he carries out the 
+					  signature validation process using CA’s public key.Successful validation assures that the public key given 
+					  in the certificate belongs to the person whose details are given in the certificate.
+					  
+					- the CA accepts the application from a client to certify his publickey. The CA, after duly verifying identity
+					  of client, issues a digital certificate to that client
+					
+# Certifying Authority (CA) :
+		
+		- the CA issues certificate to a client and assist other users to verify the certificate. The CA takes responsibility for 
+		  identifying correctly the identity of the client asking for a certificate to be issued, and ensures that the information
+		  contained within the certificate is correct and digitally signs it.
+		
+
+Key Functions of CA :
+		
+		- The key functions of a CA are as follows :
+				
+				1. Generating key pairs − The CA may generate a key pair independently or jointly with the client.
+				
+				2. Issuing digital certificates − The CA could be thought of as the PKI equivalent of a passport agency − the 
+				   CA issues a certificate after client provides the credentials to confirm his identity. The CA then signs
+				   the certificate to prevent modification of the details contained in the certificate.
+				 
+				3. Publishing Certificates − The CA need to publish certificates so that users can find them. There are two ways 
+				   of achieving this. One is to publish certificates in the equivalent of an electronic telephone directory. 
+				   The other isto send your certificate out to those people you think might need it by one means or another
+				
+				4. Verifying Certificates − The CA makes its public key available in environment to assist verification of 
+				   his signature on clients’ digital certificate
+				 
+				5. Revocation of Certificates − At times, CA revokesthe certificate issued dueto some reason such as compromise 
+				   of private key by user or loss of trust in the client. After revocation, CA maintains the list of all revoked
+ 				   certificate that is available to the environment.
+
+		- A digital certificate can be divided into four broad categories. These are :
+
+					- Class 1: These can be obtained by only providing the email address.
+					- Class 2: These need more personal information.
+					- Class 3: This first checks the identity of the person making a request.
+					- Class 4: They are used by organizations and governments.
+					
+		- Registration Authority (RA) :
+				
+				- CA may use a third-party Registration Authority (RA) to perform the necessary checks on the person or company 
+				  requesting the certificate to confirm their identity. The RA may appear to the client as a CA, but they do 
+				  not actually sign the certificate that is issued.
+				  
+		- Certificate Management System (CMS) :
+				
+				
+				- It is the management system through which certificates are published, temporarily or permanently suspended, renewed, 
+				  or revoked. Certificate management systems do not normally delete certificates because it may be necessary to 
+				  prove their statusat a point in time, perhaps for legal reasons. A CA along with associated RA runs certificate 
+				  management systems to be able to track their responsibilities and liabilities.
+		
+		- Private Key Tokens :
+				
+				- While the public key of a client is stored on the certificate, the associated secret private key can be stored on the
+   				  key owner’s computer. This method is generally not adopted. If an attacker gains access to the computer, he can easily
+				  gain access to private key. For this reason, a private key is stored on secure removable storage token access to which is 
+				  protected through a password.
+		
+				- Different vendors often use different and sometimes proprietary storage formats for storing keys. For example, Entrust 
+				  uses the proprietary .epf format, while Verisign, GlobalSign, and Baltimore use the standard .p12 format
+				  
+		
+Hierarchy of CA :
+			
+		- With vast networks and requirements of global communications, it is practically not feasible to have only one trusted CA
+          from whom all users obtain their certificates. Secondly, availability of only one CA may lead to difficulties if CA is
+ 		  compromised.
+		  
+		- In such case, the hierarchical certification model is of interest since it allows public key certificates to be used in
+          environments where two communicating parties do nothave trust relationships with the same CA
+			
+					1. The root CA is at the top of the CA hierarchy and the root CA's certificate is aself-signed certificate.
+					2. The CAs, which are directly subordinate to the root CA (For example, CA1 and CA2) have CA certificates 
+					   that are signed by the root CA.
+					3. The CAs under the subordinate CAs in the hierarchy (For example, CA5 andCA6) have their CA certificates
+ 					   signed by the higher-level subordinate CA
+		- Certificate authority (CA) hierarchies are reflected in certificate chains. A certificate chain traces a path of 
+		  certificates from a branch in the hierarchy to the root of the hierarchy.
+		
+		- CA hierarchy with a certificate chain leading from an entity certificate through two subordinate CA certificates (CA6 and CA3) 
+		  to the CA certificate for the root CA 
+		  
+		- Verifying a certificate chain is the process of ensuring that a specific certificate chain is valid, correctly signed, and trustworthy
+		
+		-The following procedure verifies a certificate chain, beginning with the certificate that is presented for authentication :
+				
+					1. A client whose authenticity is being verified supplies his certificate, generally along with the chain of 
+					   certificates up to Root CA.
+					2. Verifier takes the certificate and validates by using public key of issuer. The issuer’s public key is found
+  					   in the issuer’s certificate which is in the chain next to client’s certificate.
+					3. Now if the higher CA who has signed the issuer’s certificate, is trusted by the verifier, verification is 
+					   successful and stops here.
+					4. Else, the issuer's certificate is verified in a similar manner as done for client inabove steps. This process 
+					   continues till either trusted CA is found in betweenor else it continues till Root CA.
+
+
+# Digital signatures :
+		
+		-  a digital signature is a technique that binds a person/entity to the digital data. This binding can be independently 
+		   verified by receiver as well as any third party
+		
+		- Digital signature is a cryptographic value that is calculated from the data and a secret key known only by the signer
+		
+		- In real world, the receiver of message needs assurance that the message belongs to the sender and he should not be 
+		  able to repudiate the origination of that message. This requirement is very crucial in business applications, since
+		  likelihood of a dispute over exchanged data is very high.
+		  
+
+The following points explain the entire process in detail :
+		
+		- Each person adopting this scheme has a public-private key pair
+		
+		- Generally, the key pairs used for encryption/decryption and signing/verifying are different. The private key used
+ 		  for signing is referred to as the signature key and the public key as the verification key.
+		
+		- Signer feeds data to the hash function and generates hash of data
+		
+		- Hash value and signature key are then fed to the signature algorithm which produces the digital signature on given
+  		  hash. Signature is appended to the data and then both are sent to the verifier.
+		
+		- Verifier feeds the digital signature and the verification key into the verification algorithm. The verification 
+		  algorithm gives some value as output
+		 
+		- Verifier also runs same hash function on received data to generate hash value
+		
+		- For verification, this hash value and output of verification algorithm are compared. Based on the comparison result, 
+		  verifier decides whether the digital signature is valid.
+		
+		- Since digital signature is created by ‘private’ key of signer and no one else can have this key; the signer cannot
+ 		  repudiate signing the data in future
+		  
+
+Encryption with Digital Signature :
+
+		- In public key encryption scheme, a public (encryption) key of sender is available in open domain, and hence anyone can 
+		  spoof his identity and send any encrypted message to the receiver
+		  
+		- This makes it essential for users employing PKC for encryption to seek digital signatures along with encrypted data to 
+		  be assured of message authentication and non-repudiation.
+		  
+		- This can archived by combining digital signatures with encryption scheme. Let us briefly discuss how to achieve this 
+		  requirement. There are two possibilities :
+					
+						1. Sign-then-encrypt
+						2. encrypt-then-sign
+						
+		- However, the crypto system based on sign-then-encrypt can be exploited by receiver to spoof identity of sender and sent 
+		  that data to third party. Hence, this method is not preferred. The process of encrypt-then-sign is more reliable and
+		  widely adopted.
+		  
+		- The receiver after receiving the encrypted data and signature on it, first verifies the signature using sender’s public key.
+          After ensuring the validity of the signature, he then retrieves the data through decryption using his private key
+		  
+		  
+# Public Key Cryptography Standards (PKCS) :
+
+		1. PKCS #1 – RSA cryptography standard
+		
+		2. PKCS #2 – RSA message digest standard
+		
+		3. PKCS #3 – Diffie-Helman key agreement standard
+		
+		4. PKCS #4 – RSA key syntax standard
+		
+		5. PKCS #5 – Password-based cryptography standard 
+		
+		6. PKCS #6 – Extended-certificate syntax standard
+		
+		7. PKCS #7 – Cryptographic message syntax standard
+		
+		8. PKCS #8 – Private key information syntax standard
+		
+		9. PKCS #9 – Selected attribute types standard
+		
+		10. PKCS #10 – Certification request syntax standard
+		
+		11. PKCS #11 – Cryptographic token interface standard
+		
+		12. PKCS #12 – Personal information exchange syntax standard
+		
+		13. PKCS #13 – Elliptic curve cryptography standard
+		
+		14. PKCS #14 – Pseudo-random number generation standard
+		
+		15. PKCS #15 – Cryptographic token information format standard
+		
+
+# FIPS (Federal Information Processing Standard) 140-2 :
+
+		FIPS 140-2 :
+			
+			- FIPS 140-2 (Federal Information Processing Standard 140-2) is a U.S. government computer security standard 
+			  that specifies the requirements for cryptographic modules. 
+			  The key aspects are:
+					
+					1. Cryptographic Module Validation :
+									
+									- FIPS 140-2 defines four security levels (1 to 4) for cryptographic modules based on the rigor of 4
+									  their design, implementation, and testing. Modules must undergo rigorous testing and validation
+ 									  to be certified as FIPS 140-2 compliant.
+					
+					2. Approved Algorithms :
+									
+									- FIPS 140-2 mandates the use of approved cryptographic algorithms, such as AES, SHA, RSA, and ECDSA. 
+									   This ensures the use of secure, standardized cryptographic primitives.
+					
+					3. Physical Security :
+									
+									- For higher security levels, FIPS 140-2 imposes requirements on the physical security of the  
+									  cryptographic module, such as tamper-evident seals and tamper-resistant enclosures.
+									  
+
+# Strong Authentication :
+		
+		- Strong Authentication is a method of user verification that is considered robust enough to withstand attacks on the 
+		  system to which the users are authenticating.There are competing definitions of strong authentication, as
+ 		  layered systems often do not meet the required threshold for being strong. Strong authenticationis thought to be 
+		  true two-factor authentication or multi-factor authentication (2FA, MFA). Such systems, in requiring two or more 
+		  factors from the “something I have, something I am, and something I know), require those factorsto be a combination 
+		  of different authentication factors. Technologies that enable strong authentication include information derived from 
+		  the devices in use by people (e.g. mobile or laptop) as well as user biometrics, user email, one-time passwords (OTPs), 
+		  and time-based one-time passwords (TOTPs). True strong authentication also takes the form of cryptographic solutions 
+		  where public-key infrastructure (PKI) is the underlying system. Such systems ensure that the user and the verifying 
+		  system do not share sensitive information. Rather,the parties exchange non-sensitive mutually agreed upon information 
+		  to verify that they are the authorized parties to a conversation. Fast Identity Online (FIDO)Alliance authentication 
+		  standards are examples of such a system.
+		  
+# Single-Factor Authentication (SFA) :
+		
+		- Single-Factor Authentication (SFA) is a method of logging users into resources by having them present only one way of 
+		  verifying their identity. Username and password is the dominant form of SFA. The factors of authenticating users  
+		  generally take the form of either something you know (knowledge), something you have (possession), and something you
+		  are (biometric). Continuous authentication is an emerging means using one factor however even it compiles contextual 
+		  information derived from knowledgeand possession, in addition to device information such as geolocation
+
+# Multi-Factor Authentication (MFA) :
+		
+		- Multi-factor Authentication (MFA) is an authentication method that requiresthe user to provide two or more verification 
+		  factors to gain access to a resource such as an application, online account, or a VPN. MFA is a core component of a 
+		  strong identity and access management (IAM) policy. Rather than just asking for a username and password, MFA requires 
+		  one or more additional verification factors, which decreases the likelihood of a successful cyber-attack
+		  
+# Single Sign-on Solutions :
+		
+		- Single sign-on (SSO) is an authentication method that enables users to securely authenticate with multiple applications and 
+		  websites by using just one set of credentials. SSO works based upon a trust relationship set up between an application, known
+		  as the service provider, and an identity provider, like OneLogin. This trust relationship isoften based upon a certificate that 
+		  is exchanged between the identity provider and the service provider. This certificate can be used to sign identity information
+		  that is being sent from the identity provider to the service provider so that the service provider knows itis coming from a
+		  trusted source. In SSO, this identity data takes the form of tokens which contain identifying bits of information about the 
+		  user like a user’s email address or a username.
+
+# OpenID
+		
+		- OpenID allows you to use an existing account to sign in to multiple websites, without needing to create new passwords.
+		
+		- You may choose to associate information with your OpenID that can be shared with the websites you visit, such as a name 
+		  or email address. With OpenID, youcontrol how much of that information is shared with the websites you visit.
+		  
+		- With OpenID, your password is only given to your identity provider, and that provider then confirms your identity to 
+		  the websites you visit. Other than your provider, no website ever sees your password, so you don’t need to worry aboutan
+		  unscrupulous or insecure website compromising your identity
+		  
+# OAUTH
+		
+		- OAuth is an open-standard authorization protocol or framework that provides applications the ability for “secure designated access.”
+		  For example, you can tell Facebook that it’s OK for ESPN.com to access your profile or post updates to your timeline without having
+		  to give ESPN your Facebook password. This minimizes risk in a major way: In the event ESPN suffers a breach, your Facebook password
+		  remains safe
+		  
+		- OAuth doesn’t share password data but instead uses authorization tokens to prove an identity between consumers and service providers.
+          OAuth is an authentication protocol that allows you to approve one application interacting with another on your behalf without giving
+		  away your password.
+		  
+		NOTE: OpenID is used for authentication while OAuth is used for authorization.
+		
+# Graphical Passwords :
+		
+		- A graphical password or graphical user authentication is a form of authentication using images rather than letters, digits, or special 
+		  characters.The type of images used and the ways in which users interact with them vary between implementations.
+		  
+		- There are various types of authentications available for users to secure their accounts
+		
+		- Types of authentications :
+					
+				1. Token-based authentication includes key cards, bank cards, smart cards, etc
+				
+				2. Knowledge-based authentication includes text-based authentication and picture-based authentication.
+				
+				3. Biometric authentication includes fingerprints authentication, iris scan and facial recognition
+				
+		
+		- Graphical Password Authentication has three major categories based on the activity they use for 
+		  authentication of the password:
+				
+				1. Recognition based Authentication
+				2. Recall based Authentication
+				3. Cued Recall
+				
+# Authentication Protocols :
+		
+		1. Kerberos 
+		2. Lightweight Directory Access Protocol (LDAP)
+		3. OAuth2
+		4. SAML (Security Assertion Markup Language)
+		5. RADIUS (Remote Authentication Dial-In User Service)
+
+# FIDO (Fast Identity Online) :
+		
+		- Fast Identity Online (FIDO) Authentication is a set of open technical specifications that define user 
+		  authentication mechanisms that reduce the reliance on passwords.
+		  
+		- FIDO protocols are designed from the ground up to protect user privacy. The protocols do not disclose sensitive
+          user data that can be used by different onlineservices to collaborate and track a user across the services. Other 
+		  sensitive data like biometric prints and PINs never leaves the user’s device to ensure it cannotbe intercepted or 
+		  compromised by an attacker
+		
+		- To authenticate a user, an application – often referred to as the relying party – uses FIDO-specified client-side APIs 
+		  to interact with a user’s registered authenticator. For web applications, client-side APIs include WebAuthn implemented
+ 		  by the web browser, which in turn calls on FIDO CTAP to access the authenticator.
+		  
+		- To authenticate a user, the relying party passes a cryptographic challenge to the registered authenticator and evaluates
+          the response to determine the authenticityof the secrets stored on the client device and used to produce the response
+		  
+		- “Under the hood” FIDO utilizes asymmetric cryptography to ensure that all sensitive secrets and cryptographic key material 
+		   remain on the client device at all times and are not transmitted to the authenticating service
+		   
+		- FIDO authentication requires an initial registration step. In cases where the user device supports multiple forms of 
+		  authentication (i.e. fingerprint scanner, voiceprint recorder,face ID, etc.), the user is asked to choose a FIDO compliant
+		  authenticator from the options available on the device that matches the authenticating app’s acceptance policy. The user 
+		  then unlocks the FIDO authenticator using whatever mechanism is built into the authenticator – e.g. byproviding a fingerprint,
+		  pressing a button on a second–factor device, or enteringPIN.
+		  
+		- Once the authenticator is unlocked, the user’s device creates a new and unique public/private cryptographic key pair that will 
+		  be used for authenticating access.The public key is then sent to the online service and associated with the user’s account. The 
+		  private key and all other sensitive data related to the chosen authentication method – for example, biometric prints – remain 
+		  on the local device and never leave it.
+		  
+		- Authentication requires the client device to prove possession of the private key to the authenticating service by successfully 
+		  responding to a cryptographic challenge. The private key can only be used after successfully authenticating using the registered 
+		  authenticator, for example by swiping a finger on the fingerprint sensor, entering a PIN, speaking into a microphone, inserting a 
+		  second–factor device, pressing a button, etc. The device then uses the user account identifier provided by the service to select the 
+		  correct key and cryptographically sign the service’s challenge. The signed challenge is sent backto the service, which verifies it 
+		  with the stored public key and logs in the user.
+		  
+
+# Zero Trust Architecture :
+		
+		- Security model that requires strict verification for every person & device trying to access resources on a private network 
+		  regardless of whether they are sitting within or outside the network perimeter. 
+		- It is also known as Zero trust security or Zero trust network.
+		- No one trusted by default
+				
+					1. Identity Access Management
+					2. Privileged Access Management
+					
+# Securing Websites & Email
+
+	1. SSL :
+			
+			- Secure Socket Layer (SSL) is a technology to secure the communication between a client and the server. An SSL for email
+			  ensures that the email is not intercepted during the transit and nobody except the intended recipient can access it.
+			  An email SSL certificate can also authenticate the identity of the sender. The SSL certificate in your email account 
+			  serves two purposes – to authenticate the sender’s identity and maintain the integrity of the email. The email 
+			  certificates are also known as S/MIME or email encryption certificates
+			  
+	2. TLS :
+			
+			- Transport Layer Securities (TLS) are designed to provide security at the transport layer.TLS was derived from a security
+ 			 protocol called Secure Service Layer (SSL). TLS ensures that no third party may eavesdrops or tampers with any message.
+
+	3. PGP – Authentication and Confidentiality :
+			
+			- In 2013, when the NSA (United States National Security Agency) scandal was leaked to the public, people started to opt
+              for the services which can provide them a strong privacy for their data. Among the services people opted for, most 
+			  particularly for emails, were different plug-ins and extensions for their browsers. Interestingly, among the various 
+			  plug-ins and extensions that people started to use, there were two main programs that were solely responsible for 
+			  the complete email security that the people needed
+	
+	4. Secure/Multipurpose Internet Mail Extension(S/MIME) :
+			
+			- S/MIME is a security-enhanced version of Multipurpose Internet Mail Extension (MIME). In this, public key cryptography
+              is used for digital sign, encrypt or decrypt the email. User acquires a public-private key pair with a trusted authority
+			  and then makes appropriate use of those keys with email applications
+
+###################################################################################################################################################################
+## Cyber Forensic #################################################################################################################################################
+###################################################################################################################################################################
+
+# WHAT IS COMPUTER FORENSICS?
+		
+		- Computer forensics is the process of methodically examining computer media (hard disks, diskettes, tapes, etc.)
+          for evidence. In other words, computer forensics is the collection, preservation, analysis, and presentation of 
+		  computer-related evidence.
+		
+		- Computer forensics also referred to as computer forensic analysis, electronic discovery, electronic evidence discovery,
+          digital discovery, data recovery, data discovery, computer analysis, and computer examination
+		
+		- Computer evidence can be useful in criminal cases, civil disputes, and human resources/ employment proceeding
+
+
+# Difference – Computer Crime & Un-authorized activities?
+		
+		- Computer Crime
+				
+				1. Computer crime refers to any illegal activity where a computer, computer network, or networked device is the target, tool,
+				   or place of the criminal act.
+				
+				2. These are serious, intentional, and malicious acts that violate the law. Examples include:
+							
+							- Hacking to gain unauthorized access to systems or data
+							- Spreading malware like viruses, ransomware, or spyware
+							- Stealing data, intellectual property, or committing fraud
+							- Conducting cyber espionage or launching denial-of-service attacks
+							- Engaging in child exploitation or distributing illegal content
+				
+				3. Computer crimes are considered felonies that can result in severe legal penalties like fines and imprisonment.
+				4. They are committed by skilled cybercriminals, hacker groups, or state-sponsored actors with malicious intent.
+				
+		
+		- Unauthorized Activities
+				
+				1. Unauthorized activities refer to actions that are not explicitly permitted or approved, but may not necessarily be
+                   illegal or malicious.
+				
+				2. These can include:
+							
+							- Using a work computer for personal browsing or activities
+							- Accessing files or systems you don't have permissions for
+							- Sharing passwords or login credentials with others
+							- Connecting unauthorized devices to a network
+							- Failing to follow security protocols or best practices
+							
+				3. Unauthorized activities are generally considered policy violations or minor infractions, not criminal acts.
+				
+				4. They may result in disciplinary action by an organization, such as warnings, suspensions, or termination, but
+                   do not typically lead to criminal prosecution.
+				
+				5. Unauthorized activities are often the result of negligence, ignorance, or carelessness, rather than deliberate malicious intent.
+				
+# Cyber Laws in India :
+				
+			- Cyber laws in India are a crucial facet of the modern legal landscape, intricately weaving into our online experiences
+			  and shaping the legality of every action and reaction in the virtual space. 
+			
+			-  Cyber laws in India encompass a spectrum of vital components, delving into cyber crimes, electronic and digital signatures,
+			   intellectual property, data protection, and privacy
+			   
+			- In India, the Information Technology Act of 2000 (IT Act) stands as the cornerstone, ushering in a new era of legal 
+			  recognition for electronic commerce. Enacted on October 17, 2000, the IT Act not only addresses cyber crimes but also
+			  facilitates the seamless filing of electronic records with the government.
+			  
+
+# What are the Cyber Laws?
+
+				
+			- Cyber laws, also known as cybersecurity laws or internet laws, encompass a set of legal regulations and guidelines 
+			  that govern the use of the internet, digital technology, and cyberspace. These laws are designed to address various
+			  aspects of online activities, data protection, electronic transactions, and the prevention and prosecution of cybercrimes.
+			  
+
+# Cyber laws in India: Rules and Regulations under Cyber Laws :
+			
+			- The Information Technology Act, 2000 (“IT Act”), which became operative on October 17, 2000, comprises cyber legislation in India.
+              The Act’s primary goals are to expedite the filing of electronic records with the government and to provide electronic commerce 
+			  with legal status. The following acts, rules, and regulations are covered under cyber laws:
+
+						1. Information Technology Act, 2000
+						2. Information Technology (Certifying Authorities) Rules, 2000
+						3. Information Technology (Security Procedure) Rules, 2004
+						5. Information Technology (Certifying Authority) Regulations, 2001
+						
+						
+						
+1. Information Technology Act, 2000
+			
+			- The Information Technology Act of 2000 is like the rulebook for computers, electronic data, and the internet in India. It covers
+			  a bunch of things, from how we prove who we are online to what happens if someone does something wrong in the digital world. 
+			  The Act is all about making sure our online transactions are legal and secure. The Act even got a power-up in 2008 to keep 
+			  up with the changing tech world. It was like adding new levels to a game, making sure the rules stay up-to-date. This 
+			  law was created to boost the IT industry, make online shopping fair, help the government go digital, and stop 
+			  cybercrime. Think of it as a shield that keeps our digital space safe and sound.
+			  
+
+2. Information Technology (Certifying Authorities) Rules, 2000
+			
+			- This regulation addresses the licensing of certifying authorities and the protocols that they must follow. It also 
+			  specified the qualifications, designations, and operations of certifying authorities. They specify the requirements
+			  that these authorities must fulfill to operate, and they lay out the licensing procedures for them. Furthermore,
+			  the regulations provide a uniform and safe environment for digital verification by precisely outlining the 
+			  requirements, responsibilities, and working procedures for certifying authorities.
+			  
+3. Information Technology (Security Procedure) Rules, 2004
+				
+			- The regulations concerning safe digital signatures and secure electronic records are outlined in these rules. 
+			  It describes strict guidelines and practices to protect the privacy and integrity of digital communications. 
+			  These regulations provide a strong foundation for preserving the reliability of digital communication, 
+			  including everything from safe authentication techniques to the safeguarding of electronic documents.
+
+4. Information Technology (Certifying Authority) Regulations, 2001
+			
+			- The regulation specifies the technical requirements and methods that a certifying authority must follow. 
+			  They ensure a consistent and trustworthy approach to digital identity validation by outlining the technical 
+			  specifications and procedures that certifying authorities must follow. These rules are essential to
+			  maintaining the reliability and technical soundness of certifying authorities in the digital sphere.
+			  
+			  
+# The Purpose of Cyber Laws in India :
+			
+			- Cyber laws serve various purposes, covering aspects of computer and internet usage and protecting 
+			  individuals from online crimes. Key areas of cyber law include:
+
+				1. Fraud: Cyber laws safeguard consumers from online fraud, addressing issues like identity 
+				   theft and credit card crimes. Perpetrators may face criminal charges and civil actions. 
+				   Cyber lawyers work to both defend and prosecute fraud allegations online.
+				
+				2. Copyright: With the internet making copyright violations more prevalent, cyber laws play
+                   a crucial role. These laws protect individuals and companies from unauthorized use of 
+				   their creative works, requiring legal action to enforce copyright protections.
+				   
+				3. Defamation: Defamation laws within cyber law protect individuals and businesses from false
+                   statements made online that can harm reputations. Cyber lawyers deal with cases where online
+ 				   statements cross the line into defamation, a violation of civil laws.
+				
+				4. Harassment and stalking: Online statements that constitute harassment or stalking can violate
+                   criminal laws. Cyber lawyers handle cases where repeated threatening statements are made online,
+				   addressing both civil and criminal aspects of these violations.
+				   
+				5. Freedom of Speech: Freedom of speech is a critical aspect of cyber law. While certain online
+                   behaviors are forbidden, freedom of speech laws allow individuals to express their opinions.
+				   Cyber lawyers advise clients on the limits of free speech and may defend actions considered
+				   permissible expressions.
+				
+				6. Trade Secrets: Companies conducting online business rely on cyber laws to protect their trade secrets. 
+				   Cyber laws enable legal action against those attempting to compromise proprietary information, 
+				   ensuring the protection of algorithms and other valuable assets.
+				
+				7. Contracts and Employment Law: Cyber law is evident in the terms and conditions of websites,
+                   governing user agreements. These agreements, often related to privacy concerns, are a vital 
+				   component of cyber laws, impacting users’ interactions with online platforms.
+				   
+
+# Process of Computer Forensics (six) :
+			
+			- The Process of Computer Forensics	:
+					
+			The process of computer forensics typically involves six key stages:
+				
+				1. Identification
+								- The first step is to identify the devices, systems, and digital evidence that are relevant
+								to the investigation. This includes seizing and isolating any computers, mobile devices,
+								servers, or other digital storage media that may contain important data.
+
+				2. Preservation
+
+								- Once the relevant devices and data have been identified, the next step is to preserve the 
+								digital evidence in a forensically sound manner. This involves creating exact copies or 
+								"forensic images" of the data to ensure the original evidence is not altered or 
+								corrupted during the investigation.
+
+				3. Collection
+								
+								- The collected digital evidence is then carefully extracted and gathered for further analysis.
+								This may involve techniques like data carving to recover deleted files, or using specialized 
+								tools to extract data from encrypted or hidden sources.
+				
+				4. Examination
+								
+								- The collected digital evidence is then thoroughly examined and analyzed. This can involve 
+								a variety of techniques like keyword searches, file timeline analysis, and reverse 
+								steganography to uncover hidden data.
+
+				5. Analysis
+							
+								- The results of the examination are then analyzed to piece together the sequence of events,
+								identify the perpetrators, and determine the scope and impact of any criminal activity or 
+								security breach.
+				
+				6. Presentation 
+								
+								- Finally, the findings of the investigation are documented and presented, often for use as 
+								evidence in legal proceedings. The presentation must be thorough, accurate, and presented 
+								in a way that is understandable to non-technical stakeholders.
+
+
+# The Need for Forensics Investigators :
+		
+			- Computer forensics investigators play a critical role in modern investigations, both criminal and civil. 
+			  Their expertise is essential for:
+							
+							1. Identifying, preserving, and analyzing digital evidence
+							2. Reconstructing events and timelines from digital artifacts
+							3. Uncovering hidden or deleted data that can provide crucial clues
+							4. Serving as expert witnesses to explain technical findings in legal proceedings
+							5. Helping organizations respond to and recover from cybersecurity incidents
+							
+
+# Computer Forensics Involves
+		1. Preservation 
+		2. Identification
+		3. Extraction
+		4. Documentation
+		5. Interpretation
+
+
+1. Preservation :
+		
+		- The first and most crucial step is to preserve the digital evidence. 
+		  This involves:
+					1. Identifying all relevant devices and data sources
+					2. Ensuring the devices are powered on or off in a controlled manner to prevent data loss
+					3. Isolating the devices to prevent any tampering or changes to the data
+					4. Creating forensic images or copies of the data using specialized tools, while preserving 
+					   the original evidence
+
+2.	Identification :
+		
+		- The investigator must thoroughly identify all potential sources of digital evidence,
+          such as:
+					1. Computers, laptops, mobile phones, tablets
+					2. Cloud storage, network servers, external hard drives
+					3. Logs, emails, chat messages, internet browsing history
+
+3. Extraction :
+		
+		- The investigator uses forensic tools and techniques to extract the relevant data from 
+		  the preserved digital evidence. This may involve:
+					
+					1. Recovering deleted or hidden files
+					2. Extracting metadata like timestamps, file ownership, etc.
+					3. Decrypting encrypted data
+					4. Analyzing network traffic and logs
+
+4. Documentation :
+		
+		- Meticulous documentation is critical throughout the process. 
+		  The investigator must record:
+					
+					1. The chain of custody for all evidence
+					2. Details of the extraction and analysis procedures used
+					3. Any tools, software, or hardware employed
+					4. The findings and conclusions drawn from the evidence
+					
+5. Interpretation :
+		
+		- The final stage is to interpret the extracted digital evidence in the context of the 
+		  investigation. The investigator must:
+		  					
+					1. Analyze the data to identify relevant patterns, anomalies, and connections
+					2. Reconstruct a timeline of events based on the evidence
+					3. Draw conclusions about what the data reveals about the incident or crime
+					
+
+# Goals of Forensics Analysis
+
+		- The main goals of forensic analysis are to:
+					
+					1. Recover, analyze, and preserve digital evidence in a way that it can be presented in court
+					2. Determine the motive and identity of the perpetrator behind a cybercrime
+					3. Ensure the integrity of digital evidence by following proper procedures at the crime scene
+					4. Quickly identify evidence and estimate the potential impact of malicious activity on the victim
+					5. Produce a comprehensive forensic report detailing the investigation process
+					
+# Types of Cyber Forensics Techniques :
+			
+		- Computer forensics investigation normally follows the typical digital forensics procedure 
+		  which is the acquisition, examination, analysis, and reporting. These investigations are 
+	      mostly performed on static data (disk images) rather than live data or live systems, 
+	      though in early computer forensics days the investigators used to work on live data due 
+	      to the lack of tools.
+					   
+Various kinds of techniques are used in computer forensics investigation such as:
+
+		1. Cross-drive analysis: 
+					
+					- Cross-drive analysis (CDA) is a technique that allows an investigator to quickly identify and 
+					  correlate information from multiple data sources or information across multiple drives. 
+					  Existing approaches include multi-drive correlation using text searches, 
+					  e.g., email addresses, SSNs, message IDs, or credit card numbers.
+					  
+		2. Live analysis: 
+					
+					- It is used to examine the computers from within the OS using various forensics and sysadmin 
+					  tools to get the information from the device. In forensic analysis, the collection of volatile
+					  data is very important like the installed software packages, hardware information, etc.
+					  this approach is useful in the case where the investigator is dealing with encrypted files.
+					  If the device is still active and running when it’s handed to the investigator, the 
+					  investigator should collect all the volatile information from the device such as user 
+					  login history, which TCP and UDP ports are open, what services are currently in 
+					  use, and running, etc.
+					  
+		3. Deleted files recovery: 
+		
+					- It is a technique that is used to recover deleted files. The deleted data can be recovered or
+                      craved out using forensic tools such as CrashPlan, OnTrack EasyRecovery, Wise Data Recovery, etc.
+					  
+		4. Stochastic forensics: 
+		            
+					- It is a method to forensically re-establish the digital activities that have insufficient digital 
+					  artifacts, thus analyzing emerging patterns resulting from the stochastic nature of modern-day computers.
+		
+		5. Steganography:
+              
+                    - Steganography is a technique of hiding the secret information inside or on top of something, that 
+					  something can be anything from an image to any type o file. Computer forensics investigators can
+					  counter this by looking and comparing the hash value of the altered file and original file, the 
+					  hash value will be different for both files even though they might appear identical on
+					  visual inspection.
+
+
+# Cyber Forensics Procedures
+	
+		1. Identification :
+					
+					- The first step is to identify what digital evidence is present, where it is stored, and in what format.
+                      This involves thoroughly examining the systems and devices involved to determine what data may be 
+					  relevant to the investigation.
+					  
+		2. Preservation :
+					
+					- Once the relevant digital evidence is identified, the next step is to safely preserve it without 
+					  allowing any tampering or modification. This typically involves creating forensic images or copies
+					  of the original data to work with, while keeping the original evidence secure.
+
+		3. Analysis	:
+					
+					- The preserved digital evidence is then carefully analyzed using specialized tools and techniques. 
+					  This can involve recovering deleted files, analyzing system logs, tracing user activity, and 
+					  correlating data across multiple sources.
+
+		4. Documentation :
+					
+					- Throughout the process, detailed documentation is kept to maintain the chain of custody and ensure
+                      the integrity of the evidence. This documentation will be crucial for presenting the findings in 
+					  a legal or investigative context.
+					  
+		5. Presentation :
+					
+					- The final step is to present the findings of the digital forensics investigation in a clear and
+                      compelling manner, whether in a court of law, to management, or to other stakeholders. The goal
+					  is to effectively communicate the significance of the digital evidence
+					  
+
+# Preparation
+		- What to do before the incident
+		- Incident response plan
+		- Incident response team
+		
+
+Preparing for Incident Response
+		
+		To explain incident preparation in a conceptual and practical way for deeper real-world understanding, let's break it down into key components:
+
+		1. Risk Assessment:
+		
+		Conceptually, this is about anticipating potential threats. In practice, it involves:
+		
+					1. Identifying possible incidents (e.g., natural disasters, cyberattacks, accidents)
+					2. Evaluating their likelihood and potential impact
+					3. Prioritizing risks based on severity and probability
+
+
+		2. Resource Inventory:
+		
+		This concept revolves around knowing what you have at your disposal. Practically, it means:
+
+					1. Cataloging available equipment, supplies, and personnel
+					2. Identifying gaps in resources
+					3. Establishing relationships with external partners or suppliers
+
+
+		3. Plan Development:
+		
+		Conceptually, this is creating a roadmap for action. In reality, it involves:
+
+					1. Defining roles and responsibilities
+					2. Establishing communication protocols
+					3. Creating step-by-step procedures for various scenarios
+					4. Developing evacuation or shelter-in-place plans
+
+
+		4. Training and Drills:
+		
+		This is about building muscle memory and familiarity. In practice:
+
+					1. Conduct regular training sessions on emergency procedures
+					2. Run simulations or tabletop exercises
+					3. Practice evacuations or other emergency responses
+
+
+		5. Communication Systems:
+
+		Conceptually, this ensures information flow during a crisis. Practically:
+
+					1. Set up multi-channel alert systems (e.g., text, email, sirens)
+					2. Establish a chain of command for information dissemination
+					3. Create templates for emergency messages
+
+		6. Redundancy and Backup:
+		
+		This concept is about having fallback options. In the real world:
+
+					1. Create offsite backups of critical data
+					2. Identify alternative operational locations
+					3. Have backup power sources and communication methods
+
+
+		7. Stakeholder Engagement:
+		
+		Conceptually, this involves getting buy-in from all parties. Practically:
+
+
+					1. Inform and involve employees, customers, and partners in preparation efforts
+					2. Coordinate with local authorities and emergency services
+					3. Establish mutual aid agreements with other organizations
+
+
+		8. Regular Review and Update:
+		
+		This concept ensures plans remain relevant. In practice:
+
+					1. Schedule periodic reviews of the incident response plan
+					2. Update plans based on new threats, technologies, or organizational changes
+					3. Learn from actual incidents or near-misses to improve preparedness
+
+# Incident Response Plan:
+
+		- Conceptually, an incident response plan is like a detailed fire escape plan for cybersecurity emergencies. 
+		  Just as you'd have a plan for evacuating a building during a fire, organizations need a plan for handling 
+		  cyber incidents.
+		  
+		In practical terms, it's a documented set of instructions that outline how an organization will:
+
+					- Detect security incidents
+					- Contain the damage
+					- Eradicate the root cause
+					- Recover from the incident
+
+		Real-world example:
+		Imagine a bank discovers unauthorized access to its customer database. Their incident response plan would kick in,
+		guiding them through steps like:
+
+					1. Identifying the breach
+					2. Isolating affected systems
+					3. Investigating the cause
+					4. Fixing vulnerabilities
+					5. Restoring systems
+					6. Notifying affected customers
+					7. Reporting to relevant authorities
+					
+# Incident Response Team:
+		
+		- Conceptually, an incident response team is like a specialized SWAT team for cyber emergencies. They're 
+		  the experts you call in when there's a digital crisis. 
+		
+		- In practice, it's a group of skilled professionals from various departments, each with specific roles 
+		  in handling security incidents. The team typically includes:
+
+					- IT security specialists
+					- Network administrators
+					- Legal advisors
+					- Public relations professionals
+					- Human resources representatives
+		
+		Real-world example:
+		Let's continue with our bank scenario. When the data breach is detected, the incident response team springs into action:
+
+					1. IT security leads the technical investigation and containment
+					2. Network admins help isolate and restore affected systems
+					3. Legal advises on regulatory compliance and potential liabilities
+					4. PR manages communication with customers and the media
+					5. HR handles any internal issues if an employee is involved
+					
+# Dectecting Incident :
+		
+		1. Automated Monitoring and Alerting Systems
+					
+					- Automated monitoring and alerting systems are the backbone of incident detection. 
+					  These systems continuously analyze network traffic, system logs, and other data sources
+					  in real-time, looking for suspicious patterns or anomalies that could indicate a security 
+					  incident. When a potential threat is detected, the system can immediately generate alerts,
+					  allowing security teams to investigate and respond swiftly.
+		
+		2. User Reporting :
+					
+					- While automated systems are essential, user reporting can also play a crucial role in 
+					  incident detection. Employees and other users should be trained to recognize and report
+					  suspicious activities, such as phishing attempts, unauthorized access attempts, or 
+					  unusual system behavior. This "human sensor" approach can help identify incidents
+					  that may slip through the cracks of automated monitoring.
+
+		3. Threat Hunting :	
+					
+					- Proactive threat hunting involves actively searching for indicators of compromise (IoCs)
+					  and potential threats within an organization's network and systems. This can include 
+					  analyzing logs, monitoring network traffic, and using advanced tools to uncover hidden
+					  threats that may have evaded initial detection. Threat hunting teams can leverage threat
+					  intelligence, machine learning, and other techniques to stay ahead of evolving threats.
+		
+		4. Third-Party Monitoring Services
+					
+					- Some organizations may choose to outsource their incident detection and reporting functions
+                      to third-party monitoring services. These services can provide 24/7 monitoring and alerting,
+					  often with a higher level of expertise and advanced capabilities than in-house teams. 
+					  However, this approach requires careful consideration of the service provider's capabilities,
+					  security practices, and the organization's specific needs.
+					  
+		5. Incident Response Planning 
+					
+					- Effective incident detection is only the first step. Organizations must also have a well-defined
+					  incident response plan in place, outlining the steps to be taken when an incident is detected. 
+					  This plan should cover containment, investigation, remediation, and recovery, ensuring a 
+					  coordinated and efficient response to minimize the impact of any security breach.
+
+
+# Chain of Custody – Digital Forensics :
+		
+		- Chain of Custody refers to the logical sequence that records the sequence of custody, control, transfer, analysis
+          and disposition of physical or electronic evidence in legal cases. Each step in the chain is essential as if broke,
+		  the evidence may be rendered inadmissible. Thus we can say that preserving the chain of custody is about following 
+		  the correct and consistent procedure and hence ensuring the quality of evidence.
+		  
+What the Chain of Custody entails in Digital Cyber Forensics?
+		
+		- If you are in the field of Cyber Security, you will be at one point in your career will be involved in Digital
+     	  Forensics. One of the concepts that is most essential in Digital Forensics is the Chain of Custody.
+		
+		- The chain of custody in digital cyber forensics is also known as the paper trail or forensic link, or 
+		  chronological documentation of the evidence.
+		
+					1. Chain of custody indicates the collection, sequence of control, transfer and analysis.
+					2. It also documents details of each person who handled the evidence, date and time 
+					   it was collected or transferred, and the purpose of the transfer.
+					3. It demonstrates trust to the courts and to the client that the evidence has not tampered.
+		
+		- Digital evidence is acquired from the myriad of devices like a vast number of IoT devices, audio evidence,
+          video recordings, images, and other data stored on hard drives, flash drives, and other physical media.
+		
+
+Chain of Custody Process :
+		
+		- In order to preserve digital evidence, the chain of custody should span from the first step of data 
+		  collection to examination, analysis, reporting, and the time of presentation to the Courts. This is 
+		  very important to avoid the possibility of any suggestion that the evidence has been compromised 
+		  in any way.
+		
+		- Let’s discuss each stage of the chain of custody in detail:
+
+					1. Data Collection: 
+								
+								- This is where chain of custody process is initiated. It involves 
+								  identification, labeling, recording, and the acquisition of data 
+								  from all the possible relevant sources that preserve the integrity
+								  of the data and evidence collected.
+					
+					2. Examination: 
+					            
+								- During this process, the chain of custody information is documented
+                                  outlining the forensic process undertaken. It is important to capture
+								  screenshots throughout the process to show the tasks that are completed
+								  and the evidence uncovered.
+					
+					3. Analysis: 
+								
+								- This stage is the result of the examination stage. In the Analysis stage,
+ 								  legally justifiable methods and techniques are used to derive useful 
+								  information to address questions posed in the particular case.
+					
+					4. Reporting: 
+								
+								- This is the documentation phase of the Examination and Analysis stage. 
+								  Reporting includes the following:
+											
+											1. Statement regarding Chain of Custody.
+											2. Explanation of the various tools used.
+											3. A description of the analysis of various data sources.
+											4. Issues identified.
+											5. Vulnerabilities identified.
+											6. Recommendation for additional forensics measures that can be taken.
+											
+The Chain of Custody Form :
+		
+		- In order to prove a chain of custody, you’ll need a form that lists out the details of how the evidence 
+		  was handled every step of the way. The form should answer the following questions:
+
+					1. What is the evidence?: For example- digital information includes the filename, md5 hash, 
+					                          and Hardware information includes serial number, asset ID, 
+											  hostname, photos, description.
+					
+					2. How did you get it?: For example- Bagged, tagged or pulled from the desktop.
+					
+					3. When it was collected?: Date, Time
+					
+					4. Who has handle it?
+					
+					5. Why did that person handled it?
+					
+					6. Where was it stored?: This includes the information about the physical location in
+					   which proof is stored or information of the storage used to store the forensic image.
+					
+					7. How you transported it?: For example- in a sealed static-free bag, or in a secure storage container.
+					
+					8. How it was tracked?
+					
+					9. How it was stored?: For example- in a secure storage container.
+					
+					10. Who has access to the evidence?: This involves developing a check-in/ check-out process.
+		
+		- The CoC form must be kept up-to-date. This means every time the best evidence is handled off,
+          the chain of custody form needs to be updated.
+		  
+Procedure to establish the Chain of Custody
+		
+		- In order to assure the authenticity of the chain of custody, a series of steps must be followed.
+          It is important to note that the more information Forensic expert obtains concerning the evidence,
+		  the more authentic is the created chain of custody. You should ensure that the following procedure
+		  is followed according to the chain of custody for electronic devices:
+
+					1. Save the original material
+					2. Take photos of the physical evidence
+					3. Take screenshots of the digital evidence.
+					4. Document date, time, and any other information on the receipt of the evidence.
+					5. Inject a bit-for-bit clone of digital evidence content into forensic computers.
+					6. Perform a hash test analysis to authenticate the working clone.
+
+# Handling Digital Evidence: A Comprehensive Approach :
+		
+		1. Identification and First Response :
+					
+					- When encountering potential digital evidence, it is crucial to properly document the 
+					  device's condition and location. This includes taking photographs, recording details 
+					  about the environment, and avoiding any actions that could alter the original state 
+					  of the evidence.
+		
+		2. Forensic Duplication and Authentication :
+					
+					- Rather than working directly with the original evidence, a forensic duplicate or 
+					  "image" should be created using specialized tools and procedures. This preserves 
+					  the integrity of the original data. The duplicate can then be authenticated through 
+					  hash verification to ensure no changes have been made.
+		
+		3. Investigation and Analysis :
+					
+					- The authenticated duplicate is then carefully analyzed by digital forensics experts. 
+					  They use legally justifiable methods and tools to extract relevant information that 
+					  can address the questions of the investigation. This analysis phase is thoroughly 
+					  documented.
+		
+		4. Logging and Chain of Custody :
+					
+					- Throughout the process, a detailed chain of custody log is maintained. This records 
+					  every transfer of the evidence, who handled it, when, and why. Gaps in this chain 
+					  can compromise the admissibility of the evidence in legal proceedings.
+		
+		5. Common Mistakes to Avoid :
+					
+					- Key mistakes include working directly on the original evidence, failing to 
+					  document the initial conditions, and inadequate physical security of the evidence.
+					  Proper training and adherence to standard procedures are essential to maintain the 
+					  integrity of digital evidence.
+		
+		6. Detection and Response Strategy :
+					
+					- In a corporate setting, the first step is to detect potential incidents that may 
+					   require digital forensics. A well-planned response strategy, involving both technical
+					   and legal considerations, should then be formulated and executed
+					   
+
+# Initial Assessment
+		
+		- The initial assessment is a crucial step in evaluating and responding to an incident or 
+		  emergency situation. It involves quickly gathering information to determine the nature,
+ 		  severity, and scope of the problem.
+		- Key aspects of an initial assessment include:
+					
+					1. Assessing the scene for safety hazards and securing the area if needed
+					2. Identifying the type of incident (e.g. medical emergency, fire, hazardous materials spill)
+					3. Determining if additional resources or emergency services are required
+					4. Gathering information from witnesses or those directly involved
+					5. Providing first aid or other immediate response actions if appropriate
+		
+		- The initial assessment allows responders to make informed decisions about the appropriate course of 
+		  action and resource allocation. It sets the stage for an effective, coordinated response to mitigate
+ 		  the incident.
+
+# Incident Notification Checklist :
+		
+		- The incident notification checklist is a tool to ensure key stakeholders and response personnel are 
+		  informed of an incident in a timely manner. It typically includes:
+		  
+					1. A standardized format for reporting incident details
+					2. Contact information for relevant parties to notify (e.g. management, emergency services, regulatory agencies)
+					3. Procedures for escalating notifications based on incident severity
+					4. Timelines for completing notifications
+					
+# Hexadecimal notation :
+		
+		- Hexadecimal, often shortened to "hex", is a numbering system with base 16. It is commonly used in computing and
+          electronics to represent large numbers with fewer digits compared to the more familiar decimal system.
+		  
+		- In the hexadecimal system, there are 16 unique symbols or digits:
+					
+					1. The digits 0 through 9 represent the values zero through nine, respectively.
+					2. The letters A through F represent the values 10 through 15, respectively.
+					3. This allows each hexadecimal digit to represent a value from 0 to 15. The digits
+                       are positional, meaning each digit's position determines its place value. Moving left,
+					   each position is 16 times more significant than the previous one.
+
+# Encoding and Encryption :
+		
+		- Encoding and encryption are two distinct processes used to transform data, but they 
+		  serve different purposes:
+		
+		- Encoding:
+					
+					- Encoding is the process of converting data into a specific format that can be 
+					  easily stored, transmitted, or processed by a computer or another entity.
+					- It involves using specific rules, algorithms, or standards to transform data
+                      into a format better suited for a particular purpose or medium.
+					- Encoding ensures interoperability between systems and allows systems 
+					  that use different data representations to share information.
+					- Encoding has no security purpose and is a reversible process.
+					- Examples of encoding algorithms include ASCII, Unicode, URL encoding, and Base64.
+
+		- Encryption:
+					
+					- Encryption is the process of securely encoding data in such a way that only 
+					  authorized users with a key or password can decrypt the data to reveal the original.
+					- It involves using mathematical algorithms and a secret key to transform plaintext
+                      (the original, readable data) into ciphertext (the encrypted, unreadable data).
+					- The main goal of encryption is to ensure data confidentiality and protect data 
+					  from being accessed by unauthorized parties.
+					-  Encryption is used when data needs to be protected so those without the decryption 
+					   keys cannot access the original data.
+					- Examples of encryption algorithms include AES, RSA, and Blowfish
+
+# The Hex Editor
+		
+		- A hex editor is a computer program that allows users to view and edit the raw, hexadecimal (base 16)
+          representation of data stored in computer files or in a computer's memory. It is a powerful tool for
+		  understanding how data is stored and manipulated at the lowest level.
+		
+		- Using a hex editor, you can:
+					
+					1. View the raw, hexadecimal representation of data in a file
+					2. Edit the data by directly modifying the hexadecimal values
+					3. Search for specific patterns or values within the data
+					4. Compare two files or sections of data to identify differences
+		
+		- Hex editors are commonly used by programmers, system administrators, and security professionals to:
+					
+					1. Analyze and debug software
+					2. Recover data from corrupted or damaged files
+					3. Investigate security incidents and malware infections
+					4. Reverse engineer software and hardware
+					
+# Files
+		
+		- Files are the basic units of data storage in computer systems. A file is a collection of data stored on 
+		  a storage device, such as a hard disk, solid-state drive, or USB flash drive. Files can contain various 
+		  types of data, such as text, images, audio, video, or executable code.
+
+		- Files are typically organized into directories or folders, which provide a hierarchical structure for 
+		  organizing and accessing files. Each file has a name, a type or extension (e.g., .txt, .jpg, .exe), and
+		  various metadata, such as the file size, creation date, and permissions
+		
+
+# Hashing :
+		
+		- Hashing is the process of transforming data into a fixed-length alphanumeric string called a hash or message 
+		  digest. It is a one-way process, meaning that the original data cannot be recovered from the hash
+		
+		- Some key characteristics of hashing:
+				
+					1. Hashing is a one-way process that cannot be reversed.
+					2. Hashes are fixed-length, regardless of the input size.
+					3. Small changes in the input data result in large changes in the output hash.
+					4. It is computationally infeasible to find two inputs that produce the same hash (collision resistance).
+		
+		- Examples of hashing algorithms include MD5, SHA-1, SHA-256, and bcrypt
+
+# Hashing DLs
+		
+		- hashing is a fundamental concept in computer science and cryptography that involves generating a fixed-size 
+		  output from an input of variable size using mathematical formulas known as hash functions. This process is 
+		  crucial for various applications, including data storage, retrieval, and security.
+		  
+		- Conceptual Understanding :
+					
+					1. Hash Function: 1. A hash function takes an input (key) and produces a fixed-size output (hash value). 
+					                     This output is known as the hash code.
+										
+									  2. The hash function is designed to be deterministic, meaning that the same input 
+									     always produces the same output.
+									  
+									  3. Hash functions are typically used to map data to a specific index in a data
+                                         structure, such as a hash table.
+					
+					2. Hash Table:    1. A hash table is a data structure that uses hash functions to map keys to
+                                         values. Each key is mapped to a specific index in the table, allowing 
+										 for efficient retrieval of data.
+									  
+									  2. Hash tables are particularly useful for storing and retrieving data 
+									     quickly, as they can perform operations like insertion, deletion, and
+										 searching in constant time (O(1)).
+					
+					3. Collision Handling:
+									  
+									  1. Collisions occur when two different inputs produce the same hash value. 
+									     This can happen due to the limited size of the hash value compared to 
+										 the possible input values.
+									  
+									  2. Various techniques are used to handle collisions, such as separate chaining,
+                                         open addressing, and double hashing.
+
+# MD5 Hash Collisions :
+		
+		- Understanding MD5 Hash Collisions :
+					
+					1. A hash collision occurs when two different inputs produce the same hash value using a 
+					   hash function like MD5. This is a problem because hash functions are supposed to be 
+					   collision-resistant, meaning it should be computationally infeasible to find two
+					   messages that hash to the same value.
+					   
+		- Here's a conceptual explanation of how MD5 hash collisions work:
+					
+					1. The MD5 algorithm
+										
+										- MD5 takes an input message of arbitrary length and produces a 128-bit hash 
+										  value. It does this by breaking the message into 512-bit blocks, padding 
+										  the last block if needed, and then iteratively applying a compression 
+										  function to each block.
+					
+					2. The birthday paradox
+
+										- The birthday paradox states that in a room of just 23 people, there's a 
+										  50% chance that two people share the same birthday. This is because 
+										  there are 253 possible pairs of people to check.
+										
+										- Similarly, for a hash function with an n-bit output, after about 2^(n/2) inputs,
+ 										  the probability of a collision is about 50%. For MD5's 128-bit output, this
+										  happens after about 2^64 = 18,446,744,073,709,551,616 inputs on average.
+					
+					3. Finding collisions
+										
+										- In 2004, researchers found a way to find MD5 collisions much faster than brute 
+										  force. Their attack could find collisions in about 2^39 operations.
+										
+										- The key insight was that the MD5 compression function is not one-way. 
+										  Given the hash value after processing a block, you can find another 
+										  block that produces the same hash. This allows constructing colliding
+										  messages block-by-block.
+
+# Bit Rot :
+			
+		- Bit rot, also known as data rot or bit decay, refers to the gradual deterioration of digital data
+          over time. This phenomenon occurs due to the physical and chemical changes in the storage media,
+		  leading to the loss or corruption of the stored information.
+		
+		- Conceptual Understanding:
+					
+					1. Digital data is stored on various media, such as hard drives, solid-state drives, 
+					   optical discs, and magnetic tapes.
+					   
+					2. Over time, these storage media can degrade due to factors like physical wear, 
+					   environmental conditions, and chemical changes in the storage materials.
+					
+					3. As the storage media degrades, individual bits (the fundamental units of digital data)
+                       can flip from their original state, leading to data corruption or loss.
+
+					4. Bit rot is a gradual process, and the rate of deterioration depends on factors like
+					   the quality of the storage media, storage conditions, and the frequency of data access
+					   and refreshing.
+					   
+# Standard Operating Procedures :
+		
+
+What are Standard Operating Procedures (SOPs)?
+		
+		- Standard Operating Procedures (SOPs) are detailed, written instructions that document a routine or 
+		  repetitive activity followed by an organization. SOPs describe both technical and administrative 
+		  operational procedures, and aim to achieve efficiency, quality output, and uniformity of performance,
+		  while reducing miscommunication and the risk of errors.
+		  
+		- Key Characteristics of SOPs
+					1. Standardized: SOPs establish a common and agreed-upon way of doing things within an organization.
+					2. Documented: SOPs are written down in a formal document, rather than just being verbal instructions.
+					3. Routine/Repetitive: SOPs cover activities that are performed on a regular basis, not one-time tasks.
+					4. Detailed: SOPs provide step-by-step instructions to complete a process, leaving little room for interpretation.
+					5. Consistent: SOPs ensure the same process is followed each time, regardless of who is performing the task.
+					
+How to Write an Effective SOP
+		1. Define the Purpose and Scope
+					
+					- Start by clearly identifying the specific task or process the SOP will cover,
+					  and why it needs to be documented. Determine the scope - how broad or narrow 
+					  the SOP will be.
+					  
+		2. Identify the Key Steps
+					
+					- Observe the actual performance of the task and document each step in the correct 
+					  order. Consult subject matter experts to ensure all critical steps are included.
+		
+		3. Write Clear, Concise Instructions
+					
+					- Use simple, direct language to describe each step. Avoid jargon and ambiguity.
+ 					  Include any safety precautions, quality checks, or decision points.
+		
+		4. Format for Usability
+		
+					- Structure the SOP with a logical flow, using headings, bullet points, tables, and 
+					  diagrams as needed to make it easy to follow.
+		
+		5. Review and Approve 
+					
+					- Have the SOP reviewed by relevant stakeholders to ensure accuracy and effectiveness. 
+					  Obtain formal approval before implementing.
+		
+		6. Communicate and Train
+					
+					- Ensure all affected employees are aware of the new SOP and have been properly trained 
+					  on following the documented procedures.
+		
+		7. Monitor and Update
+					
+					- Periodically review and update the SOP to reflect any changes in the process, equipment,
+					  regulations, or best practices.
+					  
+# Processing Crime and Incident Scenes – Working with Windows & DOS Systems Current
+
+		- Identifying and Collecting Digital Evidence
+					
+					- When processing a crime or incident scene that involves digital evidence, the key tasks are to:
+								1. Identify any computers, storage devices, or other digital artifacts that may 
+								   contain relevant evidence.
+								2. Collect and preserve this digital evidence in a way that maintains its integrity 
+								   and authenticity.
+					
+		- Handling Live Systems
+								
+					- For live computer systems (i.e. those that are powered on), it's important not to simply cut 
+					  the power, as this can potentially destroy or corrupt data. Instead, investigators should:
+								1. Document the current state of the system, including any open programs, 
+								   network connections, etc.
+								2. Acquire a forensic image of the live system's memory and storage, preserving 
+								   the data in its current state.
+								3. Only power off the system if it's an older DOS or Windows-based machine, as 
+								   these are less likely to have volatile data that needs to be captured.
+								   
+		- Transporting and Analyzing Evidence
+
+					- Once the digital evidence has been collected, it should be transported to a forensics lab 
+					  for further analysis. Key steps include:
+								1. Carefully packing and transporting the evidence to prevent damage or tampering.
+								2. Analyzing the collected data using specialized forensic tools to extract and 
+								   organize relevant information.
+								3. Verifying the integrity of the evidence through techniques like hash comparisons.
+								4. Reproducing the incident or crime scene conditions to validate the findings, if necessary.
+		
+		- Reporting and Presenting Findings
+
+					- The final step is to document the entire investigation process and present the findings in a clear
+                      and credible manner. This includes:
+								1. Preparing a detailed case report outlining the steps taken, the evidence collected, 
+								   and the conclusions drawn.
+								2. Ensuring the report adheres to relevant rules, standards, and best practices to 
+								   maintain the admissibility of the digital evidence.
+								3. Presenting the findings in a way that can be easily understood by non-technical 
+								   stakeholders, such as law enforcement or the courts.
