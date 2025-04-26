@@ -1,0 +1,209 @@
+# COSA
+
+
+# Function of Operating System
+			
+			1. process management 
+			2. CPU Scheduling
+			3. Memory Management
+			4. File & IO Management
+			5. Hardware Abstration
+			6. User Interfacing 
+			7. Networking
+			8. Security & Protection
+			
+Types of Operating Systems Structures
+Depending on this, we have the following structures in the operating system:
+
+			1. Simple/Monolithic Structure
+			2. Micro-Kernel Structure
+			3. Hybrid-Kernel Structure
+			4. Exo-Kernel Structure
+			5. Layered Structure
+			6. Modular Structure
+			7. Virtual Machines
+			
+
+# Monolithic structure :
+			
+			- operating systems do not have well-defined structures and are small, simple, and limited
+			- The interfaces and levels of functionality are not well separated.
+			- In MS-DOS, application programs are able to access the basic I/O routines. These types of
+              operating systems cause the entire system to crash if one of the user programs fails.
+			  
+# Micro-Kernel Structure :
+			
+			- This structure designs the operating system by removing all non-essential components from the 
+			  kernel and implementing them as system and user programs This results in a smaller kernel called
+			  the micro-kernel
+			- Advantages of this structure are that all new services need to be added to user space and does not 
+			  require the kernel to be modified. Thus it is more secure and reliable as if a service fails, then
+			  rest of the operating system remains untouched. Mac OS is an example of this type of OS. 
+
+# Hybrid-Kernel Structure :
+			
+			- Hybrid-kernel structure is nothing but just a combination of both monolithic-kernel structure and 
+			  micro-kernel structure. Basically, it combines properties of both monolithic and micro-kernel and 
+			  make a more advance and helpful approach. It implement speed and design of monolithic and 
+			  modularity and stability of micro-kernel structure.
+
+# Exo-Kernel Structure :
+			
+			- Exokernel is an operating system developed at MIT to provide application-level management of hardware 
+			  resources. By separating resource management from protection, the exokernel architecture aims to 
+			  enable application-specific customization. Due to its limited operability, exokernel size 
+			  typically tends to be minimal
+
+# What is Monolithic Architecture?
+
+			- In a monolithic architecture, the operating system kernel is designed to provide all operating system services,
+			  including memory management, process scheduling, device drivers, and file systems, in a single, large binary.
+			  This means that all code runs in kernel space, with no separation between kernel and user-level processes.
+			  
+
+
+# Premptive Scheduling ?
+			
+			- Round Robin (RR)
+			- Shortest Remaining Time First (SRTF)
+			- Priority (preemptive version)
+
+# Non-Preemptive Scheduling :
+			
+			-  Shortest Job First (SJF basically non preemptive) 
+			- Priority (nonpreemptive version)
+
+# Paging
+
+			- There are two main types of virtual memory:
+
+				1. Paging 
+						- Paging divides memory into small fixed-size blocks called pages
+						- When the computer runs out of RAM, pages that aren’t currently in
+ 						  use are moved to the hard drive, into an area called a swap file
+						- The swap file acts as an extension of RAM. When a page is needed again,
+						  it is swapped back into RAM, a process known as page swapping. This
+						  ensures that the operating system (OS) and applications have enough 
+						  memory to run
+				2. Segmentation 
+						- Segmentation divides virtual memory into segments of different sizes.
+						- Segments that aren’t currently needed can be moved to the hard drive
+						- The system uses a segment table to keep track of each segment’s status, 
+						  including whether it’s in memory, if it’s been modified, and its physical
+						  address. Segments are mapped into a process’s address space only when 
+						  needed.
+# Thrashing 
+			
+			- At any given time, only a few pages of any process are in the main memory, and 
+			  therefore more processes can be maintained in memory
+
+# What is Paging? :
+			
+			- Paging is a memory management technique operating systems use operating systems 
+			  to optimize computer memory usage
+			- It divides memory into fixed-size pages that are mapped to physical memory frames, 
+			  reducing fragmentation and improving system performance
+			- This method allows for more efficient use of memory, which is crucial for modern
+			  operating systems and their ability to handle multitasking effectively.
+
+# What is Page Fault? :
+			
+			- A page fault happens when a running program accesses a memory page that is mapped
+              into the virtual address space but not loaded in physical memory.
+			- Since actual physical memory is much smaller than virtual memory, page faults happen.
+			- In case of a page fault, the Operating System might have to replace one of the 
+			  existing pages with the newly needed page
+
+# Common Page Replacement Techniques
+			1. First In First Out (FIFO)
+			2. Optimal Page replacement
+			3. Least Recently Used
+			4. Most Recently Used (MRU)
+			
+# Disk-cache Management :
+			
+			- Disk-cache management is essential for optimizing data storage and retrieval processes,
+			  particularly in virtualized environments. A disk cache serves as a temporary memory that
+			  stores frequently accessed data, bridging the gap between slower hard drives and 
+			  faster system memory (RAM) to enhance performance.
+
+
+# port :
+111				--> RPC bind (used for NIS for communication)
+139				--> NetBIOS
+445				--> SMB (server message block)
+2049			--> client-server communication for NFS
+
+# protocol :
+LPD 			--> Line Printer Deamon
+CIFS			--> CIFS is a common file sharing protocol used by Windows servers and compatible NAS devices.
+
+# Linux Command :
+
+useradd 	 	-> system native 
+adduser		 	-> perl script to create user with home dir
+getent passwd 	--> system user
+usernod -e 		--> expiration date for user 
+chfn 			-->  comment or decription to user 
+who 			--> list all user currently logged
+gshawdow		--> contain group password
+df 				--> disk usage statics in linux
+mkpart 			--> new partition on disk in linux
+fsck 			--> file system integrity
+blkid 			--> display information about disk partition and file systems in linux
+resize2fs 		--> resize a file system in linux	
+du 				--> disk space usage of a specific directory in linux
+e2label 		--> file system label of disk partition 
+gdisk 			--> Creat GUID partition table GPT
+delpart			--> remove partition
+pvresize		--> resize physical volume
+lvmerge			--> merge logical volume
+route 			--> routing table
+lpr				--> print a file command
+chkconfig		--> manage startup services
+nis_make		--> NIS database after makig change in  config file
+patch 			--> apply a patch file in linux
+Xorg -Configure --> generate a new zorf.conf file based on the current system configuration in Linux 
+xrandr			--> adjust screen resolution and orientation
+dig 			--> DNS resolution in linux
+exportfs		--> export directory with nfs in linux
+
+# extension :
+.diff			--> patch file in linux
+
+
+# File :
+
+/etc/mtab 		--> currently mounted file system in Linux
+/etc/rc.d/init.d --> startup script for system in most linux distro
+/etc/yp.conf	--> NIS domain name on linux 
+/etc/x11/xorg.conf -->	X windows System in Linux 
+/etc/resolv.conf --> used to configure DNS resolver settings on a linux system
+/etc/exports	--> configure NFS server in Linux
+
+
+# Tool and service 
+
+rpcbind 		--> NIS service
+XConfigurator 	--> Provide GUI fo Configuring the X Windows System in Linux 
+
+
+# DNS record type :
+		
+		1. A 	--> An A record shows the IP address for a specific hostname or domain
+		2. AAAA	--> his DNS record type is different in the sense that it points to IPV6 addresses.
+		3. CNAME --> canonical name"—is a DNS record that points a domain name (an alias) to another domain
+		4. NameServer (NS) record --> specifies the authoritative DNS server for a domain
+		5. MX (Mail Exchange) --> DNS record type that shows where emails for a domain should be routed to
+		6. SOA record: SOA stands for "start of authority." It's an important DNS record type that stores 
+		               admin information about a domain.
+		7. TXT record: TXT stands for "text," and this record type lets the owner of a domain store text
+					   values in the DNS.
+		8. PTR record: A pointer (PTR) record provides a domain name for reverse lookup.
+		9. SRV record: Using this DNS record type, it's possible to store the IP address and port for specific services.
+		10.CERT record: This record type stores public keys certificates.
+		11.DCHID: This DNS record type stores information related to dynamic host configuration protocol (DHCP).
+		12.DNAME: The full meaning of DNAME is "delegation name." This record type works very similarly to CNAME;
+				  however, it points all the subdomains for the alias to the canonical domain name. That is, 
+				  pointing the DNAME for secondsite.com to example.com will also apply to staff.secondsite.com
+				  and any other subdomain.
